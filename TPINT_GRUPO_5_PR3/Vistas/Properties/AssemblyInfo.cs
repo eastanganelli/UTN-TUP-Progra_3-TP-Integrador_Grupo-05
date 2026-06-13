@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TPINT_GRUPO_9_PR_")]
+[assembly: AssemblyTitle("Vistas")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TPINT_GRUPO_9_PR_")]
+[assembly: AssemblyProduct("Vistas")]
 [assembly: AssemblyCopyright("Copyright ©  2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9ed7617e-3501-4700-9bd1-e7ecf82c124d")]
+[assembly: Guid("2c90748c-6d2a-432b-8755-a0293c8c7275")]
 
 // Version information for an assembly consists of the following four values:
 //
