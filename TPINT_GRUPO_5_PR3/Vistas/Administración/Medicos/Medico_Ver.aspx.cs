@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace TPINT_GRUPO_9_PR_
+namespace Vistas.Administración.Medicos
 {
-    public partial class NuevoUsuario : System.Web.UI.Page
+    public partial class VerMedico : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
