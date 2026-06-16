@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Vistas.Administración.Pacientes
+namespace Vistas.Administración.Turnos
 {
-    public partial class EditarPaciente : System.Web.UI.Page
+    public partial class Turno_Editar : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

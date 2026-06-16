@@ -151,8 +151,8 @@
                     <Items>
                         <asp:MenuItem Text="Inicio" NavigateUrl="~/Administración/Inicio.aspx" />
                         <asp:MenuItem Text="Medicos" NavigateUrl="~/Administración/Medicos/Medicos.aspx" />
-                        <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administración/Usuarios/Usuarios.aspx" />
-                        <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administración/Turnos/Turnos.aspx" />
+                        <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administración/Pacientes/Pacientes.aspx" />
+                        <asp:MenuItem Text="Turnos" NavigateUrl="~/Administración/Turnos/Turnos.aspx" />
                     </Items>
                 </asp:Menu>
             </div>
