@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Nuevo Paciente" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="Paciente_Nuevo.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
+﻿<%@ Page Title="Editar Paciente" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pEditar.aspx.cs" Inherits="Vistas.Administración.Pacientes.EditarPaciente" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -20,6 +20,24 @@
             border-radius: 5px; transition: all 0.2s ease; flex-shrink: 0;
         }
         .btn-volver:hover { background-color: #185FA5; color: #ffffff; }
+
+        /* Banner de identidad */
+        .banner-editando {
+            background-color: #f0f4fa;
+            border: 1px solid #c5d8f0;
+            border-radius: 8px;
+            padding: 14px 20px;
+            display: flex; align-items: center; gap: 14px;
+            font-size: 13px; color: #1a2332;
+        }
+        .banner-editando .avatar-sm {
+            width: 38px; height: 38px; border-radius: 50%;
+            background-color: #1a2332;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: bold; color: #ffffff; flex-shrink: 0;
+        }
+        .banner-editando strong { font-weight: bold; }
+        .banner-editando small  { color: #666666; font-size: 12px; }
 
         .form-card {
             background-color: #ffffff;
@@ -52,6 +70,10 @@
             font-family: Arial, sans-serif;
         }
 
+        .campo input[readonly] {
+            background-color: #f0f0f0; color: #888888; cursor: not-allowed;
+        }
+
         .campo input:focus, .campo select:focus {
             outline: none; border-color: #185FA5; background-color: #ffffff;
         }
@@ -69,13 +91,13 @@
         }
         .btn-guardar:hover { background-color: #0C447C; }
 
-        .btn-limpiar {
+        .btn-cancelar {
             height: 38px; padding: 0 20px;
             background-color: transparent; color: #185FA5;
             border: 1px solid #185FA5; border-radius: 5px;
             font-size: 13px; cursor: pointer; transition: all 0.2s ease;
         }
-        .btn-limpiar:hover { background-color: #185FA5; color: #ffffff; }
+        .btn-cancelar:hover { background-color: #185FA5; color: #ffffff; }
     </style>
 </asp:Content>
 
@@ -83,17 +105,28 @@
 
     <div class="form-wrapper">
 
-        <!-- ENCABEZADO -->
         <div class="page-header">
             <div>
-                <h1>Nuevo Paciente</h1>
-                <p>Completá los datos para registrar un nuevo paciente en el sistema</p>
+                <h1>Editar Paciente</h1>
+                <p>Modificá los datos del paciente. El DNI no se puede cambiar.</p>
             </div>
             <a href="~/Administración/Pacientes/Pacientes.aspx" class="btn-volver">← Volver al listado</a>
         </div>
 
-        <!-- Mensaje resultado -->
         <asp:Label ID="lblMensaje" runat="server" Visible="false" />
+
+        <div class="banner-editando">
+            <div class="avatar-sm">
+                <asp:Label ID="lblIniciales" runat="server" Text="LR" />
+            </div>
+            <div>
+                <strong><asp:Label ID="lblNombreCompleto" runat="server" Text="Laura Beatriz Ramírez" /></strong>
+                &nbsp;—&nbsp; Paciente N° <asp:Label ID="lblNroPaciente" runat="server" Text="00847" />
+                <br />
+                <small>ID persona: <asp:Label ID="lblIdPersona" runat="server" Text="203" />
+                &nbsp;·&nbsp; DNI: <asp:Label ID="lblDniBanner" runat="server" Text="30.112.458" /></small>
+            </div>
+        </div>
 
         <!-- ========================
              DATOS PERSONALES
@@ -103,34 +136,29 @@
             <div class="form-grid">
 
                 <div class="campo">
+                    <label>DNI <small style="color:#888;font-weight:normal;">(no editable)</small></label>
+                    <asp:TextBox ID="txtDni" runat="server" ReadOnly="true" Text="30112458" />
+                </div>
+
+                <div class="campo">
+                    <label>Fecha de Nacimiento <span class="req">*</span></label>
+                    <asp:TextBox ID="txtFechaNac" runat="server" TextMode="Date" Text="1986-09-22" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFechaNac"
+                        CssClass="validador" ErrorMessage="La fecha es requerida." Display="Dynamic" />
+                </div>
+
+                <div class="campo">
                     <label>Nombre <span class="req">*</span></label>
-                    <asp:TextBox ID="txtNombre" runat="server" MaxLength="100" />
+                    <asp:TextBox ID="txtNombre" runat="server" MaxLength="100" Text="Laura" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNombre"
                         CssClass="validador" ErrorMessage="El nombre es requerido." Display="Dynamic" />
                 </div>
 
                 <div class="campo">
                     <label>Apellido <span class="req">*</span></label>
-                    <asp:TextBox ID="txtApellido" runat="server" MaxLength="100" />
+                    <asp:TextBox ID="txtApellido" runat="server" MaxLength="100" Text="Ramírez" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtApellido"
                         CssClass="validador" ErrorMessage="El apellido es requerido." Display="Dynamic" />
-                </div>
-
-                <div class="campo">
-                    <label>DNI <span class="req">*</span></label>
-                    <asp:TextBox ID="txtDni" runat="server" MaxLength="8" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtDni"
-                        CssClass="validador" ErrorMessage="El DNI es requerido." Display="Dynamic" />
-                    <asp:RegularExpressionValidator runat="server" ControlToValidate="txtDni"
-                        CssClass="validador" ValidationExpression="^\d{7,8}$"
-                        ErrorMessage="DNI inválido (7 u 8 dígitos numéricos)." Display="Dynamic" />
-                </div>
-
-                <div class="campo">
-                    <label>Fecha de Nacimiento <span class="req">*</span></label>
-                    <asp:TextBox ID="txtFechaNac" runat="server" TextMode="Date" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFechaNac"
-                        CssClass="validador" ErrorMessage="La fecha de nacimiento es requerida." Display="Dynamic" />
                 </div>
 
                 <div class="campo">
@@ -138,7 +166,7 @@
                     <asp:DropDownList ID="ddlSexo" runat="server">
                         <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
                         <asp:ListItem Value="M">Masculino</asp:ListItem>
-                        <asp:ListItem Value="F">Femenino</asp:ListItem>
+                        <asp:ListItem Value="F" Selected="True">Femenino</asp:ListItem>
                         <asp:ListItem Value="X">No binario</asp:ListItem>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlSexo"
@@ -148,7 +176,7 @@
 
                 <div class="campo">
                     <label>Nacionalidad <span class="req">*</span></label>
-                    <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100" />
+                    <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100" Text="Argentina" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNacionalidad"
                         CssClass="validador" ErrorMessage="La nacionalidad es requerida." Display="Dynamic" />
                 </div>
@@ -165,7 +193,7 @@
 
                 <div class="campo full-width">
                     <label>Dirección <span class="req">*</span></label>
-                    <asp:TextBox ID="txtDireccion" runat="server" MaxLength="200" />
+                    <asp:TextBox ID="txtDireccion" runat="server" MaxLength="200" Text="Av. Corrientes 4820, CABA" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtDireccion"
                         CssClass="validador" ErrorMessage="La dirección es requerida." Display="Dynamic" />
                 </div>
@@ -175,6 +203,7 @@
                     <asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="true"
                         OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged">
                         <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
+                        <asp:ListItem Value="1" Selected="True">Buenos Aires</asp:ListItem>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlProvincia"
                         InitialValue="" CssClass="validador"
@@ -184,7 +213,7 @@
                 <div class="campo">
                     <label>Localidad <span class="req">*</span></label>
                     <asp:DropDownList ID="ddlLocalidad" runat="server">
-                        <asp:ListItem Value="">-- Seleccioná provincia primero --</asp:ListItem>
+                        <asp:ListItem Value="1" Selected="True">CABA</asp:ListItem>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlLocalidad"
                         InitialValue="" CssClass="validador"
@@ -193,14 +222,14 @@
 
                 <div class="campo">
                     <label>Teléfono <span class="req">*</span></label>
-                    <asp:TextBox ID="txtTelefono" runat="server" MaxLength="20" />
+                    <asp:TextBox ID="txtTelefono" runat="server" MaxLength="20" Text="+54 11 4710-2284" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelefono"
                         CssClass="validador" ErrorMessage="El teléfono es requerido." Display="Dynamic" />
                 </div>
 
                 <div class="campo">
                     <label>Correo Electrónico <span class="req">*</span></label>
-                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="200" />
+                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="200" Text="l.ramirez@gmail.com" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail"
                         CssClass="validador" ErrorMessage="El correo es requerido." Display="Dynamic" />
                     <asp:RegularExpressionValidator runat="server" ControlToValidate="txtEmail"
@@ -213,10 +242,10 @@
 
         <!-- ACCIONES -->
         <div class="form-acciones">
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
-                CssClass="btn-limpiar" CausesValidation="false"
-                OnClick="btnLimpiar_Click" />
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar paciente"
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
+                CssClass="btn-cancelar" CausesValidation="false"
+                OnClick="btnCancelar_Click" />
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
                 CssClass="btn-guardar" OnClick="btnGuardar_Click" />
         </div>
 

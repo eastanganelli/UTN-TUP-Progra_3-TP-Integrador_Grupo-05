@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Editar Turno" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="Turno_Editar.aspx.cs" Inherits="Vistas.Administración.Pacientes.EditarPaciente" %>
+﻿<%@ Page Title="Editar Turno" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="tEditar.aspx.cs" Inherits="Vistas.Administración.Pacientes.EditarPaciente" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <!-- Espacio por si requieres estilos específicos solo para esta página -->
