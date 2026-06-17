@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Ver Turno" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="Turno_Ver.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
+﻿<%@ Page Title="Ver Turno" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="tVer.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Nuevo Paciente" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="Paciente_Nuevo.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
+﻿<%@ Page Title="Nuevo Turno" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="tNuevo.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 

@@ -1,9 +1,9 @@
-﻿<%@ Page Title="Ver Medico" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="Medico_Ver.aspx.cs" Inherits="Vistas.Administración.Medicos.VerMedico" %>
+﻿<%@ Page Title="Ver Paciente" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pVer.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
         /* =====================
-           LAYOUT DE PERFIL MÉDICO
+           LAYOUT DE PERFIL PACIENTE
         ===================== */
         .perfil-wrapper {
             width: 100%;
@@ -28,11 +28,11 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: #185FA5;
+            background-color: #1a2332;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 30px;
             color: #ffffff;
             font-weight: bold;
             flex-shrink: 0;
@@ -50,9 +50,9 @@
             font-weight: bold;
         }
 
-        .perfil-header-info .especialidad-badge {
+        .perfil-header-info .nro-paciente {
             display: inline-block;
-            background-color: #e8f0fb;
+            background-color: #f0f4fa;
             color: #185FA5;
             font-size: 12px;
             font-weight: bold;
@@ -62,7 +62,7 @@
             letter-spacing: 0.3px;
         }
 
-        .perfil-header-info .matricula {
+        .perfil-header-info .sub-info {
             font-size: 12px;
             color: #888888;
             margin: 0;
@@ -168,48 +168,61 @@
             text-align: right;
         }
 
-        /* -- TABLA DE HORARIOS -- */
-        .tabla-horarios {
+        /* -- ALERTA MÉDICA -- */
+        .alerta-medica {
+            background-color: #fff7e6;
+            border: 1px solid #f5c842;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #7a5500;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .alerta-medica .alerta-icono {
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* -- TABLA DE HISTORIAL -- */
+        .tabla-historial {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
         }
 
-        .tabla-horarios thead th {
+        .tabla-historial thead th {
             text-align: left;
             font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #888888;
-            padding: 0 0 10px 0;
+            padding: 0 12px 10px 0;
             border-bottom: 1px solid #eeeeee;
         }
 
-        .tabla-horarios tbody td {
-            padding: 10px 0;
+        .tabla-historial tbody td {
+            padding: 10px 12px 10px 0;
             border-bottom: 1px solid #f0f0f0;
             color: #1a2332;
             vertical-align: middle;
         }
 
-        .tabla-horarios tbody tr:last-child td {
+        .tabla-historial tbody tr:last-child td {
             border-bottom: none;
         }
 
-        .dia-tag {
-            display: inline-block;
-            background-color: #f0f4fa;
-            color: #185FA5;
+        .medico-ref {
             font-size: 11px;
-            font-weight: bold;
-            padding: 3px 9px;
-            border-radius: 4px;
-            min-width: 60px;
-            text-align: center;
+            color: #185FA5;
         }
 
-        /* -- TURNOS RECIENTES -- */
+        /* -- TURNOS PRÓXIMOS -- */
         .turno-item {
             display: flex;
             align-items: center;
@@ -244,13 +257,13 @@
             flex-grow: 1;
         }
 
-        .turno-detalle .paciente-nombre {
+        .turno-detalle .medico-nombre {
             font-weight: 600;
             color: #1a2332;
             margin-bottom: 2px;
         }
 
-        .turno-detalle .motivo {
+        .turno-detalle .especialidad {
             font-size: 11px;
             color: #888888;
         }
@@ -283,6 +296,31 @@
             background-color: #fdecea;
             color: #c0392b;
         }
+
+        /* -- TAGS DE ALERGIAS / CONDICIONES -- */
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .tag.alergia {
+            background-color: #fdecea;
+            color: #c0392b;
+        }
+
+        .tag.condicion {
+            background-color: #e8f0fb;
+            color: #185FA5;
+        }
     </style>
 </asp:Content>
 
@@ -294,17 +332,17 @@
              CABECERA DEL PERFIL
         ============================= -->
         <div class="perfil-header">
-            <div class="perfil-avatar">CM</div>
+            <div class="perfil-avatar">LR</div>
 
             <div class="perfil-header-info">
-                <h1>Dr. Carlos Méndez</h1>
-                <span class="especialidad-badge">Cardiología</span>
-                <p class="matricula">Matrícula N° 42.381 &nbsp;|&nbsp; CABA, Argentina</p>
+                <h1>Laura Beatriz Ramírez</h1>
+                <span class="nro-paciente">Paciente N° 00847</span>
+                <p class="sub-info">DNI 30.112.458 &nbsp;|&nbsp; 38 años &nbsp;|&nbsp; Femenino</p>
             </div>
 
             <div class="perfil-estado">
-                <span class="badge-activo">Activo</span>
-                <a href="~/Administración/Medicos/Medicos.aspx" class="btn-volver">← Volver al listado</a>
+                <span class="badge-activo">Activa</span>
+                <a href="~/Administración/Pacientes/Pacientes.aspx" class="btn-volver">← Volver al listado</a>
             </div>
         </div>
 
@@ -318,23 +356,19 @@
                 <h2>Datos Personales</h2>
                 <div class="dato-fila">
                     <span class="dato-label">Nombre completo</span>
-                    <span class="dato-valor">Carlos Alejandro Méndez</span>
+                    <span class="dato-valor">Laura Beatriz Ramírez</span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Fecha de nacimiento</span>
-                    <span class="dato-valor">14/03/1978 (47 años)</span>
+                    <span class="dato-valor">22/09/1986</span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">DNI</span>
-                    <span class="dato-valor">22.481.903</span>
+                    <span class="dato-valor">30.112.458</span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Género</span>
-                    <span class="dato-valor">Masculino</span>
-                </div>
-                <div class="dato-fila">
-                    <span class="dato-label">Nacionalidad</span>
-                    <span class="dato-valor">Argentina</span>
+                    <span class="dato-valor">Femenino</span>
                 </div>
             </div>
 
@@ -343,65 +377,72 @@
                 <h2>Contacto</h2>
                 <div class="dato-fila">
                     <span class="dato-label">Teléfono</span>
-                    <span class="dato-valor">+54 11 4823-9901</span>
+                    <span class="dato-valor">+54 11 4710-2284</span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Celular</span>
-                    <span class="dato-valor">+54 9 11 5542-1174</span>
+                    <span class="dato-valor">+54 9 11 6631-5509</span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Correo electrónico</span>
-                    <span class="dato-valor">c.mendez@clinica.com.ar</span>
+                    <span class="dato-valor">l.ramirez@gmail.com</span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Dirección</span>
-                    <span class="dato-valor">Av. Santa Fe 2340, CABA</span>
-                </div>
-                <div class="dato-fila">
-                    <span class="dato-label">Consultorio</span>
-                    <span class="dato-valor">Piso 3 – Box 7</span>
+                    <span class="dato-valor">Av. Corrientes 4820, CABA</span>
                 </div>
             </div>
 
-            <!-- Horarios de atención -->
-            <div class="info-card">
-                <h2>Horarios de Atención</h2>
-                <table class="tabla-horarios">
+            <!-- Historial de consultas -->
+            <div class="info-card full-width">
+                <h2>Historial de Consultas</h2>
+                <table class="tabla-historial">
                     <thead>
                         <tr>
-                            <th>Día</th>
-                            <th>Turno</th>
-                            <th>Horario</th>
+                            <th>Fecha</th>
+                            <th>Especialidad</th>
+                            <th>Médico</th>
+                            <th>Diagnóstico / Motivo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="dia-tag">Lunes</span></td>
-                            <td>Mañana</td>
-                            <td>08:00 – 12:00</td>
+                            <td>10/06/2025</td>
+                            <td>Cardiología</td>
+                            <td><span class="medico-ref">Dr. Méndez</span></td>
+                            <td>Seguimiento hipertensión leve</td>
                         </tr>
                         <tr>
-                            <td><span class="dia-tag">Martes</span></td>
-                            <td>Tarde</td>
-                            <td>14:00 – 18:00</td>
+                            <td>22/04/2025</td>
+                            <td>Endocrinología</td>
+                            <td><span class="medico-ref">Dra. Torres</span></td>
+                            <td>Control hipotiroidismo – ajuste dosis levotiroxina</td>
                         </tr>
                         <tr>
-                            <td><span class="dia-tag">Miércoles</span></td>
-                            <td>Mañana</td>
-                            <td>08:00 – 13:00</td>
+                            <td>05/02/2025</td>
+                            <td>Clínica Médica</td>
+                            <td><span class="medico-ref">Dr. Gutiérrez</span></td>
+                            <td>Chequeo anual – sin novedades</td>
                         </tr>
                         <tr>
-                            <td><span class="dia-tag">Viernes</span></td>
-                            <td>Mañana</td>
-                            <td>09:00 – 12:00</td>
+                            <td>18/11/2024</td>
+                            <td>Cardiología</td>
+                            <td><span class="medico-ref">Dr. Méndez</span></td>
+                            <td>Electrocardiograma de rutina</td>
+                        </tr>
+                        <tr>
+                            <td>03/08/2024</td>
+                            <td>Ginecología</td>
+                            <td><span class="medico-ref">Dra. Ibáñez</span></td>
+                            <td>Control anual ginecológico</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Turnos recientes -->
+            <!-- Próximos turnos -->
             <div class="info-card full-width">
-                <h2>Últimos Turnos Asignados</h2>
+                <h2>Próximos Turnos</h2>
 
                 <div class="turno-item">
                     <div class="turno-fecha">
@@ -409,8 +450,8 @@
                         Jun 2025
                     </div>
                     <div class="turno-detalle">
-                        <div class="paciente-nombre">Laura Giménez</div>
-                        <div class="motivo">Control post-operatorio</div>
+                        <div class="medico-nombre">Dr. Carlos Méndez</div>
+                        <div class="especialidad">Cardiología – Control post-operatorio</div>
                     </div>
                     <span class="turno-hora">09:00 hs</span>
                     <span class="badge-turno confirmado">Confirmado</span>
@@ -418,63 +459,30 @@
 
                 <div class="turno-item">
                     <div class="turno-fecha">
-                        <strong>16</strong>
+                        <strong>24</strong>
                         Jun 2025
                     </div>
                     <div class="turno-detalle">
-                        <div class="paciente-nombre">Roberto Álvarez</div>
-                        <div class="motivo">Primera consulta</div>
+                        <div class="medico-nombre">Dra. Valeria Torres</div>
+                        <div class="especialidad">Endocrinología – Control mensual</div>
                     </div>
-                    <span class="turno-hora">10:30 hs</span>
+                    <span class="turno-hora">11:30 hs</span>
                     <span class="badge-turno pendiente">Pendiente</span>
                 </div>
 
                 <div class="turno-item">
                     <div class="turno-fecha">
-                        <strong>14</strong>
-                        Jun 2025
+                        <strong>08</strong>
+                        Jul 2025
                     </div>
                     <div class="turno-detalle">
-                        <div class="paciente-nombre">María Fernández</div>
-                        <div class="motivo">Seguimiento hipertensión</div>
+                        <div class="medico-nombre">Dra. Claudia Ibáñez</div>
+                        <div class="especialidad">Ginecología – Control anual</div>
                     </div>
-                    <span class="turno-hora">08:00 hs</span>
-                    <span class="badge-turno confirmado">Confirmado</span>
+                    <span class="turno-hora">10:00 hs</span>
+                    <span class="badge-turno pendiente">Pendiente</span>
                 </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>12</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">Jorge Pereira</div>
-                        <div class="motivo">Ecocardiograma</div>
-                    </div>
-                    <span class="turno-hora">11:00 hs</span>
-                    <span class="badge-turno cancelado">Cancelado</span>
-                </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>10</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">Ana Ramírez</div>
-                        <div class="motivo">Consulta dolor de pecho</div>
-                    </div>
-                    <span class="turno-hora">09:30 hs</span>
-                    <span class="badge-turno confirmado">Confirmado</span>
-                </div>
-
             </div>
-            <!-- /turnos recientes -->
-
         </div>
-        <!-- /perfil-grid -->
-
     </div>
-    <!-- /perfil-wrapper -->
-
 </asp:Content>

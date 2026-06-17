@@ -150,9 +150,9 @@
                 <asp:Menu ID="MenuPrincipal" runat="server" Orientation="Vertical" RenderingMode="List" CssClass="menu-asp">
                     <Items>
                         <asp:MenuItem Text="Inicio" NavigateUrl="~/Administración/Inicio.aspx" />
-                        <asp:MenuItem Text="Medicos" NavigateUrl="~/Administración/Medicos/Medicos.aspx" />
-                        <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administración/Pacientes/Pacientes.aspx" />
-                        <asp:MenuItem Text="Turnos" NavigateUrl="~/Administración/Turnos/Turnos.aspx" />
+                        <asp:MenuItem Text="Medicos" NavigateUrl="~/Administración/Medicos/mInicio.aspx" />
+                        <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administración/Pacientes/pInicio.aspx" />
+                        <asp:MenuItem Text="Turnos" NavigateUrl="~/Administración/Turnos/tInicio.aspx" />
                     </Items>
                 </asp:Menu>
             </div>

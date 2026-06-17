@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Editar Medico" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="Medico_Editar.aspx.cs" Inherits="Vistas.Administración.Medicos.Medicos" %>
+﻿<%@ Page Title="Editar Turno" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="tEditar.aspx.cs" Inherits="Vistas.Administración.Pacientes.EditarPaciente" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <!-- Espacio por si requieres estilos específicos solo para esta página -->
@@ -9,7 +9,7 @@
     <!-- CONTENEDOR (Limita el ancho a 380px según tus estilos base) -->
     <div class="contenedor">
         
-        <h1>Editar Medico</h1>
+        <h1>Editar Paciente</h1>
 
     </div>
 
