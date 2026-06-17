@@ -21,7 +21,7 @@ namespace Vistas.Administración.Pacientes
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.Label lblMensaje1;
 
         /// <summary>
         /// lblNroTurno control.
@@ -165,7 +165,7 @@ namespace Vistas.Administración.Pacientes
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        protected global::System.Web.UI.WebControls.Button btnCancelar1;
 
         /// <summary>
         /// btnGuardar control.
@@ -174,6 +174,6 @@ namespace Vistas.Administración.Pacientes
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
+        protected global::System.Web.UI.WebControls.Button btnGuardar1;
     }
 }

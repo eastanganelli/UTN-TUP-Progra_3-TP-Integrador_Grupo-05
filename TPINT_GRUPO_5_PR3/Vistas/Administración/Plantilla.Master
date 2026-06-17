@@ -153,6 +153,7 @@
                         <asp:MenuItem Text="Medicos" NavigateUrl="~/Administración/Medicos/mInicio.aspx" />
                         <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administración/Pacientes/pInicio.aspx" />
                         <asp:MenuItem Text="Turnos" NavigateUrl="~/Administración/Turnos/tInicio.aspx" />
+                        <asp:MenuItem Text="Reportes" NavigateUrl="~/Administración/Reportes/ReportesInicio.aspx" />
                     </Items>
                 </asp:Menu>
             </div>

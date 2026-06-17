@@ -21,7 +21,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDni;
+        protected global::System.Web.UI.WebControls.TextBox txtDni1;
 
         /// <summary>
         /// Control ddlSexo.
@@ -30,7 +30,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSexo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSexo1;
 
         /// <summary>
         /// Control txtNombre.
@@ -39,7 +39,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre;
+        protected global::System.Web.UI.WebControls.TextBox txtNombre1;
 
         /// <summary>
         /// Control txtApellido.
@@ -48,7 +48,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtApellido;
+        protected global::System.Web.UI.WebControls.TextBox txtApellido1;
 
         /// <summary>
         /// Control txtFechaNacimiento.
@@ -66,7 +66,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNacionalidad;
+        protected global::System.Web.UI.WebControls.TextBox txtNacionalidad1;
 
         /// <summary>
         /// Control txtDireccion.
@@ -75,7 +75,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDireccion;
+        protected global::System.Web.UI.WebControls.TextBox txtDireccion1;
 
         /// <summary>
         /// Control ddlProvincia.
@@ -84,7 +84,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProvincia;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProvincia1;
 
         /// <summary>
         /// Control ddlLocalidad.
@@ -93,7 +93,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLocalidad;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocalidad1;
 
         /// <summary>
         /// Control txtEmail.
@@ -102,7 +102,7 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmail;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail1;
 
         /// <summary>
         /// Control txtTelefono.
@@ -111,6 +111,6 @@ namespace Vistas.Administración.Pacientes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTelefono;
+        protected global::System.Web.UI.WebControls.TextBox txtTelefono1;
     }
 }

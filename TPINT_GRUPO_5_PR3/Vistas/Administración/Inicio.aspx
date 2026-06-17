@@ -34,6 +34,8 @@
 
     .btn-icon { border: 1px solid #ccc; background: #fff; border-radius: 5px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #555; font-size: 13px; }
     .btn-icon:hover { border-color: #185FA5; color: #185FA5; background: #f0f6ff; }
+
+
 </style>
 </asp:Content>
 

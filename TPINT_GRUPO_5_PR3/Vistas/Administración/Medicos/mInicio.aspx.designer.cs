@@ -30,7 +30,7 @@ namespace Vistas.Administración.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad2;
 
         /// <summary>
         /// ddlEstado control.

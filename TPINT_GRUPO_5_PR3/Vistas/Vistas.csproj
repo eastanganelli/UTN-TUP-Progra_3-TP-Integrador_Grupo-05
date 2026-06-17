@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -62,11 +65,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Administración\Inicio.aspx" />
     <Content Include="Administración\Medicos\mEditar.aspx" />
     <Content Include="Administración\Medicos\mInicio.aspx" />
@@ -75,6 +73,8 @@
     <Content Include="Administración\Pacientes\pNuevo.aspx" />
     <Content Include="Administración\Pacientes\pInicio.aspx" />
     <Content Include="Administración\Pacientes\pVer.aspx" />
+    <Content Include="Administración\Reportes\ReportesInicio.aspx" />
+    <Content Include="Administración\Reportes\ReportesResultado.aspx" />
     <Content Include="Administración\Turnos\tInicio.aspx" />
     <Content Include="Administración\Turnos\tEditar.aspx" />
     <Content Include="Administración\Turnos\tNuevo.aspx" />
@@ -140,6 +140,20 @@
     </Compile>
     <Compile Include="Administración\Pacientes\pVer.aspx.designer.cs">
       <DependentUpon>pVer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administración\Reportes\ReportesInicio.aspx.cs">
+      <DependentUpon>ReportesInicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administración\Reportes\ReportesInicio.aspx.designer.cs">
+      <DependentUpon>ReportesInicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administración\Reportes\ReportesResultado.aspx.cs">
+      <DependentUpon>ReportesResultado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administración\Reportes\ReportesResultado.aspx.designer.cs">
+      <DependentUpon>ReportesResultado.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administración\Turnos\tInicio.aspx.cs">
       <DependentUpon>tInicio.aspx</DependentUpon>
@@ -211,7 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Administración\Medicos\Especialidades\" />
-    <Folder Include="Administración\Reportes\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -247,7 +260,7 @@
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
