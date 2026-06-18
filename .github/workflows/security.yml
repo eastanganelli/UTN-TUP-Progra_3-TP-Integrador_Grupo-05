@@ -19,9 +19,7 @@ jobs:
       - name: Install and Run OpenGrep
         run: |
           echo "Downloading OpenGrep..."
-          wget https://github.com -O opengrep
-          chmod +x opengrep
-          
+          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | bash          
           echo "Running scan..."
           ./opengrep ci --sarif --sarif-output opengrep_report.sarif --config auto --suppress-errors
         shell: bash
