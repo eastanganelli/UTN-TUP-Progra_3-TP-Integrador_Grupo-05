@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33383DD8-F3C6-48B7-A02B-51C9B65912E3}</ProjectGuid>
+    <ProjectGuid>{A00CC9C0-3913-4CF7-8339-0D1E60B6D33A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Datos</RootNamespace>
-    <AssemblyName>Datos</AssemblyName>
+    <RootNamespace>Negocios</RootNamespace>
+    <AssemblyName>Negocios</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,26 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Especialidades.cs" />
-    <Compile Include="HorariosMedicos.cs" />
-    <Compile Include="Localidades.cs" />
-    <Compile Include="Medicos.cs" />
-    <Compile Include="Pacientes.cs" />
-    <Compile Include="Personas.cs" />
+    <Compile Include="EspecialidadesNegocio.cs" />
+    <Compile Include="HorariosMedicosNegocio.cs" />
+    <Compile Include="LocalidadesNegocio.cs" />
+    <Compile Include="MedicosNegocio.cs" />
+    <Compile Include="PacientesNegocio.cs" />
+    <Compile Include="PersonasNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provincias.cs" />
-    <Compile Include="Turnos.cs" />
-    <Compile Include="Usuarios.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entidades\Entidades.csproj">
-      <Project>{acdf1b43-5ae4-4863-84a1-1fde895e9ce1}</Project>
-      <Name>Entidades</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Negocios\Negocios.csproj">
-      <Project>{a00cc9c0-3913-4cf7-8339-0d1e60b6d33a}</Project>
-      <Name>Negocios</Name>
-    </ProjectReference>
+    <Compile Include="ProvinciasNegocio.cs" />
+    <Compile Include="TurnosNegocio.cs" />
+    <Compile Include="UsuariosNegocio.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

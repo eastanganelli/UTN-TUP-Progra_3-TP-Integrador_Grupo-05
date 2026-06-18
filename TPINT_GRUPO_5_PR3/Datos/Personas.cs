@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Datos
-{
-    internal class Personas
-    {
+namespace Datos {
+    internal class Personas {
     }
 }

@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="Datos/Datos.csproj" Id="22ded4dc-9b9e-4a82-b4ee-a8ab090916c5" />
-  <Project Path="Entidades/Entidades.csproj" Id="f9d21123-90ba-44b3-a22a-b7a0db3e4cc9" />
-  <Project Path="Negocio/Negocio.csproj" Id="afdc5b3b-f9f8-4b06-8450-bb52632778cc" />
+  <Project Path="Datos/Datos.csproj" Id="33383dd8-f3c6-48b7-a02b-51c9b65912e3" />
+  <Project Path="Entidades/Entidades.csproj" Id="acdf1b43-5ae4-4863-84a1-1fde895e9ce1" />
+  <Project Path="Negocios/Negocios.csproj" Id="a00cc9c0-3913-4cf7-8339-0d1e60b6d33a" />
   <Project Path="Vistas/Vistas.csproj" Id="2c90748c-6d2a-432b-8755-a0293c8c7275" />
 </Solution>
