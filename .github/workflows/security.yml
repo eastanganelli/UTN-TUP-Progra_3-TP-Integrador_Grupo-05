@@ -19,10 +19,9 @@ jobs:
 
       - name: Install OpenGrep
         run: |
-          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | bash
-          
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          echo "$HOME/.opengrep/bin" >> $GITHUB_PATH
+          wget -qO opengrep https://github.com/opengrep/opengrep/releases/latest/download/opengrep_manylinux_x86
+          chmod +x opengrep
+          sudo mv opengrep /usr/local/bin/opengrep
 
       - name: Run OpenGrep Scan
         run: opengrep scan --config auto --json -o opengrep-report.json .
