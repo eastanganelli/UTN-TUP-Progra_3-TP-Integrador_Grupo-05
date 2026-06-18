@@ -1,40 +1,33 @@
 name: Security Scan
+
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+
 jobs:
-   sast-scan:
-    name: OpenGrep Static Analysis
+  opengrep-scan:
+    name: Run OpenGrep
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-      
+    
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Install OpenGrep
         run: |
-          pip install opengrep
+          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | bash
 
       - name: Run OpenGrep Scan
-        run: |
-          opengrep scan --sarif -o opengrep-results.sarif .
+        run: opengrep scan --config auto --json -o opengrep-report.json .
 
-      - name: Upload SARIF to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: opengrep-results.sarif
-
-      - name: Upload Scan Artifacts
+      - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: opengrep-report
-          path: opengrep-results.sarif
+          path: opengrep-report.json
+          retention-days: 14
