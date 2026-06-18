@@ -10,23 +10,31 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write # Required to upload SARIF results
-
+      security-events: write
+      
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install and Run OpenGrep
-        run: |
-          echo "Downloading OpenGrep..."
-          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | bash          
-          echo "Running scan..."
-          ./opengrep ci --sarif --sarif-output opengrep_report.sarif --config auto --suppress-errors
-        shell: bash
-
-      - name: Upload Scan Results to GitHub
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          sarif_file: opengrep_report.sarif
-          category: opengrep-sast
+          python-version: '3.11'
+
+      - name: Install OpenGrep
+        run: |
+          pip install opengrep
+
+      - name: Run OpenGrep Scan
+        run: |
+          opengrep scan --sarif -o opengrep-results.sarif .
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: opengrep-results.sarif
+
+      - name: Upload Scan Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: opengrep-report
+          path: opengrep-results.sarif
