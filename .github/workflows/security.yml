@@ -19,12 +19,23 @@ jobs:
 
       - name: Install OpenGrep
         run: |
-          wget -qO opengrep https://github.com/opengrep/opengrep/releases/latest/download/opengrep_manylinux_x86
-          chmod +x opengrep
-          sudo mv opengrep /usr/local/bin/opengrep
+          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | sudo bash
 
       - name: Run OpenGrep Scan
-        run: opengrep scan --config auto --json -o opengrep-report.json .
+        run: |
+          set +e
+          opengrep scan --config auto --json -o opengrep-report.json . --verbose
+          SCAN_EXIT_CODE=$?
+          set -e
+          echo "========================================"
+          echo "         OpenGrep Scan Findings         "
+          echo "========================================"
+          if [ -s opengrep-report.json ]; then
+            jq -r 'if (.results | length) > 0 then (.results[] | "[\(.extra.severity | ascii_upcase)] \(.path) (Line \(.start.line))\nRule: \(.check_id)\nMessage: \(.extra.message)\n---") else "✅ No vulnerabilities found!" end' opengrep-report.json
+          else
+            echo "Error: opengrep-report.json was not generated."
+          fi
+          exit $SCAN_EXIT_CODE
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
