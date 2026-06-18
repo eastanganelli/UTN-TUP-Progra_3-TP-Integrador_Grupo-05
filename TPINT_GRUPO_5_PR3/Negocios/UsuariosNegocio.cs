@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Negocio
-{
-    internal class UsuariosNegocio
-    {
+namespace Negocio {
+    internal class UsuariosNegocio {
     }
 }
