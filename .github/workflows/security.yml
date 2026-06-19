@@ -9,17 +9,22 @@ on:
       - main
 
 jobs:
-  opengrep-scan:
-    name: Run OpenGrep
+  opengrep:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Run Opengrep Scan
-        uses: platform-sec/opengrep-action@v1
+      - id: scan
+        uses: platform-sec/opengrep-action@LATEST_SHA256_HASH
         with:
-          config: "gh://opengrep/opengrep-rules/csharp"
-          format: "sarif"
-          error-on-findings: true 
+          target: .
+          output-format: json/sarif
+          strict: true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: opengrep-results
+          path: |
+            ${{ steps.scan.outputs.json-file }}
+            ${{ steps.scan.outputs.sarif-file }}
