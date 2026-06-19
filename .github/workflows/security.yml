@@ -25,7 +25,7 @@ jobs:
 
       - name: Run OpenGrep Scan
         run: |
-          opengrep scan --verbose --json opengrep-report.json .
+          opengrep scan --config auto --json . > opengrep-report.json
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
