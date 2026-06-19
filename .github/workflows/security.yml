@@ -17,12 +17,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install OpenGrep
-        run: |
-          wget -qO opengrep https://github.com/opengrep/opengrep/releases/latest/download/opengrep_manylinux_x86
-          chmod +x opengrep
-          sudo mv opengrep /usr/local/bin/opengrep
-
-      - name: Run OpenGrep Scan
-        run: |
-          opengrep scan -f --config auto
+      - name: Run Opengrep Scan
+        uses: platform-sec/opengrep-action@v1
+        with:
+          config: "gh://opengrep/opengrep-rules/csharp"
+          format: "sarif"
+          error-on-findings: true 
