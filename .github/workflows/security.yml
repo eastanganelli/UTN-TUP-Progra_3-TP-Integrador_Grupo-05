@@ -23,24 +23,7 @@ jobs:
 
       - name: Run OpenGrep Scan
         run: |
-          set +e
-          
-          opengrep scan --config auto --json -o opengrep-report.json .
-          
-          SCAN_EXIT_CODE=$?
-          set -e
-          
-          echo "========================================"
-          echo "         OpenGrep Scan Findings         "
-          echo "========================================"
-          
-          if [ -s opengrep-report.json ]; then
-            jq -r 'if (.results | length) > 0 then (.results[] | "[\(.extra.severity | ascii_upcase)] \(.path) (Line \(.start.line))\nRule: \(.check_id)\nMessage: \(.extra.message)\n---") else "✅ No vulnerabilities found!" end' opengrep-report.json
-          else
-            echo "Error: opengrep-report.json was not generated."
-          fi
-          
-          exit $SCAN_EXIT_CODE
+          opengrep scan --verbose --json opengrep-report.json .
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
