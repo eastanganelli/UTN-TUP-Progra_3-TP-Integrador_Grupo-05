@@ -18,8 +18,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install OpenGrep
-        # pipx natively handles downloading the wrapper, the core engine, and updating the $PATH
-        run: pipx install opengrep
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | sudo bash
 
       - name: Run OpenGrep Scan
         run: |
