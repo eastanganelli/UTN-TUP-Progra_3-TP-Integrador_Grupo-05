@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Entidades {
-    internal class Usuario {
+    public class Usuario {
         private int id_usuario;
         private string username;
         private string password;
         private string tipo;
         private int id_medico;
         private bool activo;
-        Usuario() {
+        public Usuario() {
             this.id_usuario = 0;
             this.username = "";
             this.password = "";
@@ -18,7 +18,7 @@ namespace Entidades {
             this.id_medico = 0;
             this.activo = false;
         }
-        Usuario(int id_usuario, string username, string password) {
+        public Usuario(int id_usuario, string username, string password) {
             this.id_usuario = id_usuario;
             this.username = username;
             this.password = password;
@@ -26,7 +26,7 @@ namespace Entidades {
             this.id_medico = 0;
             this.activo = false;
         }
-        Usuario(int id_usuario, string username, string password, string tipo, int id_medico, bool activo) {
+        public Usuario(int id_usuario, string username, string password, string tipo, int id_medico, bool activo) {
             this.id_usuario = id_usuario;
             this.username = username;
             this.password = password;

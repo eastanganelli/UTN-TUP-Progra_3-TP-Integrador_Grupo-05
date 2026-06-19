@@ -52,5 +52,15 @@
     <Compile Include="TurnosNegocio.cs" />
     <Compile Include="UsuariosNegocio.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Datos\Datos.csproj">
+      <Project>{33383dd8-f3c6-48b7-a02b-51c9b65912e3}</Project>
+      <Name>Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{acdf1b43-5ae4-4863-84a1-1fde895e9ce1}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

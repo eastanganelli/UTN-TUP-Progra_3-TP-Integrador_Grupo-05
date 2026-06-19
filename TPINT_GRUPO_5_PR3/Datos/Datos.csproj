@@ -63,10 +63,6 @@
       <Project>{acdf1b43-5ae4-4863-84a1-1fde895e9ce1}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Negocios\Negocios.csproj">
-      <Project>{a00cc9c0-3913-4cf7-8339-0d1e60b6d33a}</Project>
-      <Name>Negocios</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
