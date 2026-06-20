@@ -230,8 +230,8 @@
                     runat="server"
                     Text="Ingresar"
                     CssClass="boton-ingresar"
-                    UseSubmitBehavior="false"
-                    OnClientClick="return false;" />
+                    UseSubmitBehavior="false" OnClick="btnIngresar_Click"
+                    />
 
             </div>
 
