@@ -12,18 +12,17 @@ namespace Vistas.Administración.Medicos {
         private LocalidadesNegocio conexionLocalidades = new LocalidadesNegocio();
         private ProvinciasNegocio conexionProvincias = new ProvinciasNegocio();
 
-        private Medico medico = null;
-        private Usuario usuario = null;
-        private Persona persona = null;
-        private Especialidad especialidad = null;
-        private Localidad localidad = null;
-        private Provincia provincia = null;
+        public Medico medico { get; set; }
+        public Usuario usuario { get; set; }
+        public Persona persona { get; set; }
+        public Especialidad especialidad { get; set; }
+        public Localidad localidad { get; set; }
+        public Provincia provincia { get; set; }
         protected void Page_Load(object sender, EventArgs e) {
             if (Request.QueryString["id"] != null) {
                 string id_medico = Request.QueryString["id"];
                 this.medico = conexionMedicos.ObtenerMedico(Convert.ToInt32(id_medico));
-
-                this.usuario = conexionUsuarios.ObtenerUsuarioPorId(this.medico.IDMedico);
+                //this.usuario = conexionUsuarios.ObtenerUsuario(this.medico.IDMedico);
                 this.persona = conexionPersonas.ObtenerPersona(this.medico.IDPersona);
                 this.especialidad = conexionEspecialidades.ObtenerEspecialidad(this.medico.IDEspecialidad);
                 this.localidad = conexionLocalidades.ObtenerLocalidad(this.persona.IDLocalidad);

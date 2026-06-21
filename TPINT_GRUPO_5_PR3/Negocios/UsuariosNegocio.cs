@@ -8,7 +8,7 @@ namespace Negocio
     public class UsuariosNegocio
     {
         private Usuarios datosUsuarios = new Usuarios();
-        public Usuario ObtenerUsuarioPorId(int id_usuario)
+        public Usuario ObtenerUsuario(int id_usuario)
         {
             try
             {

@@ -288,14 +288,15 @@
             <div class="perfil-avatar">CM</div>
 
             <div class="perfil-header-info">
-                <h1>Dr. Carlos Méndez</h1>
-                <span class="especialidad-badge">Cardiología</span>
-                <p class="matricula">Matrícula N° 42.381 &nbsp;|&nbsp; CABA, Argentina</p>
+                <h1>Dr. <%= persona.Nombre %> <%= persona.Apellido %></h1>
+                <span class="especialidad-badge"><%= especialidad.Nombre %></span>
+                <p class="matricula">Matrícula N° <%= medico.Legajo %></p>
+                <%--<p class="matricula">Matrícula N° <%= medico.Legajo %> &nbsp;|&nbsp; CABA, Argentina</p>--%>
             </div>
 
             <div class="perfil-estado">
-                <span class="badge-activo">Activo</span>
-                <a href="~/Administración/Medicos/Medicos.aspx" class="btn-volver">← Volver al listado</a>
+                <span class='<%# Convert.ToBoolean(medico.Estado) ? "badge badge-active" : "badge badge-inactive" %>'><%# Convert.ToBoolean(medico.Estado) ? "Activo" : "Inactivo" %></span>
+                <a href="/Administración/Medicos/mInicio.aspx" class="btn-volver">← Volver al listado</a>
             </div>
         </div>
 
@@ -309,23 +310,23 @@
                 <h2>Datos Personales</h2>
                 <div class="dato-fila">
                     <span class="dato-label">Nombre completo</span>
-                    <span class="dato-valor"></span>
+                    <span class="dato-valor"><%= persona.Apellido %>,<%= persona.Nombre %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Fecha de nacimiento</span>
-                    <span class="dato-valor">14/03/1978 (47 años)</span>
+                    <span class="dato-valor"><%= persona.FechaNacimiento %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">DNI</span>
-                    <span class="dato-valor">22.481.903</span>
+                    <span class="dato-valor"><%= persona.DNI %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Género</span>
-                    <span class="dato-valor">Masculino</span>
+                    <span class="dato-valor"><%= persona.Sexo %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Nacionalidad</span>
-                    <span class="dato-valor">Argentina</span>
+                    <span class="dato-valor"><%= persona.Nacionalidad %></span>
                 </div>
             </div>
 
@@ -334,24 +335,20 @@
                 <h2>Contacto</h2>
                 <div class="dato-fila">
                     <span class="dato-label">Teléfono</span>
-                    <span class="dato-valor">+54 11 4823-9901</span>
-                </div>
-                <div class="dato-fila">
-                    <span class="dato-label">Celular</span>
-                    <span class="dato-valor">+54 9 11 5542-1174</span>
+                    <span class="dato-valor"><%= persona.Telefono %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Correo electrónico</span>
-                    <span class="dato-valor">c.mendez@clinica.com.ar</span>
+                    <span class="dato-valor"><%= persona.Email %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Dirección</span>
-                    <span class="dato-valor">Av. Santa Fe 2340, CABA</span>
+                    <span class="dato-valor"><%= persona.Direccion %></span>
                 </div>
-                <div class="dato-fila">
+                <%--<div class="dato-fila">
                     <span class="dato-label">Consultorio</span>
                     <span class="dato-valor">Piso 3 – Box 7</span>
-                </div>
+                </div>--%>
             </div>
 
             <!-- Horarios de atención -->
@@ -391,7 +388,7 @@
             </div>
 
             <!-- Turnos recientes -->
-            <div class="info-card full-width">
+            <%--<div class="info-card full-width">
                 <h2>Últimos Turnos Asignados</h2>
 
                 <div class="turno-item">
@@ -459,7 +456,7 @@
                     <span class="badge-turno confirmado">Confirmado</span>
                 </div>
 
-            </div>
+            </div>--%>
             <!-- /turnos recientes -->
 
         </div>

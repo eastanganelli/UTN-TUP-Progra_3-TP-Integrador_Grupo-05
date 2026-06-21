@@ -8,19 +8,16 @@ namespace Vistas.Administración.Medicos
     public partial class Medicos : System.Web.UI.Page
     {
         private const int POR_PAGINA = 10;
-
         protected int PaginaActual
         {
-            get { return ViewState["PaginaActual"] != null ? (int)ViewState["PaginaActual"] : 1; }
-            set { ViewState["PaginaActual"] = value; }
+            get => ViewState["PaginaActual"] != null ? (int)ViewState["PaginaActual"] : 1;
+            set => ViewState["PaginaActual"] = value;
         }
-
         protected int TotalPaginas
         {
-            get { return ViewState["TotalPaginas"] != null ? (int)ViewState["TotalPaginas"] : 1; }
-            set { ViewState["TotalPaginas"] = value; }
+            get => ViewState["TotalPaginas"] != null ? (int)ViewState["TotalPaginas"] : 1;
+        set => ViewState["TotalPaginas"] = value;
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

@@ -25,10 +25,11 @@ namespace Datos {
                     Apellido = resultado.Rows[0]["apellido"].ToString(),
                     Sexo = resultado.Rows[0]["sexo"].ToString()[0],
                     FechaNacimiento = resultado.Rows[0]["fecha_nacimiento"].ToString(),
-                    Direccion = resultado.Rows[0]["domicilio"].ToString(),
+                    Direccion = resultado.Rows[0]["direccion"].ToString(),
                     IDLocalidad = Convert.ToInt32(resultado.Rows[0]["id_localidad"]),
                     Email = resultado.Rows[0]["email"].ToString(),
-                    Telefono = resultado.Rows[0]["telefono"].ToString()
+                    Telefono = resultado.Rows[0]["telefono"].ToString(),
+                    Nacionalidad = resultado.Rows[0]["nacionalidad"].ToString()
                 };
             }
             return persona;
