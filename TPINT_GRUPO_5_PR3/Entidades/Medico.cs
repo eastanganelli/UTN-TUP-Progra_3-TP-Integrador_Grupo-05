@@ -12,7 +12,7 @@ namespace Entidades {
         public Medico() {
             this.id_medico = 0;
             this.id_persona = 0;
-            this.legajo = "";
+            this.legajo = string.Empty;
             this.id_especialidad = 0;
             this.activo = false;
         }

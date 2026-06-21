@@ -39,7 +39,7 @@ namespace Datos {
 
             if (resultado.Rows.Count == 0)
             {
-                throw new Exception($"El Usuario [{user}] fue no encontrado!");
+                throw new Exception($"El Usuario o Contraseña es incorrecta!");
             }
 
             Usuario usuario = null;

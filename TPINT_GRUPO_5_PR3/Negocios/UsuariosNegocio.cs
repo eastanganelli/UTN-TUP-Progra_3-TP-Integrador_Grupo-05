@@ -8,9 +8,16 @@ namespace Negocio
     public class UsuariosNegocio
     {
         private Usuarios datosUsuarios = new Usuarios();
-        public DataTable ObtenerUsuarios()
+        public Usuario ObtenerUsuarioPorId(int id_usuario)
         {
-            return datosUsuarios.ObtenerUsuarios();
+            try
+            {
+                return datosUsuarios.ObtenerUsuario(id_usuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el usuario por ID: " + ex.Message);
+            }
         }
         public int ObtenerCantidadDeUsuarios()
         {
@@ -24,18 +31,6 @@ namespace Negocio
         {
             return datosUsuarios.ObtenerUsuariosPaginado(NroPagina, CantPagina);
         }
-        public Usuario ObtenerUsuarioPorId(int id_usuario)
-        {
-            try
-            {
-                return datosUsuarios.ObtenerUsuario(id_usuario);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener el usuario por ID: " + ex.Message);
-            }
-        }
-
         public Usuario Login(string username, string password)
         {
             if (string.IsNullOrEmpty(username))

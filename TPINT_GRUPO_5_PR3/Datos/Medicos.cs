@@ -1,6 +1,7 @@
 ﻿using Entidades;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Datos {
     public class Medicos {
@@ -42,7 +43,7 @@ namespace Datos {
             return (int)Math.Ceiling((double)cantidad_Medicos / cantidad_pagina);
         }
         public DataTable ObtenerMedicosPaginado(int nro_pagina, int cantidad_pagina = 10) {
-            string consulta = $"SELECT * FROM Medico ORDER BY id_medico ASC LIMIT {cantidad_pagina} OFFSET (({nro_pagina}) * {cantidad_pagina})";
+            string consulta = $"SELECT * FROM vw_Medicos ORDER BY id_medico ASC OFFSET ({nro_pagina} - 1) * {cantidad_pagina} ROWS FETCH NEXT {cantidad_pagina} ROWS ONLY;";
             return conexion.ObtenerTabla(consulta, "Medico");
         }
     }

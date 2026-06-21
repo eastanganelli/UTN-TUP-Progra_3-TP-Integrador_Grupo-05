@@ -44,6 +44,7 @@
     .pag-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; color: #555; cursor: pointer; background: #fff; }
     .pag-btn.active { background: #185FA5; border-color: #185FA5; color: #fff; }
     .pag-btn:hover:not(.active) { border-color: #185FA5; color: #185FA5; }
+    .pag-select { height: 30px; padding: 0 6px; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; color: #555; background: #fff; cursor: pointer; min-width: 60px; }
 </style>
 </asp:Content>
 
@@ -64,7 +65,7 @@
                 <label>Buscar</label>
                 <asp:TextBox ID="txtBuscar" runat="server" placeholder="Nombre, apellido o DNI..." style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:200px;" />
             </div>
-            <div class="filter-group">
+            <%--<div class="filter-group">
                 <label>Especialidad</label>
                 <asp:DropDownList ID="ddlEspecialidad" runat="server" style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:160px;">
                     <asp:ListItem Text="Todas" Value="" />
@@ -74,7 +75,7 @@
                     <asp:ListItem Text="Clínica Médica" Value="4" />
                     <asp:ListItem Text="Neurología" Value="5" />
                 </asp:DropDownList>
-            </div>
+            </div>--%>
             <div class="filter-group">
                 <label>Estado</label>
                 <asp:DropDownList ID="ddlEstado" runat="server" style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:120px;">
@@ -83,109 +84,75 @@
                     <asp:ListItem Text="Inactivo" Value="0" />
                 </asp:DropDownList>
             </div>
-            <button class="btn-search">Buscar</button>
-            <button class="btn-clear">Limpiar</button>
+            <asp:Button ID="btnBuscar"  runat="server" Text="Buscar"  CssClass="btn-search" OnClick="btnBuscar_Click"  />
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn-clear"  OnClick="btnLimpiar_Click" />
         </div>
 
         <div class="table-card">
             <div class="table-meta">
-                <span>Se encontraron <strong>8</strong> médicos</span>
-                <span>Página 1 de 1</span>
+                <span>Se encontraron <strong><asp:Label ID="lblTotalMedicos" runat="server" Text="0" /></strong> médicos</span>
+                <asp:Label ID="lblPaginaInfo" runat="server" Text="Página 1 de 1" />
             </div>
 
-            <table class="gv-medicos">
-                <thead>
+            <asp:Repeater ID="rptMedicos" runat="server" OnItemCommand="rptMedicos_ItemCommand">
+                <HeaderTemplate>
+                    <table class="gv-medicos">
+                        <thead>
+                            <tr>
+                                <th>Legajo</th>
+                                <th>Médico</th>
+                                <th>DNI</th>
+                                <th>Especialidad</th>
+                                <%--<th>Días de atención</th>
+                                <th>Horario</th>--%>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                </HeaderTemplate>
+                <ItemTemplate>
                     <tr>
-                        <th>Legajo</th>
-                        <th>Médico</th>
-                        <th>DNI</th>
-                        <th>Especialidad</th>
-                        <th>Días de atención</th>
-                        <th>Horario</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>MED-001</strong></td>
-                        <td><strong>García, Laura</strong><br /><span style="font-size:11px;color:#888">l.garcia@clinica.com</span></td>
-                        <td>28.541.003</td>
-                        <td><span class="badge badge-esp">Cardiología</span></td>
-                        <td>Lun / Mié / Vie</td>
-                        <td>09:00 – 15:00</td>
-                        <td><span class="badge badge-active">Activo</span></td>
+                        <td><strong><%# Eval("Legajo") %></strong></td>
                         <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
+                            <strong><%# Eval("Apellido") %>, <%# Eval("Nombre") %></strong><br />
+                            <span style="font-size:11px;color:#888"><%# Eval("Email") %></span>
+                        </td>
+                        <td><%# Eval("DNI") %></td>
+                        <td><span class="badge badge-esp"><%# Eval("Especialidad") %></span></td>
+                        <%--<td><%# Eval("Dias") %></td>--%>
+                        <%--<td><%# Eval("Horarios") %></td>--%>
+                        <td>
+                            <span class='<%# Convert.ToBoolean(Eval("Activo")) ? "badge badge-active" : "badge badge-inactive" %>'>
+                                <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
+                            </span>
+                        </td>
+                        <td>
+                            <asp:HyperLink runat="server"
+                                NavigateUrl='<%# "mVer.aspx?id=" + Eval("id_medico") %>'
+                                CssClass="btn-icon" title="Ver">👁</asp:HyperLink>
+                            <asp:HyperLink runat="server"
+                                NavigateUrl='<%# "mEditar.aspx?id=" + Eval("id_medico") %>'
+                                CssClass="btn-icon" title="Editar">✏️</asp:HyperLink>
+                            <asp:LinkButton runat="server" CssClass="btn-icon danger"
+                                CommandName="Baja" CommandArgument='<%# Eval("id_medico") %>'
+                                title="Dar de baja"
+                                OnClientClick="return confirm('¿Confirma dar de baja este médico?');">🗑</asp:LinkButton>
                         </td>
                     </tr>
-                    <tr>
-                        <td><strong>MED-002</strong></td>
-                        <td><strong>Martínez, Roberto</strong><br /><span style="font-size:11px;color:#888">r.martinez@clinica.com</span></td>
-                        <td>31.220.887</td>
-                        <td><span class="badge badge-esp">Pediatría</span></td>
-                        <td>Mar / Jue</td>
-                        <td>08:00 – 14:00</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>MED-003</strong></td>
-                        <td><strong>Peralta, Sofía</strong><br /><span style="font-size:11px;color:#888">s.peralta@clinica.com</span></td>
-                        <td>35.109.442</td>
-                        <td><span class="badge badge-esp">Traumatología</span></td>
-                        <td>Lun / Mar / Jue / Vie</td>
-                        <td>10:00 – 17:00</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>MED-004</strong></td>
-                        <td><strong>Fernández, Juan</strong><br /><span style="font-size:11px;color:#888">j.fernandez@clinica.com</span></td>
-                        <td>29.877.011</td>
-                        <td><span class="badge badge-esp">Clínica Médica</span></td>
-                        <td>Mié / Vie</td>
-                        <td>13:00 – 19:00</td>
-                        <td><span class="badge badge-inactive">Inactivo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>MED-005</strong></td>
-                        <td><strong>Ruiz, Valentina</strong><br /><span style="font-size:11px;color:#888">v.ruiz@clinica.com</span></td>
-                        <td>33.654.229</td>
-                        <td><span class="badge badge-esp">Neurología</span></td>
-                        <td>Lun / Mié</td>
-                        <td>07:00 – 12:00</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                </ItemTemplate>
+                <FooterTemplate>
+                        </tbody>
+                    </table>
+                </FooterTemplate>
+            </asp:Repeater>
 
             <div class="paginador">
-                <button class="pag-btn">&#8249;</button>
-                <button class="pag-btn active">1</button>
-                <button class="pag-btn">2</button>
-                <button class="pag-btn">3</button>
-                <button class="pag-btn">&#8250;</button>
+                <asp:LinkButton ID="lbtnAnterior"  runat="server" CssClass="pag-btn" OnClick="lbtnAnterior_Click">&#8249;</asp:LinkButton>
+                <asp:DropDownList ID="ddlPagina" runat="server" CssClass="pag-select"
+                    AutoPostBack="true"
+                    OnSelectedIndexChanged="ddlPagina_SelectedIndexChanged" />
+                <asp:LinkButton ID="lbtnSiguiente" runat="server" CssClass="pag-btn" OnClick="lbtnSiguiente_Click">&#8250;</asp:LinkButton>
             </div>
         </div>
 

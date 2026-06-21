@@ -2,9 +2,6 @@
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
-        /* =====================
-           LAYOUT DE PERFIL MÉDICO
-        ===================== */
         .perfil-wrapper {
             width: 100%;
             max-width: 860px;
@@ -13,7 +10,6 @@
             gap: 24px;
         }
 
-        /* -- CABECERA DE PERFIL -- */
         .perfil-header {
             background-color: #ffffff;
             border: 1px solid #cccccc;
@@ -111,14 +107,12 @@
             color: #ffffff;
         }
 
-        /* -- GRID DE SECCIONES -- */
         .perfil-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        /* -- CARD GENÉRICA -- */
         .info-card {
             background-color: #ffffff;
             border: 1px solid #cccccc;
@@ -141,7 +135,6 @@
             border-bottom: 1px solid #eeeeee;
         }
 
-        /* -- FILAS DE DATOS -- */
         .dato-fila {
             display: flex;
             justify-content: space-between;
@@ -168,7 +161,6 @@
             text-align: right;
         }
 
-        /* -- TABLA DE HORARIOS -- */
         .tabla-horarios {
             width: 100%;
             border-collapse: collapse;
@@ -209,7 +201,6 @@
             text-align: center;
         }
 
-        /* -- TURNOS RECIENTES -- */
         .turno-item {
             display: flex;
             align-items: center;
@@ -318,7 +309,7 @@
                 <h2>Datos Personales</h2>
                 <div class="dato-fila">
                     <span class="dato-label">Nombre completo</span>
-                    <span class="dato-valor">Carlos Alejandro Méndez</span>
+                    <span class="dato-valor"></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Fecha de nacimiento</span>

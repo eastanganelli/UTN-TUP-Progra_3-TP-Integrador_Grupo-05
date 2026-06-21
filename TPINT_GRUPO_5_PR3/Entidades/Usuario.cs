@@ -8,13 +8,13 @@ namespace Entidades {
         private string username;
         private string password;
         private string tipo;
-        private int id_medico;
+        private int? id_medico;
         private bool activo;
         public Usuario() {
             this.id_usuario = 0;
-            this.username = "";
-            this.password = "";
-            this.tipo = "";
+            this.username = string.Empty;
+            this.password = string.Empty;
+            this.tipo = string.Empty;
             this.id_medico = 0;
             this.activo = false;
         }
@@ -22,11 +22,11 @@ namespace Entidades {
             this.id_usuario = id_usuario;
             this.username = username;
             this.password = password;
-            this.tipo = "";
+            this.tipo = string.Empty;
             this.id_medico = 0;
             this.activo = false;
         }
-        public Usuario(int id_usuario, string username, string password, string tipo, int id_medico, bool activo) {
+        public Usuario(int id_usuario, string username, string password, string tipo, int? id_medico, bool activo) {
             this.id_usuario = id_usuario;
             this.username = username;
             this.password = password;
@@ -38,7 +38,7 @@ namespace Entidades {
         public string NombreUsuario { get => username; set => username = value; }
         public string Contrasenya { get => password; set => password = value; }
         public string Rol { get => tipo; set => tipo = value; }
-        public int IDMedico { get => id_medico; set => id_medico = value; }
+        public int IDMedico { get => (int)id_medico; set => id_medico = value; }
         public bool Estado { get => activo; set => activo = value; }
     }
 }
