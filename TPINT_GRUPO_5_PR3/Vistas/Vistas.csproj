@@ -225,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Administración\Medicos\Especialidades\" />
+    <Folder Include="Administración\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entidades\Entidades.csproj">

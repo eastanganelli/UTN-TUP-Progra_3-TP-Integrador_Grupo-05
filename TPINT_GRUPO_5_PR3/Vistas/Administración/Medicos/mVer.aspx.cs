@@ -5,12 +5,16 @@ using System.Diagnostics;
 
 namespace Vistas.Administración.Medicos {
     public partial class VerMedico : System.Web.UI.Page {
+        private const int TURNOS_FILA = 10;
+
         private MedicosNegocio conexionMedicos = new MedicosNegocio();
         private UsuariosNegocio conexionUsuarios = new UsuariosNegocio();
         private PersonasNegocio conexionPersonas = new PersonasNegocio();
         private EspecialidadesNegocio conexionEspecialidades = new EspecialidadesNegocio();
         private LocalidadesNegocio conexionLocalidades = new LocalidadesNegocio();
         private ProvinciasNegocio conexionProvincias = new ProvinciasNegocio();
+        private HorariosMedicosNegocio conexionHorariosMedicos = new HorariosMedicosNegocio();
+        private TurnosNegocio conexionTurnos = new TurnosNegocio();
 
         public Medico medico { get; set; }
         public Usuario usuario { get; set; }
@@ -27,6 +31,10 @@ namespace Vistas.Administración.Medicos {
                 this.especialidad = conexionEspecialidades.ObtenerEspecialidad(this.medico.IDEspecialidad);
                 this.localidad = conexionLocalidades.ObtenerLocalidad(this.persona.IDLocalidad);
                 this.provincia = conexionProvincias.ObtenerProvincia(this.localidad.IDProvincia);
+                rptHorarios.DataSource = conexionHorariosMedicos.ObtenerHorariosDeMedico(Convert.ToInt32(id_medico));
+                rptHorarios.DataBind();
+                rptTurnos.DataSource = conexionTurnos.ObtenerUltimosTurnosDeMedico(Convert.ToInt32(id_medico), TURNOS_FILA);
+                rptTurnos.DataBind();
             }
         }
     }

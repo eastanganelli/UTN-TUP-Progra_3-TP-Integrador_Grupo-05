@@ -345,10 +345,6 @@
                     <span class="dato-label">Dirección</span>
                     <span class="dato-valor"><%= persona.Direccion %></span>
                 </div>
-                <%--<div class="dato-fila">
-                    <span class="dato-label">Consultorio</span>
-                    <span class="dato-valor">Piso 3 – Box 7</span>
-                </div>--%>
             </div>
 
             <!-- Horarios de atención -->
@@ -358,111 +354,50 @@
                     <thead>
                         <tr>
                             <th>Día</th>
-                            <th>Turno</th>
                             <th>Horario</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><span class="dia-tag">Lunes</span></td>
-                            <td>Mañana</td>
-                            <td>08:00 – 12:00</td>
-                        </tr>
-                        <tr>
-                            <td><span class="dia-tag">Martes</span></td>
-                            <td>Tarde</td>
-                            <td>14:00 – 18:00</td>
-                        </tr>
-                        <tr>
-                            <td><span class="dia-tag">Miércoles</span></td>
-                            <td>Mañana</td>
-                            <td>08:00 – 13:00</td>
-                        </tr>
-                        <tr>
-                            <td><span class="dia-tag">Viernes</span></td>
-                            <td>Mañana</td>
-                            <td>09:00 – 12:00</td>
-                        </tr>
+                        <asp:Repeater ID="rptHorarios" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><span class="dia-tag"><%# Eval("NombreDia") %></span></td>
+                                    <td><%# Eval("HoraInicio") %> – <%# Eval("HoraFin") %></td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </tbody>
                 </table>
+                <asp:Label ID="lblSinHorarios" runat="server" Text="No hay horarios cargados." Visible="false" />
             </div>
 
             <!-- Turnos recientes -->
-            <%--<div class="info-card full-width">
+            <div class="info-card full-width">
                 <h2>Últimos Turnos Asignados</h2>
 
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>16</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">Laura Giménez</div>
-                        <div class="motivo">Control post-operatorio</div>
-                    </div>
-                    <span class="turno-hora">09:00 hs</span>
-                    <span class="badge-turno confirmado">Confirmado</span>
-                </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>16</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">Roberto Álvarez</div>
-                        <div class="motivo">Primera consulta</div>
-                    </div>
-                    <span class="turno-hora">10:30 hs</span>
-                    <span class="badge-turno pendiente">Pendiente</span>
-                </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>14</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">María Fernández</div>
-                        <div class="motivo">Seguimiento hipertensión</div>
-                    </div>
-                    <span class="turno-hora">08:00 hs</span>
-                    <span class="badge-turno confirmado">Confirmado</span>
-                </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>12</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">Jorge Pereira</div>
-                        <div class="motivo">Ecocardiograma</div>
-                    </div>
-                    <span class="turno-hora">11:00 hs</span>
-                    <span class="badge-turno cancelado">Cancelado</span>
-                </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>10</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="paciente-nombre">Ana Ramírez</div>
-                        <div class="motivo">Consulta dolor de pecho</div>
-                    </div>
-                    <span class="turno-hora">09:30 hs</span>
-                    <span class="badge-turno confirmado">Confirmado</span>
-                </div>
-
-            </div>--%>
+                <asp:Repeater ID="rptTurnos" runat="server">
+                    <ItemTemplate>
+                        <div class="turno-item">
+                            <div class="turno-fecha">
+                                <strong><%# Convert.ToDateTime(Eval("Fecha")).Day %></strong>
+                                <%# Convert.ToDateTime(Eval("Fecha")).ToString("MMM yyyy", new System.Globalization.CultureInfo("es-AR")) %>
+                            </div>
+                            <div class="turno-detalle">
+                                <div class="paciente-nombre"><%# Eval("Paciente") %></div>
+                                <div class="motivo"><%# Eval("Observacion") %></div>
+                            </div>
+                            <span class="turno-hora"><%# Eval("Hora") %> hs</span>
+                            <span class='<%# "badge-turno " + Eval("Estado").ToString().ToLower() %>'>
+                                <%# Eval("Estado") %>
+                            </span>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+                <asp:Label ID="lblSinTurnos" runat="server" Text="No hay turnos asignados." Visible="false" />
+            </div>
             <!-- /turnos recientes -->
-
         </div>
         <!-- /perfil-grid -->
-
     </div>
     <!-- /perfil-wrapper -->
-
 </asp:Content>
