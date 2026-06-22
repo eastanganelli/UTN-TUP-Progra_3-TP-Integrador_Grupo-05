@@ -57,43 +57,45 @@ namespace Vistas.Administracion.Turnos
             try
             {
                 DataTable dtOriginal = _negocioTurnos.ListarTurnos();
+                DataTable dtFiltrado = dtOriginal.Clone();
 
                 if (dtOriginal != null && dtOriginal.Rows.Count > 0)
                 {
-                    DataView dv = new DataView(dtOriginal);
-
-                    string filtroCompleto = "";
-
-                    if (!string.IsNullOrWhiteSpace(txtBuscar.Text))
+                    foreach (DataRow fila in dtOriginal.Rows)
                     {
-                        string busqueda = txtBuscar.Text.Trim().Replace("'", "''");
-                        filtroCompleto += $"(id_paciente LIKE '%{busqueda}%' OR id_medico LIKE '%{busqueda}%')";
+                        if (!string.IsNullOrWhiteSpace(txtBuscar.Text))
+                        {
+                            string busqueda = txtBuscar.Text.Trim().ToLower();
+                            string paciente = fila["id_paciente"].ToString().ToLower();
+                            string medico = fila["id_medico"].ToString().ToLower();
+
+                            if (!paciente.Contains(busqueda) && !medico.Contains(busqueda))
+                                continue; 
+                        }
+
+                        if (ddlEspecialidad.SelectedIndex > 0)
+                        {
+                            string espSeleccionada = ddlEspecialidad.SelectedItem.Text.Trim().ToLower();
+                            string espFila = fila["especialidad"].ToString().ToLower();
+
+                            if (espFila != espSeleccionada)
+                                continue;
+                        }
+
+                        if (ddlEstado.SelectedIndex > 0)
+                        {
+                            string estSeleccionado = ddlEstado.SelectedItem.Text.Trim().ToLower();
+                            string estFila = fila["estado"].ToString().ToLower();
+
+                            if (estFila != estSeleccionado)
+                                continue;
+                        }
+
+                        dtFiltrado.ImportRow(fila);
                     }
 
-                    if (ddlEspecialidad.SelectedIndex > 0)
-                    {
-                        string espSeleccionada = ddlEspecialidad.SelectedItem.Text.Trim();
-
-                        if (filtroCompleto != "") filtroCompleto += " AND ";
-
-                        filtroCompleto += $"especialidad = '{espSeleccionada}'";
-                    }
-
-                    if (!string.IsNullOrEmpty(ddlEstado.SelectedValue))
-                    {
-                        string estadoSeleccionado = ddlEstado.SelectedItem.Text.Trim();
-
-                        if (filtroCompleto != "") filtroCompleto += " AND ";
-
-                        filtroCompleto += $"estado = '{estadoSeleccionado}'";
-                    }
-
-                    if (filtroCompleto != "")
-                    {
-                        dv.RowFilter = filtroCompleto;
-                    }
-
-                    DataTable dtFiltrado = dv.ToTable();
+                    dgvTurnos.DataSource = dtFiltrado;
+                    dgvTurnos.DataBind();
 
                     lblContador.Text = dtFiltrado.Rows.Count.ToString();
 
@@ -106,9 +108,6 @@ namespace Vistas.Administracion.Turnos
                         dgvTurnos.PageIndex = totalPaginas - 1;
                     }
                     lblPaginaActual.Text = (dgvTurnos.PageIndex + 1).ToString();
-
-                    dgvTurnos.DataSource = dtFiltrado;
-                    dgvTurnos.DataBind();
                 }
                 else
                 {

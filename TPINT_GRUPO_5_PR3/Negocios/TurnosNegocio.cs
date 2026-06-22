@@ -17,5 +17,7 @@ namespace Negocio {
         {
             return _datosTurnos.ObtenerUltimosTurnos(id_medico, top_limite);
         }
+
+
     }
 }
