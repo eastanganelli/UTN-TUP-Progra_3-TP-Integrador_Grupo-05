@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Vistas.Administracion.Pacientes
 {
-    public partial class pInicio: System.Web.UI.Page
+    public partial class Pacientes: System.Web.UI.Page
     {
         PacientesNegocio pacientesNegocio = new PacientesNegocio();
         protected void Page_Load(object sender, EventArgs e)

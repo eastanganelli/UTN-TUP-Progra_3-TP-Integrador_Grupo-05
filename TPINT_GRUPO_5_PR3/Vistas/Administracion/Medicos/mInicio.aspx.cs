@@ -62,9 +62,8 @@ namespace Vistas.Administracion.Medicos
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtBuscar.Text = "";
-            //ddlEspecialidad.SelectedIndex = 0;
-            ddlEstado.SelectedIndex       = 0;
+            txtBuscar.Text = string.Empty;
+            ddlEstado.SelectedIndex = 0;
             PaginaActual = 1;
             CargarMedicos();
         }
@@ -87,16 +86,13 @@ namespace Vistas.Administracion.Medicos
             }
         }
 
-        protected void ddlPagina_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        protected void ddlPagina_SelectedIndexChanged(object sender, EventArgs e) {
             PaginaActual = int.Parse(ddlPagina.SelectedValue);
             CargarMedicos();
         }
 
-        protected void rptMedicos_ItemCommand(object source, RepeaterCommandEventArgs e)
-        {
-            if (e.CommandName == "Baja")
-            {
+        protected void rptMedicos_ItemCommand(object source, RepeaterCommandEventArgs e) {
+            if (e.CommandName == "Baja") {
                 // TODO: implementar lógica de baja de médico
                 CargarMedicos();
             }

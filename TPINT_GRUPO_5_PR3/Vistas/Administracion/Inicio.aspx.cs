@@ -5,8 +5,8 @@ using System.Diagnostics;
 namespace Vistas.Administracion {
     public partial class Inicio : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            UsuariosNegocio negocioUsuarios = new UsuariosNegocio();
-            Debug.WriteLine($"Cantidad de usuarios: {negocioUsuarios.ObtenerCantidadDeUsuarios()}");
+            //UsuariosNegocio negocioUsuarios = new UsuariosNegocio();
+            //Debug.WriteLine($"Cantidad de usuarios: {negocioUsuarios.ObtenerCantidadDeUsuarios()}");
         }
     }
 }

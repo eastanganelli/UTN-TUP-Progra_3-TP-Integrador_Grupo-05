@@ -29,7 +29,7 @@ namespace Datos {
             Conexion.Close();
             return FilasCambiadas;
         }
-        public DataTable ObtenerTabla(string nombreTabla, string consulta) {
+        public DataTable ObtenerTabla(string consulta, string nombreTabla) {
             SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
             conexion.Open();
             SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);

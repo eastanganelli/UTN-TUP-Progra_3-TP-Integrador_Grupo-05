@@ -36,22 +36,23 @@ namespace Datos
                 parametros.Add(new SqlParameter("@estado", estado));
             }
             consulta += "INNER JOIN Persona ON Paciente.Id_Persona = Persona.Id_Persona " +
-                "INNER JOIN nombre AS Localidad, id_prvoncia FROM Localidad ON Persona.Id_Localidad = Localidad.Id_Localidad" +
-                "INNER JOIN nombre AS Provincia ON Localidad.Id_Provincia = Provincia.Id_Provincia";
+                    "INNER JOIN nombre AS Localidad, id_prvoncia FROM Localidad ON Persona.Id_Localidad = Localidad.Id_Localidad" +
+                    "INNER JOIN nombre AS Provincia ON Localidad.Id_Provincia = Provincia.Id_Provincia";
             DataTable tabla = accesoDatos.ObtenerTablaParametros(consulta, "Paciente", parametros.ToArray());
             return tabla;
         }
 
         public DataTable getTablaPacientes()
         {
-            DataTable tabla = accesoDatos.ObtenerTabla("Paciente", "SELECT Paciente.*, Persona.*, " +
-                                                        "Localidad.Nombre AS Localidad, " +
-                                                        "Provincia.Nombre AS Provincia, " +
-                                                        "Localidad.Id_Provincia AS Id_Provincia " +
-                                                        "FROM Paciente " +
-                                                        "INNER JOIN Persona ON Paciente.Id_Persona = Persona.Id_Persona " +
-                                                        "INNER JOIN Localidad ON Persona.Id_Localidad = Localidad.Id_Localidad " +
-                                                        "INNER JOIN Provincia ON Localidad.Id_Provincia = Provincia.Id_Provincia");
+            string consulta = "SELECT Paciente.*, Persona.*, " +
+                            "Localidad.Nombre AS Localidad, " +
+                            "Provincia.Nombre AS Provincia, " +
+                            "Localidad.Id_Provincia AS Id_Provincia " +
+                            "FROM Paciente " +
+                            "INNER JOIN Persona ON Paciente.Id_Persona = Persona.Id_Persona " +
+                            "INNER JOIN Localidad ON Persona.Id_Localidad = Localidad.Id_Localidad " +
+                            "INNER JOIN Provincia ON Localidad.Id_Provincia = Provincia.Id_Provincia";
+            DataTable tabla = accesoDatos.ObtenerTabla(consulta, "Paciente");
             return tabla;
         }
     }
