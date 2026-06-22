@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Editar Medico" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="mEditar.aspx.cs" Inherits="Vistas.Administracion.Medicos.EditarMedico" %>
+﻿<%@ Page Title="Medico - Editar" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="mEditar.aspx.cs" Inherits="Vistas.Administracion.Medicos.EditarMedico" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -51,15 +51,16 @@
                 <h1>Editar Médico</h1>
                 <p>Modificá los datos. El DNI y el legajo no se pueden editar.</p>
             </div>
-            <a href="/Administracion/Medicos/mInicio.aspx" class="btn-volver">← Volver al listado</a>
+            <a href="/Administracion/Medicos/mInicio.aspx" class="btn-volver"
+               onclick="return confirm('¿Descartás los cambios y volvés al listado?');">← Volver al listado</a>
         </div>
 
         <asp:Label ID="lblMensaje" runat="server" Visible="false" />
 
         <div class="banner-editando">
-            <div class="avatar-sm">
+            <%--<div class="avatar-sm">
                 <asp:Label ID="lblIniciales" runat="server" Text="CM" />
-            </div>
+            </div>--%>
             <div>
                 <strong>
                     <asp:Label ID="lblDocGen" runat="server" Text=""/>
@@ -249,9 +250,11 @@
 
         <div class="form-acciones">
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
-                CssClass="btn-cancelar" CausesValidation="false"/>
+                CssClass="btn-cancelar" CausesValidation="false"
+                OnClientClick="return confirm('¿Descartás los cambios y volvés al listado?');"
+                OnClick="btnCancelar_Click" />
             <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
-                CssClass="btn-guardar"/>
+                CssClass="btn-guardar" OnClick="btnGuardar_Click" />
         </div>
     </div>
 </asp:Content>

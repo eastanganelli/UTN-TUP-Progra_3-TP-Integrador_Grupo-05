@@ -26,5 +26,30 @@ namespace Negocio {
         public DataTable ObtenerMedicosPaginados(int NroPagina, int CantPagina) {
             return datosMedicos.ObtenerMedicosPaginado(NroPagina, CantPagina);
         }
+        public int AgregarMedico(Entidades.Persona persona, Entidades.Medico medico, out string mensaje) {
+            try {
+                return datosMedicos.AgregarMedico(persona, medico, out mensaje);
+            }
+            catch (Exception ex) {
+                mensaje = "Error al agregar el médico: " + ex.Message;
+                return -1;
+            }
+        }
+        public string ActualizarMedico(Entidades.Persona persona, Entidades.Medico medico) {
+            try {
+                return datosMedicos.ActualizarMedico(persona, medico);
+            }
+            catch (Exception ex) {
+                throw new Exception("Error al actualizar el médico: " + ex.Message);
+            }
+        }
+        public string DarDeBajaMedico(int id_medico) {
+            try {
+                return datosMedicos.DarDeBajaMedico(id_medico);
+            }
+            catch (Exception ex) {
+                throw new Exception("Error al dar de baja el médico: " + ex.Message);
+            }
+        }
     }
 }

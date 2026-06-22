@@ -78,10 +78,10 @@ namespace Vistas.Administracion.Medicos
             lblLegajoBanner.Text = medico.Legajo;
             lblIdMedico.Text = medico.IDMedico.ToString();
 
-            string iniciales = "";
-            if (persona.Nombre.Length > 0) iniciales += persona.Nombre[0];
-            if (persona.Apellido.Length > 0) iniciales += persona.Apellido[0];
-            lblIniciales.Text = iniciales.ToUpper();
+            //string iniciales = "";
+            //if (persona.Nombre.Length > 0) iniciales += persona.Nombre[0];
+            //if (persona.Apellido.Length > 0) iniciales += persona.Apellido[0];
+            //lblIniciales.Text = iniciales.ToUpper();
         }
         private void CargarFormulario()  {
             txtDni.Text = persona.DNI;
@@ -101,6 +101,63 @@ namespace Vistas.Administracion.Medicos
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e) {
             int idProvincia = int.Parse(ddlProvincia.SelectedValue);
             CargarLocalidadesDeProvincia(idProvincia);
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e) {
+            if (string.IsNullOrWhiteSpace(txtNombreForm.Text)    ||
+                string.IsNullOrWhiteSpace(txtApellidoForm.Text)  ||
+                string.IsNullOrWhiteSpace(ddlSexo.SelectedValue) ||
+                string.IsNullOrWhiteSpace(txtFechaNac.Text)      ||
+                string.IsNullOrWhiteSpace(txtNacionalidad.Text)  ||
+                string.IsNullOrWhiteSpace(txtDireccion.Text)     ||
+                string.IsNullOrWhiteSpace(ddlLocalidad.SelectedValue) ||
+                string.IsNullOrWhiteSpace(txtTelefono.Text)      ||
+                string.IsNullOrWhiteSpace(txtEmail.Text)         ||
+                string.IsNullOrWhiteSpace(ddlEspecialidad.SelectedValue)) {
+                MostrarMensaje("Completá todos los campos obligatorios.", esError: true);
+                return;
+            }
+
+            var personaActualizada = new Persona {
+                Nombre          = txtNombreForm.Text.Trim(),
+                Apellido        = txtApellidoForm.Text.Trim(),
+                Sexo            = ddlSexo.SelectedValue[0],
+                FechaNacimiento = txtFechaNac.Text,
+                Nacionalidad    = txtNacionalidad.Text.Trim(),
+                Direccion       = txtDireccion.Text.Trim(),
+                IDLocalidad     = int.Parse(ddlLocalidad.SelectedValue),
+                Email           = txtEmail.Text.Trim(),
+                Telefono        = txtTelefono.Text.Trim()
+            };
+
+            var medicoActualizado = new Medico {
+                IDMedico       = int.Parse(lblIdMedico.Text),
+                Legajo         = txtLegajo.Text.Trim(),
+                IDEspecialidad = int.Parse(ddlEspecialidad.SelectedValue)
+            };
+
+            try {
+                string mensaje = conexionMedicos.ActualizarMedico(personaActualizada, medicoActualizado);
+                medico  = conexionMedicos.ObtenerMedico(medicoActualizado.IDMedico);
+                persona = conexionPersonas.ObtenerPersona(medico.IDPersona);
+                Cargar_Banner();
+                MostrarMensaje(string.IsNullOrWhiteSpace(mensaje) ? "Cambios guardados correctamente." : mensaje, esError: false);
+            }
+            catch (Exception ex) {
+                MostrarMensaje(ex.Message, esError: true);
+            }
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e) {
+            Response.Redirect("mInicio.aspx");
+        }
+
+        private void MostrarMensaje(string texto, bool esError) {
+            lblMensaje.Text = texto;
+            lblMensaje.Attributes["style"] = esError
+                ? "display:block; padding:12px 16px; border-radius:6px; margin-bottom:16px; background:#fdecea; color:#c0392b; border:1px solid #e6b3b3;"
+                : "display:block; padding:12px 16px; border-radius:6px; margin-bottom:16px; background:#eafaf1; color:#1e8449; border:1px solid #a9dfbf;";
+            lblMensaje.Visible = true;
         }
     }
 }

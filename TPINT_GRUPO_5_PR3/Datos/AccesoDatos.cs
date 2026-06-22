@@ -48,24 +48,18 @@ namespace Datos {
             if (string.IsNullOrWhiteSpace(tableName)) throw new ArgumentException("El nombre de la tabla no puede estar vacío.", nameof(tableName));
 
             SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
-            conexion.Open();
-            using (SqlCommand cmd = new SqlCommand(sqlQuery, conexion))
-            {
-                if (parametros != null)
-                    cmd.Parameters.AddRange(parametros);
-
-                using (SqlDataAdapter adaptador = new SqlDataAdapter(cmd))
-                {
-                    DataTable tabla = new DataTable(tableName);
-                    adaptador.Fill(tabla);
-                    return tabla;
-                }
-            }
+            SqlCommand cmd = new SqlCommand(sqlQuery, conexion);
+            if (parametros != null)
+                cmd.Parameters.AddRange(parametros);
+            SqlDataAdapter adaptador = new SqlDataAdapter(cmd);
+            DataTable tabla = new DataTable(tableName);
+            adaptador.Fill(tabla);
+            conexion.Close();
+            return tabla;
         }
 
         public int EjecutarConsulta(string consulta) {
             SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
-            conexion.Open();
             SqlCommand comando = new SqlCommand(consulta, conexion);
             int resultado = comando.ExecuteNonQuery();
             conexion.Close();

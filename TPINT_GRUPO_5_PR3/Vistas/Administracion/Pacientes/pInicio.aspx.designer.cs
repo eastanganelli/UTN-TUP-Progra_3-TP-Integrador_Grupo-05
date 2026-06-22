@@ -11,7 +11,7 @@ namespace Vistas.Administracion.Pacientes
 {
 
 
-    public partial class pInicio
+    public partial class Pacientes
     {
 
         /// <summary>

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
 using System.Data;
-using Entidades;
 
 namespace Vistas.Administracion.Pacientes
 {
-    public partial class pInicio : System.Web.UI.Page
+    public partial class Pacientes : System.Web.UI.Page
     {
         PacientesNegocio pacientesNegocio = new PacientesNegocio();
 

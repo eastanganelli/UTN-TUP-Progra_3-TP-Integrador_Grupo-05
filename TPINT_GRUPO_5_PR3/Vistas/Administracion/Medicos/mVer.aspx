@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Ver Medico" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="mVer.aspx.cs" Inherits="Vistas.Administracion.Medicos.VerMedico" %>
+﻿<%@ Page Title="Medico - Detalles" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="mVer.aspx.cs" Inherits="Vistas.Administracion.Medicos.VerMedico" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>

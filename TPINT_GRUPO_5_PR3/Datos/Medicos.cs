@@ -46,5 +46,66 @@ namespace Datos {
             string consulta = $"SELECT * FROM vw_Medicos ORDER BY id_medico ASC OFFSET ({nro_pagina} - 1) * {cantidad_pagina} ROWS FETCH NEXT {cantidad_pagina} ROWS ONLY;";
             return conexion.ObtenerTabla(consulta, "Medico");
         }
+        public int AgregarMedico(Entidades.Persona persona, Medico medico, out string mensaje) {
+            using (SqlConnection conn = conexion.ObtenerConexion()) {
+                using (SqlCommand cmd = new SqlCommand("sp_Medico_Alta", conn)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@legajo",             medico.Legajo);
+                    cmd.Parameters.AddWithValue("@dni",                persona.DNI);
+                    cmd.Parameters.AddWithValue("@nombre",             persona.Nombre);
+                    cmd.Parameters.AddWithValue("@apellido",           persona.Apellido);
+                    cmd.Parameters.AddWithValue("@sexo",               persona.Sexo.ToString());
+                    cmd.Parameters.AddWithValue("@nacionalidad",       persona.Nacionalidad);
+                    cmd.Parameters.AddWithValue("@fecha_nacimiento",   DateTime.Parse(persona.FechaNacimiento));
+                    cmd.Parameters.AddWithValue("@direccion",          persona.Direccion);
+                    cmd.Parameters.AddWithValue("@id_localidad",       persona.IDLocalidad);
+                    cmd.Parameters.AddWithValue("@email",              persona.Email);
+                    cmd.Parameters.AddWithValue("@telefono",           persona.Telefono);
+                    cmd.Parameters.AddWithValue("@id_especialidad",    medico.IDEspecialidad);
+                    SqlParameter pId  = new SqlParameter("@nuevo_id", SqlDbType.Int)            { Direction = ParameterDirection.Output };
+                    SqlParameter pMsg = new SqlParameter("@mensaje",  SqlDbType.NVarChar, 200)  { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(pId);
+                    cmd.Parameters.Add(pMsg);
+                    cmd.ExecuteNonQuery();
+                    mensaje = pMsg.Value?.ToString() ?? string.Empty;
+                    return Convert.ToInt32(pId.Value);
+                }
+            }
+        }
+        public string ActualizarMedico(Entidades.Persona persona, Medico medico) {
+            using (SqlConnection conn = conexion.ObtenerConexion()) {
+                using (SqlCommand cmd = new SqlCommand("sp_Medico_Modificar", conn)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_medico",          medico.IDMedico);
+                    cmd.Parameters.AddWithValue("@nombre",             persona.Nombre);
+                    cmd.Parameters.AddWithValue("@apellido",           persona.Apellido);
+                    cmd.Parameters.AddWithValue("@sexo",               persona.Sexo.ToString());
+                    cmd.Parameters.AddWithValue("@nacionalidad",       persona.Nacionalidad);
+                    cmd.Parameters.AddWithValue("@fecha_nacimiento",   DateTime.Parse(persona.FechaNacimiento));
+                    cmd.Parameters.AddWithValue("@direccion",          persona.Direccion);
+                    cmd.Parameters.AddWithValue("@id_localidad",       persona.IDLocalidad);
+                    cmd.Parameters.AddWithValue("@email",              persona.Email);
+                    cmd.Parameters.AddWithValue("@telefono",           persona.Telefono);
+                    cmd.Parameters.AddWithValue("@legajo",             medico.Legajo);
+                    cmd.Parameters.AddWithValue("@id_especialidad",    medico.IDEspecialidad);
+                    SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(pMsg);
+                    cmd.ExecuteNonQuery();
+                    return pMsg.Value?.ToString() ?? string.Empty;
+                }
+            }
+        }
+        public string DarDeBajaMedico(int id_medico) {
+            using (SqlConnection conn = conexion.ObtenerConexion()) {
+                using (SqlCommand cmd = new SqlCommand("sp_Medico_Baja", conn)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_medico", id_medico);
+                    SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(pMsg);
+                    cmd.ExecuteNonQuery();
+                    return pMsg.Value?.ToString() ?? string.Empty;
+                }
+            }
+        }
     }
 }
