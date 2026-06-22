@@ -79,6 +79,7 @@
     <Content Include="Administracion\Turnos\tEditar.aspx" />
     <Content Include="Administracion\Turnos\tNuevo.aspx" />
     <Content Include="Administracion\Turnos\tVer.aspx" />
+    <Content Include="CSS\principal.css" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Administracion\Medicos\mNuevo.aspx" />
@@ -212,6 +213,11 @@
       <DependentUpon>Plantilla.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Administracion\Plantilla.Master" />
@@ -236,6 +242,12 @@
       <Project>{a00cc9c0-3913-4cf7-8339-0d1e60b6d33a}</Project>
       <Name>Negocios</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

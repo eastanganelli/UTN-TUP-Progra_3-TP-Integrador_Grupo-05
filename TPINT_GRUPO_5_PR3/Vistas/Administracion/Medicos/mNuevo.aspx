@@ -58,7 +58,6 @@
             outline: none; border-color: #185FA5; background-color: #ffffff;
         }
 
-        /* GridView de horarios */
         .grilla-horarios { width: 100%; border-collapse: collapse; font-size: 13px; }
         .grilla-horarios th {
             text-align: left; font-size: 11px; font-weight: bold;

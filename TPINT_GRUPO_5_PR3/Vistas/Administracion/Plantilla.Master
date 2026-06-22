@@ -8,31 +8,24 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
     
     <style>
-        /* =====================
-           ESTILOS BASE (Tus estilos integrados)
-        ===================== */
         body {
             font-family: Arial, sans-serif;
-            background-color: #fafafa; /* Fondo claro para el área de contenido */
+            background-color: #fafafa;
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            display: flex; /* Permite dividir sidebar y contenido */
+            display: flex;
         }
 
-        /* =====================
-           LAYOUT PRINCIPAL (Nuevo)
-        ===================== */
         #form1 {
             display: flex;
             width: 100%;
             min-height: 100vh;
         }
 
-        /* -- SIDEBAR -- */
         .sidebar {
             width: 250px;
-            background-color: #1a2332; /* Usa tu color oscuro */
+            background-color: #1a2332;
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -49,7 +42,7 @@
             width: 60px;
             height: 60px;
             margin-bottom: 10px;
-            border-radius: 8px; /* Opcional */
+            border-radius: 8px;
         }
 
         .sidebar-logo h2 {
@@ -63,7 +56,6 @@
             padding: 16px 0;
         }
 
-        /* Estilización del componente <asp:Menu> */
         .menu-asp ul { padding: 0; margin: 0; width: 100%; }
         .menu-asp li { width: 100%; list-style: none; }
         .menu-asp a {
@@ -78,10 +70,9 @@
         .menu-asp a:hover, .menu-asp a.selected {
             background-color: #0C447C !important;
             color: #ffffff !important;
-            border-left-color: #185FA5; /* Usa tu azul principal */
+            border-left-color: #185FA5;
         }
 
-        /* -- ACCESO DE USUARIO (Abajo) -- */
         .sidebar-user {
             padding: 16px;
             background-color: #111722;
@@ -95,25 +86,18 @@
             height: 40px;
             border-radius: 50%;
         }
-
         .user-info { display: flex; flex-direction: column; }
         .user-info .nombre { font-size: 13px; font-weight: bold; color: #ffffff; margin-bottom: 4px; }
         .user-info a { font-size: 11px; color: #185FA5; text-decoration: none; }
         .user-info a:hover { text-decoration: underline; }
-
-        /* -- ZONA DE CONTENIDO -- */
         .contenido-principal {
             flex-grow: 1;
             padding: 32px;
             overflow-y: auto;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Para que las cards no se queden en el centro vertical */
+            align-items: flex-start;
         }
-
-        /* =====================
-           TUS COMPONENTES (Intactos)
-        ===================== */
         .contenedor { width: 100%; max-width: 380px; padding: 16px; }
         .encabezado { text-align: center; margin-bottom: 24px; }
         .encabezado h1 { font-size: 20px; color: #1a2332; margin: 0 0 4px 0; }
@@ -142,7 +126,7 @@
         <!-- MENU -->
         <div class="sidebar">
             <div class="sidebar-logo">
-                <h2>Clínica</h2>
+                <h2><%= nombreClinica %></h2>
             </div>
 
             <div class="sidebar-menu">

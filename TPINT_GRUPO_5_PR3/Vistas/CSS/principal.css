@@ -1,0 +1,495 @@
+/* ============================================================
+   LAYOUT BASE
+   estructura raíz de la app: body + sidebar + contenido
+   ============================================================ */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+}
+
+#form1 {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* ============================================================
+   SIDEBAR
+   barra lateral izquierda con logo, menú y datos del usuario
+   ============================================================ */
+
+.sidebar {
+    width: 250px;
+    background-color: #1a2332;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-logo {
+    padding: 24px 16px;
+    text-align: center;
+    background-color: #111722;
+}
+
+    .sidebar-logo img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+    .sidebar-logo h2 {
+        margin: 0;
+        font-size: 18px;
+        color: #ffffff;
+    }
+
+.sidebar-menu {
+    flex-grow: 1;
+    padding: 16px 0;
+}
+
+.menu-asp ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.menu-asp li {
+    width: 100%;
+    list-style: none;
+}
+
+.menu-asp a {
+    display: block;
+    padding: 14px 24px;
+    color: #cccccc !important;
+    text-decoration: none;
+    font-size: 14px;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+    .menu-asp a:hover,
+    .menu-asp a.selected {
+        background-color: #0C447C !important;
+        color: #ffffff !important;
+        border-left-color: #185FA5;
+    }
+
+/* sección inferior del sidebar con avatar y nombre */
+.sidebar-user {
+    padding: 16px;
+    background-color: #111722;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+    .sidebar-user img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+    .user-info .nombre {
+        font-size: 13px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 4px;
+    }
+
+    .user-info a {
+        font-size: 11px;
+        color: #185FA5;
+        text-decoration: none;
+    }
+
+        .user-info a:hover {
+            text-decoration: underline;
+        }
+
+
+/* ============================================================
+   CONTENIDO PRINCIPAL
+   zona derecha donde van todas las páginas
+   ============================================================ */
+
+.contenido-principal {
+    flex-grow: 1;
+    padding: 32px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* ancho máximo para páginas simples como login o formularios chicos */
+.contenedor {
+    width: 100%;
+    max-width: 380px;
+    padding: 16px;
+}
+
+.encabezado {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+    .encabezado h1 {
+        font-size: 20px;
+        color: #1a2332;
+        margin: 0 0 4px 0;
+    }
+
+    .encabezado p {
+        font-size: 13px;
+        color: #666666;
+        margin: 0;
+    }
+
+
+/* ============================================================
+   CARDS Y FORMULARIOS
+   tarjeta blanca genérica y campos de input
+   ============================================================ */
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.campo {
+    margin-bottom: 16px;
+}
+
+    .campo label {
+        display: block;
+        font-size: 13px;
+        color: #333333;
+        margin-bottom: 5px;
+    }
+
+    .campo input[type="text"],
+    .campo input[type="password"] {
+        width: 100%;
+        height: 38px;
+        padding: 0 10px;
+        font-size: 14px;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: #1a2332;
+        background-color: #fafafa;
+    }
+
+    .campo input:focus {
+        outline: none;
+        border-color: #185FA5;
+        background-color: #ffffff;
+    }
+
+/* mensajito de error debajo de un campo */
+.validador {
+    font-size: 12px;
+    color: #cc0000;
+    margin-top: 4px;
+    display: block;
+}
+
+
+/* ============================================================
+   BOTONES GLOBALES
+   botones usados en login y formularios genéricos
+   ============================================================ */
+
+.boton-ingresar {
+    width: 100%;
+    height: 40px;
+    background-color: #185FA5;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+    .boton-ingresar:hover {
+        background-color: #0C447C;
+    }
+
+.pie {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: #999999;
+}
+
+
+/* ============================================================
+   PÁGINAS DE LISTADO
+   todo lo que se usa en páginas tipo "tabla con filtros"
+   ============================================================ */
+
+/* las páginas de listado necesitan todo el ancho disponible */
+.contenedor.listado {
+    max-width: 100%;
+    padding: 0;
+}
+
+/* encabezado con título a la izquierda y botón a la derecha */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a2332;
+}
+
+.page-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-top: 2px;
+}
+
+
+/* ============================================================
+   BOTONES DE LISTADO
+   primario (nuevo), buscar, limpiar e iconos de acción en fila
+   ============================================================ */
+
+/* botón azul grande tipo "Nuevo médico" */
+.btn-primary {
+    background: #185FA5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 9px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+    .btn-primary:hover { background: #0C447C; }
+
+/* botones del buscador */
+.btn-search {
+    background: #185FA5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0 16px;
+    height: 34px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-clear {
+    background: #fff;
+    color: #666;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 14px;
+    height: 34px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* iconitos de acción en cada fila (ver, editar, baja) */
+.btn-icon {
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555;
+    font-size: 13px;
+}
+
+    .btn-icon:hover { border-color: #185FA5; color: #185FA5; background: #f0f6ff; }
+    .btn-icon.danger:hover { border-color: #cc0000; color: #cc0000; background: #fff5f5; }
+
+
+/* ============================================================
+   FILTROS
+   barra de búsqueda con campos y selects
+   ============================================================ */
+
+.filters-bar {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+    /* etiqueta chiquita arriba del input */
+    .filter-group label {
+        font-size: 11px;
+        color: #666;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .filter-group input,
+    .filter-group select {
+        height: 34px;
+        padding: 0 10px;
+        font-size: 13px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #fafafa;
+        color: #1a2332;
+        min-width: 140px;
+    }
+
+
+/* ============================================================
+   TABLA DE DATOS
+   card contenedor + encabezado con meta info + tabla
+   ============================================================ */
+
+.table-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* fila superior que dice "X resultados / Página Y de Z" */
+.table-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    color: #666;
+}
+
+.gv-medicos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+    .gv-medicos th {
+        background: #1a2332;
+        color: #fff;
+        padding: 11px 14px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .gv-medicos td {
+        padding: 11px 14px;
+        color: #333;
+        border-bottom: 1px solid #f0f0f0;
+        vertical-align: middle;
+    }
+
+    .gv-medicos tr:last-child td { border-bottom: none; }
+    .gv-medicos tr:hover td { background: #f5f8fc; }
+
+
+/* ============================================================
+   BADGES / ETIQUETAS
+   pastillitas de estado (activo/inactivo) y especialidad
+   ============================================================ */
+
+.badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.badge-active   { background: #eaf3de; color: #3B6D11; }
+.badge-inactive { background: #fcebeb; color: #A32D2D; }
+.badge-esp      { background: #e6f1fb; color: #0C447C; }
+
+
+/* ============================================================
+   PAGINADOR
+   fila de navegación abajo de la tabla
+   ============================================================ */
+
+.paginador {
+    padding: 12px 18px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+/* botones anterior / siguiente */
+.pag-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    background: #fff;
+}
+
+    .pag-btn.active              { background: #185FA5; border-color: #185FA5; color: #fff; }
+    .pag-btn:hover:not(.active)  { border-color: #185FA5; color: #185FA5; }
+
+/* combobox selector de página */
+.pag-select {
+    height: 30px;
+    padding: 0 6px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #555;
+    background: #fff;
+    cursor: pointer;
+    min-width: 60px;
+}
