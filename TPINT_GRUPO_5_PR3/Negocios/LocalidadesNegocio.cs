@@ -24,5 +24,9 @@ namespace Negocio
         {
             return datosLocalidades.ObtenerLocalidades();
         }
+        public DataTable ObtenerLocalidadesPorProvincia(int id_Provincia)
+        {
+            return datosLocalidades.ObtenerLocalidadesPorProvincia(id_Provincia);
+        }
     }
 }
