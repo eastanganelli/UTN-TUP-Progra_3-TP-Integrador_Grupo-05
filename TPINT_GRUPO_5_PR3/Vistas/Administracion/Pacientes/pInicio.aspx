@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Pacientes" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pInicio.aspx.cs" Inherits="Vistas.Administración.Pacientes.pInicio" %>
+﻿<%@ Page Title="Pacientes" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="pInicio.aspx.cs" Inherits="Vistas.Administracion.Pacientes.pInicio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>
@@ -81,7 +81,7 @@
                 </asp:DropDownList>
             </div>
             <asp:Button ID="BtnBuscar" runat="server" Text="Buscar" CssClass="btn-search" OnClick="BtnBuscar_Click" />
-            <button class="btn-clear">Limpiar</button>
+            <asp:Button ID="BtnLimpiar" runat="server" Text="Limpiar" CssClass="btn-clear" OnClick="BtnLimpiar_Click" />
         </div>
 
         <div class="table-card">
@@ -151,7 +151,7 @@
                             <asp:TextBox ID="txt_editFecha" runat="server" Text='<%# Bind("fecha_nacimiento") %>'></asp:TextBox>
                         </EditItemTemplate>
                         <ItemTemplate>
-                            <asp:Label ID="lblFecha" runat="server" Text='<%# Eval("Fecha_Nacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
+                            <asp:Label ID="lblFecha" runat="server" Text='<%# Bind("Fecha_Nacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Dirección">
@@ -196,7 +196,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Activo">
                         <EditItemTemplate>
-                            <asp:CheckBox ID="chkbox_editActivo" runat="server" Checked='<%# Bind("Activo") %>' />
+                            <asp:CheckBox ID="chkbox_editActivo" runat="server" Checked='<%# Eval("Activo") %>' />
                         </EditItemTemplate>
                         <ItemTemplate>
                             <span class='<%# Convert.ToBoolean(Eval("Activo")) ? "badge badge-active" : "badge badge-inactive" %>'>
@@ -211,7 +211,7 @@
                                     ID="btnVer"
                                     runat="server"
                                     CommandName="Ver"
-                                    CommandArgument='<%# Eval("Id_Paciente") %>'
+                                    CommandArgument='<%# Bind("Id_Paciente") %>'
                                     CssClass="btn-icon"
                                     ToolTip="Ver">
                                     👁
@@ -230,7 +230,7 @@
                                 ID="btnEliminar"
                                 runat="server"
                                 CommandName="Eliminar"
-                                CommandArgument='<%# Eval("Id_Paciente") %>'
+                                CommandArgument='<%# Bind("Id_Paciente") %>'
                                 CssClass="btn-icon danger"
                                 ToolTip="Dar de baja"
                                 OnClientClick="return confirm('¿Desea dar de baja este paciente?');">
