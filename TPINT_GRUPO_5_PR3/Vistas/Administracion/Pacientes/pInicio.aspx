@@ -26,6 +26,15 @@
     .gv-tabla tr:last-child td { border-bottom: none; }
     .gv-tabla tr:hover td { background: #f5f8fc; }
 
+    .gv-tabla tr.inactivo td {
+    background: #f2f2f2 !important;
+    color: #999 !important;
+    }
+
+    .gv-tabla tr.inactivo:hover td {
+    background: #ececec !important;
+    }
+
     .badge { display: inline-block; padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 500; }
     .badge-active { background: #eaf3de; color: #3B6D11; }
     .badge-inactive { background: #fcebeb; color: #A32D2D; }
@@ -87,8 +96,7 @@
         <div class="table-card">
             <div class="table-meta">
                 <span>Se encontraron 
-                <asp:Label ID="lblCantidad" runat="server"></asp:Label> &nbsp;
-                pacientes</span>
+                <asp:Label ID="lblCantidad" runat="server"></asp:Label> pacientes</span>
                 <span>Página 1 de 1</span>
             </div>
 
@@ -96,7 +104,7 @@
 
             
             <div class ="grid-container">
-            <asp:GridView ID="gvPacientes" runat="server" CssClass="gv-tabla" GridLines="None" BorderWidth="0" AllowPaging="True" AutoGenerateColumns="False" OnPageIndexChanging="gvPacientes_PageIndexChanging" PageSize="5">
+            <asp:GridView ID="gvPacientes" runat="server" CssClass="gv-tabla" GridLines="None" BorderWidth="0" AllowPaging="True" AutoGenerateColumns="False" OnPageIndexChanging="gvPacientes_PageIndexChanging" OnRowDataBound="gvPacientes_RowDataBound" PageSize="5" OnRowCommand="gvPacientes_RowCommand">
                 <Columns>
                     <asp:TemplateField HeaderText="ID Paciente">
                         <EditItemTemplate>
@@ -221,20 +229,21 @@
                                    ID="btnEditar"
                                    runat="server"
                                    CommandName="Edit"
+                                  CommandArgument='<%# Bind("Id_Paciente") %>'
                                    CssClass="btn-icon"
                                    ToolTip="Editar">
                                     ✏️
                             </asp:LinkButton>
 
                             <asp:LinkButton
-                                ID="btnEliminar"
-                                runat="server"
-                                CommandName="Eliminar"
-                                CommandArgument='<%# Bind("Id_Paciente") %>'
-                                CssClass="btn-icon danger"
-                                ToolTip="Dar de baja"
-                                OnClientClick="return confirm('¿Desea dar de baja este paciente?');">
-                                🗑
+                                    ID="btnToggle"
+                                    runat="server"
+                                    CommandName="ToggleEstado"
+                                    CommandArgument='<%# Bind("Id_Paciente") %>'
+                                    CssClass="btn-icon"
+                                    ToolTip='<%# Convert.ToBoolean(Eval("Activo")) ? "Dar de baja" : "Reactivar" %>'>
+    
+                                    <%# Convert.ToBoolean(Eval("Activo")) ? "🗑" : "✔️" %>
                             </asp:LinkButton>
 
                         </ItemTemplate>

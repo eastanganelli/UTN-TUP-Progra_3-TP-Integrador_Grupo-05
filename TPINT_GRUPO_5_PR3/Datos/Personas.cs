@@ -9,7 +9,7 @@ namespace Datos {
         private AccesoDatos conexion = new AccesoDatos();
         public Persona ObtenerPersona(int id_Persona) {
             string consulta = $"SELECT * FROM Persona WHERE id_persona = {id_Persona}";
-            var resultado = conexion.ObtenerTabla(consulta, "Persona");
+            var resultado = conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Persona");
             if (resultado.Rows.Count == 0)
             {
                 throw new Exception($"La Persona con ID [{id_Persona}] fue no encontrada!");
@@ -36,7 +36,7 @@ namespace Datos {
         }
         public DataTable ObtenerPersonas() {
             string consulta = "SELECT * FROM Persona";
-            return conexion.ObtenerTabla(consulta, "Persona");
+            return conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Persona");
         }
     }
 }
