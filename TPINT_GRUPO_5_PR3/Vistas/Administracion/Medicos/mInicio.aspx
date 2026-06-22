@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>
-    /* Sobrescribe el max-width:380px del contenedor base */
     .contenedor {
         max-width: 100% !important;
         width: 100%;
