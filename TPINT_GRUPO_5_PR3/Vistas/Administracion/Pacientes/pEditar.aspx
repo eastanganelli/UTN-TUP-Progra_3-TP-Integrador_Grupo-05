@@ -149,14 +149,14 @@
 
                 <div class="campo">
                     <label>Nombre <span class="req">*</span></label>
-                    <asp:TextBox ID="txtNombre" runat="server" MaxLength="100" Text="Laura" />
+                    <asp:TextBox ID="txtNombre" runat="server" MaxLength="100"  />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNombre"
                         CssClass="validador" ErrorMessage="El nombre es requerido." Display="Dynamic" />
                 </div>
 
                 <div class="campo">
                     <label>Apellido <span class="req">*</span></label>
-                    <asp:TextBox ID="txtApellido" runat="server" MaxLength="100" Text="Ramírez" />
+                    <asp:TextBox ID="txtApellido" runat="server" MaxLength="100"/>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtApellido"
                         CssClass="validador" ErrorMessage="El apellido es requerido." Display="Dynamic" />
                 </div>
@@ -176,7 +176,7 @@
 
                 <div class="campo">
                     <label>Nacionalidad <span class="req">*</span></label>
-                    <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100" Text="Argentina" />
+                    <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100"  />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNacionalidad"
                         CssClass="validador" ErrorMessage="La nacionalidad es requerida." Display="Dynamic" />
                 </div>
@@ -193,7 +193,7 @@
 
                 <div class="campo full-width">
                     <label>Dirección <span class="req">*</span></label>
-                    <asp:TextBox ID="txtDireccion" runat="server" MaxLength="200" Text="Av. Corrientes 4820, CABA" />
+                    <asp:TextBox ID="txtDireccion" runat="server" MaxLength="200"  />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtDireccion"
                         CssClass="validador" ErrorMessage="La dirección es requerida." Display="Dynamic" />
                 </div>
@@ -202,8 +202,8 @@
                     <label>Provincia <span class="req">*</span></label>
                     <asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="true"
                         OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged">
-                        <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                        <asp:ListItem Value="1" Selected="True">Buenos Aires</asp:ListItem>
+                        <asp:ListItem Value="0">-- Seleccioná --</asp:ListItem>
+                        
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlProvincia"
                         InitialValue="" CssClass="validador"
@@ -240,7 +240,7 @@
             </div>
         </div>
 
-        <!-- ACCIONES -->
+       
         <div class="form-acciones">
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
                 CssClass="btn-cancelar" CausesValidation="false"

@@ -12,7 +12,7 @@ namespace Datos
         public Localidad ObtenerLocalidad(int id_Localidad)
         {
             string consulta = $"SELECT * FROM Localidad WHERE id_localidad = {id_Localidad}";
-            DataTable resultado = conexion.ObtenerTabla(consulta, "Localidad");
+            DataTable resultado = conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Localidad");
             if (resultado.Rows.Count == 0)
             {
                 throw new Exception($"La Localidad con ID [{id_Localidad}] fue no encontrada!");
@@ -32,12 +32,12 @@ namespace Datos
         public DataTable ObtenerLocalidades()
         {
             string consulta = "SELECT * FROM Localidad";
-            return conexion.ObtenerTabla(consulta, "Localidad");
+            return conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Localidad");
         }
         public DataTable ObtenerLocalidadesPorProvincia(int id_Provincia)
         {
             string consulta = $"SELECT * FROM Localidad WHERE id_provincia = {id_Provincia} ORDER BY nombre";
-            return conexion.ObtenerTabla(consulta, "Localidad");
+            return conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Localidad");
         }
     }
 }

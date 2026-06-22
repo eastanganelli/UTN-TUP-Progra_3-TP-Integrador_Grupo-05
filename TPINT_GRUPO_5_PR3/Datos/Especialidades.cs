@@ -11,8 +11,8 @@ namespace Datos
         private AccesoDatos conexion = new AccesoDatos();
         public Especialidad ObtenerEspecialidad(int id_Especialidad)
         {
-            string consulta = $"SELECT * FROM Especialidad WHERE id_especialidad = {id_Especialidad}";
-            DataTable resultado = conexion.ObtenerTabla(consulta, "Especialidad");
+            string sqlQuery = $"SELECT * FROM Especialidad WHERE id_especialidad = {id_Especialidad}";
+            DataTable resultado = conexion.ObtenerTabla(sqlQuery, "Especialidad");
             if (resultado.Rows.Count == 0)
             {
                 throw new Exception($"La Especialidad con ID [{id_Especialidad}] fue no encontrada!");
@@ -30,8 +30,8 @@ namespace Datos
         }
         public DataTable ObtenerEspecialidades()
         {
-            string consulta = "SELECT * FROM Especialidad";
-            return conexion.ObtenerTabla(consulta, "Especialidad");
+            string sqlQuery = "SELECT * FROM Especialidad";
+            return conexion.ObtenerTabla(sqlQuery, "Especialidad");
         }
     }
 }

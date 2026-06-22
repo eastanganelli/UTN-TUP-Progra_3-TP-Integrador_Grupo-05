@@ -6,25 +6,29 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
 using System.Data;
+using Entidades;
 
 namespace Vistas.Administracion.Pacientes
 {
-    public partial class Pacientes: System.Web.UI.Page
+    public partial class pInicio : System.Web.UI.Page
     {
         PacientesNegocio pacientesNegocio = new PacientesNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                CargarPacientes();
+                int cantidadPacientes = CargarPacientes();
+                lblCantidad.Text = cantidadPacientes.ToString();
             }
         }
 
-        private void CargarPacientes()
+        private int CargarPacientes()
         {
             DataTable tabla = pacientesNegocio.getTabla();
             gvPacientes.DataSource = tabla;
             gvPacientes.DataBind();
+            return tabla.Rows.Count;
         }
 
         protected void BtnBuscar_Click(object sender, EventArgs e)
@@ -35,7 +39,7 @@ namespace Vistas.Administracion.Pacientes
 
             string sexo = ddlSexo.SelectedValue;
 
-           
+
             DataTable tabla = pacientesNegocio.BuscarPacientes(texto, sexo, estado);
 
             gvPacientes.DataSource = tabla;
@@ -55,6 +59,58 @@ namespace Vistas.Administracion.Pacientes
             ddlSexo.SelectedIndex = 0;
 
             CargarPacientes();
+        }
+
+        protected void gvPacientes_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                bool activo = Convert.ToBoolean(DataBinder.Eval(e.Row.DataItem, "Activo"));
+
+                if (!activo)
+                {
+                    e.Row.CssClass = "inactivo";
+                }
+            }
+        }
+
+        protected void gvPacientes_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int idPaciente;
+            switch (e.CommandName)
+            {
+                case "Ver":
+                {
+                        idPaciente = Convert.ToInt32(e.CommandArgument);
+
+                        Response.Redirect("pVer.aspx?idPaciente=" + idPaciente);
+
+                        break;
+                }
+
+                case "Edit":
+                {
+                        idPaciente = Convert.ToInt32(e.CommandArgument);
+                        Response.Redirect("pEditar.aspx?idPaciente=" + idPaciente);
+                        break;
+                }
+
+                case "ToggleEstado": //ELIMINAR/BAJA LOGICA
+                {
+
+                        idPaciente = Convert.ToInt32(e.CommandArgument);
+
+
+                        bool activoActual = pacientesNegocio.ObtenerEstadoPaciente(idPaciente);
+
+
+                        pacientesNegocio.CambiarEstado(idPaciente, !activoActual);
+
+                        CargarPacientes();
+                        break;
+                }
+            }
+
         }
     }
 }

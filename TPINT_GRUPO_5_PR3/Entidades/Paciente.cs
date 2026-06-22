@@ -4,16 +4,20 @@ using System.Text;
 
 namespace Entidades
 {
-    public class Paciente
+    public class Paciente 
     {
-        Paciente() { }
+        public Paciente() { }
+
+        public Paciente(int idPaciente, bool estado) 
+        {
+            IdPaciente = idPaciente;
+            Estado = estado;
+        }
+
 
         public int IdPaciente { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Sexo { get; set; }
-        public DateTime FechaNacimiento { get; set; }
-        public string Estado { get; set; }
+      
+        public bool Estado { get; set; }
 
 
     }

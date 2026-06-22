@@ -9,7 +9,7 @@ namespace Datos {
         public Usuario ObtenerUsuario(int id_usuario)
         {
             string consulta = $"SELECT * FROM Usuario WHERE id_usuario = {id_usuario}";
-            DataTable resultado = conexion.ObtenerTabla(consulta, "Usuario");
+            DataTable resultado = conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Usuario");
 
             if (resultado.Rows.Count == 0)
             {

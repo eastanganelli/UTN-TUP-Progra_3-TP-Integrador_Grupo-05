@@ -9,7 +9,7 @@ namespace Datos {
         public Medico ObtenerMedico(int id_Medico)
         {
             string consulta = $"SELECT * FROM Medico WHERE id_medico = {id_Medico}";
-            DataTable resultado = conexion.ObtenerTabla(consulta, "Medico");
+            DataTable resultado = conexion.ObtenerTabla(consulta, "Medico"); // Review: ObtenerTabla signature is compatible (no-op)
 
             if (resultado.Rows.Count == 0) {
                 throw new Exception($"El Medico con ID [{id_Medico}] fue no encontrado!");

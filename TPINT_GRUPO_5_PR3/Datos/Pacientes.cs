@@ -10,6 +10,38 @@ namespace Datos
     public class Pacientes
     {
         AccesoDatos accesoDatos = new AccesoDatos();
+
+        public Paciente ObtenerPacientePorId(int idPaciente)
+        {
+            string consulta = "SELECT * FROM Paciente WHERE Id_Paciente = @idPaciente";
+            SqlParameter parametro = new SqlParameter("@idPaciente", idPaciente);
+            DataTable tabla = accesoDatos.ObtenerTablaParametros(consulta, "Paciente", new SqlParameter[] { parametro });
+            if (tabla.Rows.Count > 0)
+            {
+                DataRow row = tabla.Rows[0];
+                Paciente paciente = new Paciente
+                {
+                    IdPaciente = Convert.ToInt32(row["Id_Paciente"]),
+                    Estado = Convert.ToBoolean(row["Activo"])
+                };
+                return paciente;
+            }
+            else
+            {
+                return null; 
+            }
+        }
+
+        public int CambiarEstadoPaciente(int idPaciente, bool nuevoEstado)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Parameters.AddWithValue("@IdPaciente", idPaciente);
+            cmd.Parameters.AddWithValue("@Activo", nuevoEstado);
+
+            return accesoDatos.EjecutarProcedimientoAlmacenado(cmd,"sp_ActualizarEstadoPaciente");
+        }
+
         public DataTable BuscarPacientes(string texto, string sexo, string estado)
         {
             string consulta =
@@ -50,15 +82,17 @@ namespace Datos
 
         public DataTable getTablaPacientes()
         {
-            string consulta = "SELECT Paciente.*, Persona.*, " +
-                            "Localidad.Nombre AS Localidad, " +
-                            "Provincia.Nombre AS Provincia, " +
-                            "Localidad.Id_Provincia AS Id_Provincia " +
-                            "FROM Paciente " +
-                            "INNER JOIN Persona ON Paciente.Id_Persona = Persona.Id_Persona " +
-                            "INNER JOIN Localidad ON Persona.Id_Localidad = Localidad.Id_Localidad " +
-                            "INNER JOIN Provincia ON Localidad.Id_Provincia = Provincia.Id_Provincia";
-            DataTable tabla = accesoDatos.ObtenerTabla(consulta, "Paciente");
+            DataTable tabla = accesoDatos.ObtenerTabla(
+                "SELECT Paciente.*, Persona.*, " +
+                "Localidad.Nombre AS Localidad, " +
+                "Provincia.Nombre AS Provincia, " +
+                "Localidad.Id_Provincia AS Id_Provincia " +
+                "FROM Paciente " +
+                "INNER JOIN Persona ON Paciente.Id_Persona = Persona.Id_Persona " +
+                "INNER JOIN Localidad ON Persona.Id_Localidad = Localidad.Id_Localidad " +
+                "INNER JOIN Provincia ON Localidad.Id_Provincia = Provincia.Id_Provincia",
+                "Paciente"
+            );
             return tabla;
         }
     }
