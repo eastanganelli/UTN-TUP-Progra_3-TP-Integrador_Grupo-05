@@ -29,7 +29,7 @@ namespace Datos {
             Conexion.Close();
             return FilasCambiadas;
         }
-        public DataTable ObtenerTabla(string consulta, string nombreTabla) {
+        public DataTable ObtenerTabla(string nombreTabla, string consulta) {
             SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
             conexion.Open();
             SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
@@ -38,6 +38,26 @@ namespace Datos {
             conexion.Close();
             return setDatos.Tables[nombreTabla];
         }
+        public DataTable ObtenerTablaParametros(string consulta, string nombreTabla, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexion = new SqlConnection(rutaBaseDeDatos))
+            {
+                conexion.Open();
+
+                SqlCommand cmd = new SqlCommand(consulta, conexion);
+
+                if (parametros != null)
+                    cmd.Parameters.AddRange(parametros);
+
+                SqlDataAdapter adaptador = new SqlDataAdapter(cmd);
+
+                DataTable tabla = new DataTable();
+                adaptador.Fill(tabla);
+
+                return tabla;
+            }
+        }
+
         public int EjecutarConsulta(string consulta) {
             SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
             conexion.Open();

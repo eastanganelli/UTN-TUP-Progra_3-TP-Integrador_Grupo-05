@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Pacientes" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pInicio.aspx.cs" Inherits="Vistas.Administración.Pacientes.Pacientes" %>
+﻿<%@ Page Title="Pacientes" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pInicio.aspx.cs" Inherits="Vistas.Administración.Pacientes.pInicio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>
@@ -21,14 +21,18 @@
     .table-meta { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid #eee; font-size: 13px; color: #666; }
 
     .gv-tabla { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .gv-tabla th { background: #1a2332; color: #fff; padding: 11px 14px; text-align: left; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
-    .gv-tabla td { padding: 11px 14px; color: #333; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    .gv-tabla th { background: #1a2332; color: #fff; padding: 11px 14px; text-align: center; vertical-align:middle; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px;white-space: nowrap; }
+    .gv-tabla td { padding: 11px 14px; color: #333; border-bottom: 1px solid #f0f0f0; vertical-align: middle; white-space:nowrap}
     .gv-tabla tr:last-child td { border-bottom: none; }
     .gv-tabla tr:hover td { background: #f5f8fc; }
 
     .badge { display: inline-block; padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 500; }
     .badge-active { background: #eaf3de; color: #3B6D11; }
     .badge-inactive { background: #fcebeb; color: #A32D2D; }
+
+    .grid-container {
+    width: 100%;
+    overflow-x: auto;}
 
     .btn-icon { border: 1px solid #ccc; background: #fff; border-radius: 5px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #555; font-size: 13px; }
     .btn-icon:hover { border-color: #185FA5; color: #185FA5; background: #f0f6ff; }
@@ -38,6 +42,8 @@
     .pag-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; color: #555; cursor: pointer; background: #fff; }
     .pag-btn.active { background: #185FA5; border-color: #185FA5; color: #fff; }
     .pag-btn:hover:not(.active) { border-color: #185FA5; color: #185FA5; }
+
+
 </style>
 </asp:Content>
 
@@ -74,153 +80,172 @@
                     <asp:ListItem Text="Inactivo" Value="0" />
                 </asp:DropDownList>
             </div>
-            <button class="btn-search">Buscar</button>
+            <asp:Button ID="BtnBuscar" runat="server" Text="Buscar" CssClass="btn-search" OnClick="BtnBuscar_Click" />
             <button class="btn-clear">Limpiar</button>
         </div>
 
         <div class="table-card">
             <div class="table-meta">
-                <span>Se encontraron <strong>8</strong> pacientes</span>
+                <span>Se encontraron 
+                <asp:Label ID="lblCantidad" runat="server"></asp:Label> &nbsp;
+                pacientes</span>
                 <span>Página 1 de 1</span>
             </div>
 
-            <table class="gv-tabla">
-                <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Paciente</th>
-                        <th>Sexo</th>
-                        <th>Fecha de nacimiento</th>
-                        <th>Teléfono</th>
-                        <th>Localidad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>32.456.789</td>
-                        <td><strong>Gómez, Carlos</strong><br /><span style="font-size:11px;color:#888">c.gomez@gmail.com</span></td>
-                        <td>Masculino</td>
-                        <td>14/03/1990</td>
-                        <td>11 4523-8891</td>
-                        <td>San Martín</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>28.114.003</td>
-                        <td><strong>Sánchez, Ana</strong><br /><span style="font-size:11px;color:#888">a.sanchez@gmail.com</span></td>
-                        <td>Femenino</td>
-                        <td>22/07/1985</td>
-                        <td>11 3377-4420</td>
-                        <td>Tigre</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>40.887.221</td>
-                        <td><strong>Díaz, Lucía</strong><br /><span style="font-size:11px;color:#888">l.diaz@gmail.com</span></td>
-                        <td>Femenino</td>
-                        <td>05/11/2001</td>
-                        <td>11 6612-9934</td>
-                        <td>Pacheco</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>25.003.441</td>
-                        <td><strong>Herrera, Miguel</strong><br /><span style="font-size:11px;color:#888">m.herrera@gmail.com</span></td>
-                        <td>Masculino</td>
-                        <td>30/01/1978</td>
-                        <td>11 4801-2256</td>
-                        <td>Don Torcuato</td>
-                        <td><span class="badge badge-inactive">Inactivo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>38.229.774</td>
-                        <td><strong>Romero, Florencia</strong><br /><span style="font-size:11px;color:#888">f.romero@gmail.com</span></td>
-                        <td>Femenino</td>
-                        <td>18/06/1999</td>
-                        <td>11 5544-1123</td>
-                        <td>Benavídez</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>30.667.009</td>
-                        <td><strong>Alvarez, Diego</strong><br /><span style="font-size:11px;color:#888">d.alvarez@gmail.com</span></td>
-                        <td>Masculino</td>
-                        <td>09/09/1993</td>
-                        <td>11 4209-8871</td>
-                        <td>Zárate</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>42.110.338</td>
-                        <td><strong>Vega, Camila</strong><br /><span style="font-size:11px;color:#888">c.vega@gmail.com</span></td>
-                        <td>Femenino</td>
-                        <td>27/02/2003</td>
-                        <td>11 7823-4490</td>
-                        <td>San Isidro</td>
-                        <td><span class="badge badge-active">Activo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>27.554.882</td>
-                        <td><strong>Morales, Pablo</strong><br /><span style="font-size:11px;color:#888">p.morales@gmail.com</span></td>
-                        <td>Masculino</td>
-                        <td>11/12/1980</td>
-                        <td>11 3901-6643</td>
-                        <td>Escobar</td>
-                        <td><span class="badge badge-inactive">Inactivo</span></td>
-                        <td>
-                            <button class="btn-icon" title="Ver">👁</button>
-                            <button class="btn-icon" title="Editar">✏️</button>
-                            <button class="btn-icon danger" title="Dar de baja">🗑</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            
 
-            <div class="paginador">
-                <button class="pag-btn">&#8249;</button>
-                <button class="pag-btn active">1</button>
-                <button class="pag-btn">2</button>
-                <button class="pag-btn">3</button>
-                <button class="pag-btn">&#8250;</button>
-            </div>
+            
+            <div class ="grid-container">
+            <asp:GridView ID="gvPacientes" runat="server" CssClass="gv-tabla" GridLines="None" BorderWidth="0" AllowPaging="True" AutoGenerateColumns="False" OnPageIndexChanging="gvPacientes_PageIndexChanging" PageSize="5">
+                <Columns>
+                    <asp:TemplateField HeaderText="ID Paciente">
+                        <EditItemTemplate>
+                            <asp:Label ID="lbledit_id" runat="server" Text='<%# Bind("id_paciente") %>'></asp:Label>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdPaciente" runat="server" Text='<%# Bind("id_paciente") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Apellido ">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editApellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblApellido" runat="server" Text='<%# Bind("Apellido") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nombre">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editNombre" runat="server" Text='<%# Bind("Nombre") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblNombre" runat="server" Text='<%# Bind("Nombre") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="DNI">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editDNI" runat="server" Text='<%# Bind("DNI") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblDNI" runat="server" Text='<%# Bind("DNI") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Sexo">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editSexo" runat="server" Text='<%# Bind("Sexo") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblSexo" runat="server" Text='<%# Bind("Sexo") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nacionalidad">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editNacionalidad" runat="server" Text='<%# Bind("nacionalidad") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblNacionalidad" runat="server" Text='<%# Bind("Nacionalidad") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Fecha de Nacimiento">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editFecha" runat="server" Text='<%# Bind("fecha_nacimiento") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblFecha" runat="server" Text='<%# Eval("Fecha_Nacimiento", "{0:dd/MM/yyyy}") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Dirección">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editDireccion" runat="server" Text='<%# Bind("direccion") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblDireccion" runat="server" Text='<%# Bind("direccion") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Localidad">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editLocalidad" runat="server" Text='<%# Bind("Localidad") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblLocalidad" runat="server" Text='<%# Bind("Localidad") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Provincia">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editProvincia" runat="server" Text='<%# Bind("Provincia") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblProvincia" runat="server" Text='<%# Bind("Provincia") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Correo electrónico">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editCorreo" runat="server" Text='<%# Bind("email") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblCorreo" runat="server" Text='<%# Bind("email") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Teléfono">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txt_editTelefono" runat="server" Text='<%# Bind("Telefono") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="lblTelefono" runat="server" Text='<%# Bind("telefono") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Activo">
+                        <EditItemTemplate>
+                            <asp:CheckBox ID="chkbox_editActivo" runat="server" Checked='<%# Bind("Activo") %>' />
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <span class='<%# Convert.ToBoolean(Eval("Activo")) ? "badge badge-active" : "badge badge-inactive" %>'>
+                                 <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
+                             </span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Acciones">
+                         <ItemTemplate>
+
+                            <asp:LinkButton
+                                    ID="btnVer"
+                                    runat="server"
+                                    CommandName="Ver"
+                                    CommandArgument='<%# Eval("Id_Paciente") %>'
+                                    CssClass="btn-icon"
+                                    ToolTip="Ver">
+                                    👁
+                            </asp:LinkButton>
+
+                            <asp:LinkButton
+                                   ID="btnEditar"
+                                   runat="server"
+                                   CommandName="Edit"
+                                   CssClass="btn-icon"
+                                   ToolTip="Editar">
+                                    ✏️
+                            </asp:LinkButton>
+
+                            <asp:LinkButton
+                                ID="btnEliminar"
+                                runat="server"
+                                CommandName="Eliminar"
+                                CommandArgument='<%# Eval("Id_Paciente") %>'
+                                CssClass="btn-icon danger"
+                                ToolTip="Dar de baja"
+                                OnClientClick="return confirm('¿Desea dar de baja este paciente?');">
+                                🗑
+                            </asp:LinkButton>
+
+                        </ItemTemplate>
+                  </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
         </div>
+
+            
+
+            
 
     </div>
 
