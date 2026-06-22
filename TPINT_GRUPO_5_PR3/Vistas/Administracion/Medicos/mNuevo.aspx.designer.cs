@@ -11,7 +11,7 @@ namespace Vistas.Administracion.Medicos
 {
 
 
-    public partial class Medicos
+    public partial class NuevoMedico
     {
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje1;
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
         /// txtNombre control.
@@ -30,7 +30,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre1;
+        protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
         /// txtApellido control.
@@ -39,7 +39,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtApellido1;
+        protected global::System.Web.UI.WebControls.TextBox txtApellido;
 
         /// <summary>
         /// txtDni control.
@@ -48,7 +48,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDni1;
+        protected global::System.Web.UI.WebControls.TextBox txtDni;
 
         /// <summary>
         /// txtLegajo control.
@@ -57,7 +57,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLegajo1;
+        protected global::System.Web.UI.WebControls.TextBox txtLegajo;
 
         /// <summary>
         /// ddlSexo control.
@@ -66,7 +66,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSexo1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSexo;
 
         /// <summary>
         /// txtFechaNac control.
@@ -75,7 +75,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaNac1;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaNac;
 
         /// <summary>
         /// txtNacionalidad control.
@@ -84,7 +84,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNacionalidad1;
+        protected global::System.Web.UI.WebControls.TextBox txtNacionalidad;
 
         /// <summary>
         /// txtDireccion control.
@@ -93,7 +93,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDireccion1;
+        protected global::System.Web.UI.WebControls.TextBox txtDireccion;
 
         /// <summary>
         /// ddlProvincia control.
@@ -102,7 +102,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProvincia1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProvincia;
 
         /// <summary>
         /// ddlLocalidad control.
@@ -111,7 +111,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLocalidad1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocalidad;
 
         /// <summary>
         /// txtTelefono control.
@@ -120,7 +120,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTelefono1;
+        protected global::System.Web.UI.WebControls.TextBox txtTelefono;
 
         /// <summary>
         /// txtEmail control.
@@ -129,7 +129,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmail1;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
         /// ddlEspecialidad control.
@@ -138,7 +138,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad;
 
         /// <summary>
         /// btnAgregarHorario control.
@@ -147,7 +147,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarHorario1;
+        protected global::System.Web.UI.WebControls.Button btnAgregarHorario;
 
         /// <summary>
         /// gvHorarios control.
@@ -156,7 +156,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvHorarios1;
+        protected global::System.Web.UI.WebControls.GridView gvHorarios;
 
         /// <summary>
         /// txtUsername control.
@@ -165,7 +165,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsername1;
+        protected global::System.Web.UI.WebControls.TextBox txtUsername;
 
         /// <summary>
         /// txtPassword control.
@@ -174,7 +174,7 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword1;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
         /// txtPasswordConfirm control.
@@ -183,7 +183,16 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPasswordConfirm1;
+        protected global::System.Web.UI.WebControls.TextBox txtPasswordConfirm;
+
+        /// <summary>
+        /// btnLimpiar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpiar;
 
         /// <summary>
         /// btnGuardar control.
@@ -192,6 +201,6 @@ namespace Vistas.Administracion.Medicos
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar1;
+        protected global::System.Web.UI.WebControls.Button btnGuardar;
     }
 }

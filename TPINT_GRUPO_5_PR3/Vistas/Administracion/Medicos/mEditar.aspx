@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Editar Medico" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="mEditar.aspx.cs" Inherits="Vistas.Administracion.Medicos.Medicos" %>
+﻿<%@ Page Title="Editar Medico" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="mEditar.aspx.cs" Inherits="Vistas.Administracion.Medicos.EditarMedico" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -150,13 +150,12 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="form-wrapper">
-
-        <%--<div class="page-header">
+        <div class="page-header">
             <div>
                 <h1>Editar Médico</h1>
                 <p>Modificá los datos. El DNI y el legajo no se pueden editar.</p>
             </div>
-            <a href="~/Administracion/Medicos/Medicos.aspx" class="btn-volver">← Volver al listado</a>
+            <a href="/Administracion/Medicos/mInicio.aspx" class="btn-volver">← Volver al listado</a>
         </div>
 
         <asp:Label ID="lblMensaje" runat="server" Visible="false" />
@@ -166,149 +165,117 @@
                 <asp:Label ID="lblIniciales" runat="server" Text="CM" />
             </div>
             <div>
-                <strong><asp:Label ID="lblNombreCompleto" runat="server" Text="Dr. Carlos Méndez" /></strong>
-                &nbsp;—&nbsp; Legajo: <asp:Label ID="lblLegajoBanner" runat="server" Text="MED-0012" />
+                <strong>
+                    <asp:Label ID="lblDocGen" runat="server" Text=""/>
+                    <asp:Label ID="lblNombre" runat="server" Text=""/>
+                    <asp:Label ID="lblApellido" runat="server" Text=""/>
+                </strong>
+                &nbsp;—&nbsp; Legajo: <asp:Label ID="lblLegajoBanner" runat="server" Text=""/>
                 <br />
-                <small>ID médico: <asp:Label ID="lblIdMedico" runat="server" Text="12" />
-                &nbsp;·&nbsp; <asp:Label ID="lblEspecialidadBanner" runat="server" Text="Cardiología" /></small>
+                <small>ID médico: <asp:Label ID="lblIdMedico" runat="server" Text="" />
+                &nbsp;·&nbsp; <asp:DropDownList ID="ddlEspecialidadBanner" runat="server"
+                    style="height:22px;padding:0 4px;font-size:12px;border:1px solid #c5d8f0;border-radius:4px;background:transparent;color:#1a2332;" Enabled="False" /></small>
             </div>
-        </div>--%>
+        </div>
 
         <!-- ========================
              DATOS PERSONALES
         ========================= -->
-        <%--<div class="form-card">
+        <div class="form-card">
             <h2>Datos Personales</h2>
             <div class="form-grid">
 
                 <div class="campo campo-readonly">
                     <label>DNI <small style="color:#888;font-weight:normal;">(no editable)</small></label>
-                    <asp:TextBox ID="txtDni" runat="server" ReadOnly="true" Text="22481903" />
+                    <asp:TextBox ID="txtDni" runat="server" ReadOnly="true" />
                 </div>
 
                 <div class="campo campo-readonly">
                     <label>Legajo <small style="color:#888;font-weight:normal;">(no editable)</small></label>
-                    <asp:TextBox ID="txtLegajo" runat="server" ReadOnly="true" Text="MED-0012" />
+                    <asp:TextBox ID="txtLegajo" runat="server" ReadOnly="true" />
                 </div>
 
                 <div class="campo">
                     <label>Nombre <span class="req">*</span></label>
-                    <asp:TextBox ID="txtNombre" runat="server" MaxLength="100" Text="Carlos" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNombre"
-                        CssClass="validador" ErrorMessage="El nombre es requerido." Display="Dynamic" />
+                    <asp:TextBox ID="txtNombreForm" runat="server" MaxLength="100" />
                 </div>
 
                 <div class="campo">
                     <label>Apellido <span class="req">*</span></label>
-                    <asp:TextBox ID="txtApellido" runat="server" MaxLength="100" Text="Méndez" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtApellido"
-                        CssClass="validador" ErrorMessage="El apellido es requerido." Display="Dynamic" />
+                    <asp:TextBox ID="txtApellidoForm" runat="server" MaxLength="100" />
                 </div>
 
                 <div class="campo">
                     <label>Sexo <span class="req">*</span></label>
                     <asp:DropDownList ID="ddlSexo" runat="server">
                         <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                        <asp:ListItem Value="M" Selected="True">Masculino</asp:ListItem>
+                        <asp:ListItem Value="M">Masculino</asp:ListItem>
                         <asp:ListItem Value="F">Femenino</asp:ListItem>
                         <asp:ListItem Value="X">No binario</asp:ListItem>
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlSexo"
-                        InitialValue="" CssClass="validador"
-                        ErrorMessage="El sexo es requerido." Display="Dynamic" />
                 </div>
 
                 <div class="campo">
                     <label>Fecha de Nacimiento <span class="req">*</span></label>
-                    <asp:TextBox ID="txtFechaNac" runat="server" TextMode="Date" Text="1978-03-14" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFechaNac"
-                        CssClass="validador" ErrorMessage="La fecha es requerida." Display="Dynamic" />
+                    <asp:TextBox ID="txtFechaNac" runat="server" TextMode="Date" />
                 </div>
 
                 <div class="campo full-width">
                     <label>Nacionalidad <span class="req">*</span></label>
-                    <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100" Text="Argentina" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNacionalidad"
-                        CssClass="validador" ErrorMessage="La nacionalidad es requerida." Display="Dynamic" />
+                    <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100" />
                 </div>
 
             </div>
-        </div>--%>
+        </div>
 
         <!-- ========================
              CONTACTO Y UBICACIÓN
         ========================= -->
-        <%--<div class="form-card">
+        <div class="form-card">
             <h2>Contacto y Ubicación</h2>
             <div class="form-grid">
 
                 <div class="campo full-width">
                     <label>Dirección <span class="req">*</span></label>
-                    <asp:TextBox ID="txtDireccion" runat="server" MaxLength="200" Text="Av. Santa Fe 2340, CABA" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtDireccion"
-                        CssClass="validador" ErrorMessage="La dirección es requerida." Display="Dynamic" />
+                    <asp:TextBox ID="txtDireccion" runat="server" MaxLength="200" />
                 </div>
 
                 <div class="campo">
                     <label>Provincia <span class="req">*</span></label>
                     <asp:DropDownList ID="ddlProvincia" runat="server" AutoPostBack="true"
-                        OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged">
-                        <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                        <asp:ListItem Value="1" Selected="True">Buenos Aires</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlProvincia"
-                        InitialValue="" CssClass="validador"
-                        ErrorMessage="La provincia es requerida." Display="Dynamic" />
+                        OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged" />
                 </div>
 
                 <div class="campo">
                     <label>Localidad <span class="req">*</span></label>
-                    <asp:DropDownList ID="ddlLocalidad" runat="server">
-                        <asp:ListItem Value="1" Selected="True">CABA</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlLocalidad"
-                        InitialValue="" CssClass="validador"
-                        ErrorMessage="La localidad es requerida." Display="Dynamic" />
+                    <asp:DropDownList ID="ddlLocalidad" runat="server" />
                 </div>
 
                 <div class="campo">
                     <label>Teléfono <span class="req">*</span></label>
-                    <asp:TextBox ID="txtTelefono" runat="server" MaxLength="20" Text="+54 11 4823-9901" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelefono"
-                        CssClass="validador" ErrorMessage="El teléfono es requerido." Display="Dynamic" />
+                    <asp:TextBox ID="txtTelefono" runat="server" MaxLength="20" />
                 </div>
 
                 <div class="campo">
                     <label>Correo Electrónico <span class="req">*</span></label>
-                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="200" Text="c.mendez@clinica.com.ar" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail"
-                        CssClass="validador" ErrorMessage="El correo es requerido." Display="Dynamic" />
-                    <asp:RegularExpressionValidator runat="server" ControlToValidate="txtEmail"
-                        CssClass="validador" ValidationExpression="^[^@\s]+@[^@\s]+\.[^@\s]+$"
-                        ErrorMessage="Formato de correo inválido." Display="Dynamic" />
+                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="200" />
                 </div>
 
             </div>
-        </div>--%>
+        </div>
 
         <!-- ========================
              DATOS PROFESIONALES
         ========================= -->
-        <%--<div class="form-card">
+        <div class="form-card">
             <h2>Datos Profesionales</h2>
             <div class="form-grid">
                 <div class="campo full-width">
                     <label>Especialidad <span class="req">*</span></label>
-                    <asp:DropDownList ID="ddlEspecialidad" runat="server">
-                        <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                        <asp:ListItem Value="1" Selected="True">Cardiología</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlEspecialidad"
-                        InitialValue="" CssClass="validador"
-                        ErrorMessage="La especialidad es requerida." Display="Dynamic" />
+                    <asp:DropDownList ID="ddlEspecialidad" runat="server" />
                 </div>
             </div>
-        </div>--%>
+        </div>
 
         <!-- ========================
              HORARIOS DE ATENCIÓN
@@ -384,12 +351,11 @@
             <p>Hypervinculo a sección usuario para editar</p>
         </div>
 
-        <%--<div class="form-acciones">
+        <div class="form-acciones">
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
-                CssClass="btn-cancelar" CausesValidation="false"
-                OnClick="btnCancelar_Click" />
+                CssClass="btn-cancelar" CausesValidation="false"/>
             <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
-                CssClass="btn-guardar" OnClick="btnGuardar_Click" />
-        </div>--%>
+                CssClass="btn-guardar"/>
+        </div>
     </div>
 </asp:Content>
