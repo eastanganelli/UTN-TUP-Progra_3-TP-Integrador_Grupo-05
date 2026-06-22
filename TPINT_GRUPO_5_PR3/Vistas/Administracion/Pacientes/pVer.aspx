@@ -2,28 +2,6 @@
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
-        /* =====================
-           LAYOUT DE PERFIL PACIENTE
-        ===================== */
-        .perfil-wrapper {
-            width: 100%;
-            max-width: 860px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        /* -- CABECERA DE PERFIL -- */
-        .perfil-header {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 8px;
-            padding: 28px 32px;
-            display: flex;
-            align-items: center;
-            gap: 28px;
-        }
-
         .perfil-avatar {
             width: 80px;
             height: 80px;
@@ -96,79 +74,6 @@
             display: inline-block;
         }
 
-        .btn-volver {
-            font-size: 12px;
-            color: #185FA5;
-            text-decoration: none;
-            border: 1px solid #185FA5;
-            padding: 5px 12px;
-            border-radius: 5px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-volver:hover {
-            background-color: #185FA5;
-            color: #ffffff;
-        }
-
-        /* -- GRID DE SECCIONES -- */
-        .perfil-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        /* -- CARD GENÉRICA -- */
-        .info-card {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 8px;
-            padding: 24px;
-        }
-
-        .info-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .info-card h2 {
-            font-size: 13px;
-            font-weight: bold;
-            color: #185FA5;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin: 0 0 18px 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-        /* -- FILAS DE DATOS -- */
-        .dato-fila {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 9px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 13px;
-        }
-
-        .dato-fila:last-child {
-            border-bottom: none;
-        }
-
-        .dato-label {
-            color: #888888;
-            font-size: 12px;
-            flex-shrink: 0;
-            margin-right: 12px;
-        }
-
-        .dato-valor {
-            color: #1a2332;
-            font-weight: 500;
-            text-align: right;
-        }
-
-        /* -- ALERTA MÉDICA -- */
         .alerta-medica {
             background-color: #fff7e6;
             border: 1px solid #f5c842;
@@ -188,7 +93,6 @@
             margin-top: 1px;
         }
 
-        /* -- TABLA DE HISTORIAL -- */
         .tabla-historial {
             width: 100%;
             border-collapse: collapse;
@@ -222,7 +126,6 @@
             color: #185FA5;
         }
 
-        /* -- TURNOS PRÓXIMOS -- */
         .turno-item {
             display: flex;
             align-items: center;
@@ -297,7 +200,6 @@
             color: #c0392b;
         }
 
-        /* -- TAGS DE ALERGIAS / CONDICIONES -- */
         .tags-wrapper {
             display: flex;
             flex-wrap: wrap;

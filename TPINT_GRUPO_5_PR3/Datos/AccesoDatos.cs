@@ -34,14 +34,12 @@ namespace Datos {
             if (string.IsNullOrWhiteSpace(sqlQuery)) throw new ArgumentException("La consulta SQL no puede estar vacía.", nameof(sqlQuery));
             if (string.IsNullOrWhiteSpace(tableName)) throw new ArgumentException("El nombre de la tabla no puede estar vacío.", nameof(tableName));
 
-            using (SqlConnection conexion = new SqlConnection(rutaBaseDeDatos)) {
-                conexion.Open();
-                SqlDataAdapter adaptador = new SqlDataAdapter(sqlQuery, conexion);
-                DataSet setDatos = new DataSet();
-                adaptador.Fill(setDatos, tableName);
-                conexion.Close();
-                return setDatos.Tables[tableName];
-            }
+            SqlConnection Conexion = ObtenerConexion();
+            SqlDataAdapter adaptador = new SqlDataAdapter(sqlQuery, Conexion);
+            DataSet setDatos = new DataSet();
+            adaptador.Fill(setDatos, tableName);
+            Conexion.Close();
+            return setDatos.Tables[tableName];
         }
       
         public DataTable ObtenerTablaParametros(string sqlQuery, string tableName, SqlParameter[] parametros)
@@ -49,21 +47,18 @@ namespace Datos {
             if (string.IsNullOrWhiteSpace(sqlQuery)) throw new ArgumentException("La consulta SQL no puede estar vacía.", nameof(sqlQuery));
             if (string.IsNullOrWhiteSpace(tableName)) throw new ArgumentException("El nombre de la tabla no puede estar vacío.", nameof(tableName));
 
-            using (SqlConnection conexion = new SqlConnection(rutaBaseDeDatos))
+            SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
+            conexion.Open();
+            using (SqlCommand cmd = new SqlCommand(sqlQuery, conexion))
             {
-                conexion.Open();
+                if (parametros != null)
+                    cmd.Parameters.AddRange(parametros);
 
-                using (SqlCommand cmd = new SqlCommand(sqlQuery, conexion))
+                using (SqlDataAdapter adaptador = new SqlDataAdapter(cmd))
                 {
-                    if (parametros != null)
-                        cmd.Parameters.AddRange(parametros);
-
-                    using (SqlDataAdapter adaptador = new SqlDataAdapter(cmd))
-                    {
-                        DataTable tabla = new DataTable(tableName);
-                        adaptador.Fill(tabla);
-                        return tabla;
-                    }
+                    DataTable tabla = new DataTable(tableName);
+                    adaptador.Fill(tabla);
+                    return tabla;
                 }
             }
         }

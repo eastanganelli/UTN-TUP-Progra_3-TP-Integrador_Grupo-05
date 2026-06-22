@@ -2,25 +2,6 @@
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
-        .form-wrapper {
-            width: 100%;
-            max-width: 860px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .page-header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .page-header h1 { font-size: 22px; color: #1a2332; margin: 0 0 4px 0; font-weight: bold; }
-        .page-header p  { font-size: 13px; color: #888888; margin: 0; }
-
-        .btn-volver {
-            font-size: 12px; color: #185FA5; text-decoration: none;
-            border: 1px solid #185FA5; padding: 7px 14px;
-            border-radius: 5px; transition: all 0.2s ease; flex-shrink: 0;
-        }
-        .btn-volver:hover { background-color: #185FA5; color: #ffffff; }
-
         .banner-turno {
             background-color: #1a2332;
             border-radius: 8px;
@@ -41,65 +22,9 @@
             font-size: 11px; color: #7a8fa8; margin-top: 2px;
         }
 
-        .form-card {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 8px;
-            padding: 24px;
-        }
-
-        .form-card h2 {
-            font-size: 13px; font-weight: bold; color: #185FA5;
-            text-transform: uppercase; letter-spacing: 0.8px;
-            margin: 0 0 20px 0; padding-bottom: 10px;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-grid.una-col { grid-template-columns: 1fr; }
-
-        .campo { display: flex; flex-direction: column; gap: 5px; }
-        .campo.full-width { grid-column: 1 / -1; }
-
-        .campo label { font-size: 12px; font-weight: bold; color: #333333; }
-        .campo label .req { color: #c0392b; margin-left: 2px; }
-
-        .campo input[type="text"],
-        .campo select,
-        .campo textarea {
-            height: 36px; padding: 0 10px; font-size: 13px;
-            border: 1px solid #cccccc; border-radius: 5px;
-            color: #1a2332; background-color: #fafafa;
-            box-sizing: border-box; width: 100%;
-            font-family: Arial, sans-serif;
-        }
-
         .campo textarea {
             height: auto; min-height: 80px; padding: 8px 10px; resize: none;
         }
-
-        .campo input:focus, .campo select:focus, .campo textarea:focus {
-            outline: none; border-color: #185FA5; background-color: #ffffff;
-        }
-
-        .seccion-nota {
-            font-size: 11px; color: #888888;
-            background-color: #f5f8fc; border: 1px solid #dde8f5;
-            border-radius: 5px; padding: 8px 12px; margin-bottom: 16px;
-        }
-
-        .validador { font-size: 11px; color: #c0392b; display: block; }
-
-        .form-acciones { display: flex; justify-content: flex-end; gap: 12px; }
-
-        .btn-guardar {
-            height: 38px; padding: 0 28px;
-            background-color: #185FA5; color: #ffffff;
-            border: none; border-radius: 5px;
-            font-size: 14px; font-weight: bold; cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .btn-guardar:hover { background-color: #0C447C; }
 
         .btn-limpiar {
             height: 38px; padding: 0 20px;
@@ -113,37 +38,6 @@
 
 <style>
 
-    .form-wrapper{
-        width:100%;
-        max-width:950px;
-    }
-
-    .page-header{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:20px;
-    }
-
-    .page-title{
-        font-size:22px;
-        color:#1a2332;
-        font-weight:500;
-    }
-
-    .page-subtitle{
-        font-size:13px;
-        color:#888;
-        margin-top:2px;
-    }
-
-    .form-card{
-        background:#fff;
-        border:1px solid #ccc;
-        border-radius:8px;
-        padding:25px;
-    }
-
     .section-title{
         font-size:13px;
         text-transform:uppercase;
@@ -155,67 +49,11 @@
         font-weight:bold;
     }
 
-    .form-grid{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:18px;
-        margin-bottom:30px;
-    }
-
-    .campo{
-        display:flex;
-        flex-direction:column;
-        gap:5px;
-    }
-
-    .campo label{
-        font-size:12px;
-        color:#666;
-        font-weight:500;
-        text-transform:uppercase;
-    }
-
-    .campo input,
-    .campo select{
-        height:38px;
-        padding:0 10px;
-        border:1px solid #ccc;
-        border-radius:5px;
-        background:#fafafa;
-        color:#1a2332;
-        font-size:13px;
-    }
-
-    .campo input:focus,
-    .campo select:focus{
-        outline:none;
-        border-color:#185FA5;
-        background:#fff;
-    }
-
-    .full-width{
-        grid-column:1 / -1;
-    }
-
     .acciones{
         display:flex;
         justify-content:flex-end;
         gap:10px;
         margin-top:25px;
-    }
-
-    .btn-primary{
-        background:#185FA5;
-        color:#fff;
-        border:none;
-        border-radius:5px;
-        padding:10px 18px;
-        font-size:13px;
-        cursor:pointer;
-    }
-
-    .btn-primary:hover{
-        background:#0C447C;
     }
 
     .btn-secondary{

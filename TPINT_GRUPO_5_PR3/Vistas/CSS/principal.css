@@ -144,6 +144,12 @@ body {
     padding: 16px;
 }
 
+/* las páginas de listado necesitan todo el ancho disponible */
+.contenedor.listado {
+    max-width: 100%;
+    padding: 0;
+}
+
 .encabezado {
     text-align: center;
     margin-bottom: 24px;
@@ -163,8 +169,8 @@ body {
 
 
 /* ============================================================
-   CARDS Y FORMULARIOS
-   tarjeta blanca genérica y campos de input
+   CAMPOS Y FORMULARIOS GENÉRICOS
+   campos con label + input, usados en login y todas las páginas
    ============================================================ */
 
 .card {
@@ -174,31 +180,50 @@ body {
     padding: 24px;
 }
 
+/* contenedor de un campo: apila label > input > validador */
 .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     margin-bottom: 16px;
 }
 
+.campo.full-width { grid-column: 1 / -1; }
+
     .campo label {
-        display: block;
-        font-size: 13px;
+        font-size: 12px;
+        font-weight: bold;
         color: #333333;
-        margin-bottom: 5px;
     }
+
+    /* asterisco de campo obligatorio */
+    .campo label .req { color: #c0392b; margin-left: 2px; }
 
     .campo input[type="text"],
-    .campo input[type="password"] {
-        width: 100%;
-        height: 38px;
+    .campo input[type="password"],
+    .campo select {
+        height: 36px;
         padding: 0 10px;
-        font-size: 14px;
+        font-size: 13px;
         border: 1px solid #cccccc;
         border-radius: 5px;
-        box-sizing: border-box;
         color: #1a2332;
         background-color: #fafafa;
+        box-sizing: border-box;
+        width: 100%;
+        font-family: Arial, sans-serif;
     }
 
-    .campo input:focus {
+    /* campos no editables (DNI, legajo) */
+    .campo input[readonly],
+    .campo-readonly input {
+        background-color: #f0f0f0;
+        color: #888888;
+        cursor: not-allowed;
+    }
+
+    .campo input:focus,
+    .campo select:focus {
         outline: none;
         border-color: #185FA5;
         background-color: #ffffff;
@@ -206,16 +231,15 @@ body {
 
 /* mensajito de error debajo de un campo */
 .validador {
-    font-size: 12px;
-    color: #cc0000;
-    margin-top: 4px;
+    font-size: 11px;
+    color: #c0392b;
     display: block;
 }
 
 
 /* ============================================================
    BOTONES GLOBALES
-   botones usados en login y formularios genéricos
+   botones usados en login, logout y páginas genéricas
    ============================================================ */
 
 .boton-ingresar {
@@ -229,9 +253,7 @@ body {
     cursor: pointer;
 }
 
-    .boton-ingresar:hover {
-        background-color: #0C447C;
-    }
+    .boton-ingresar:hover { background-color: #0C447C; }
 
 .pie {
     text-align: center;
@@ -243,14 +265,8 @@ body {
 
 /* ============================================================
    PÁGINAS DE LISTADO
-   todo lo que se usa en páginas tipo "tabla con filtros"
+   encabezado, filtros, tabla y paginador para páginas tipo índice
    ============================================================ */
-
-/* las páginas de listado necesitan todo el ancho disponible */
-.contenedor.listado {
-    max-width: 100%;
-    padding: 0;
-}
 
 /* encabezado con título a la izquierda y botón a la derecha */
 .page-header {
@@ -260,23 +276,8 @@ body {
     margin-bottom: 20px;
 }
 
-.page-title {
-    font-size: 22px;
-    font-weight: 500;
-    color: #1a2332;
-}
-
-.page-subtitle {
-    font-size: 13px;
-    color: #888;
-    margin-top: 2px;
-}
-
-
-/* ============================================================
-   BOTONES DE LISTADO
-   primario (nuevo), buscar, limpiar e iconos de acción en fila
-   ============================================================ */
+.page-title   { font-size: 22px; font-weight: 500; color: #1a2332; }
+.page-subtitle { font-size: 13px; color: #888; margin-top: 2px; }
 
 /* botón azul grande tipo "Nuevo médico" */
 .btn-primary {
@@ -291,7 +292,6 @@ body {
     align-items: center;
     gap: 6px;
 }
-
     .btn-primary:hover { background: #0C447C; }
 
 /* botones del buscador */
@@ -331,16 +331,10 @@ body {
     color: #555;
     font-size: 13px;
 }
+    .btn-icon:hover             { border-color: #185FA5; color: #185FA5; background: #f0f6ff; }
+    .btn-icon.danger:hover      { border-color: #cc0000; color: #cc0000; background: #fff5f5; }
 
-    .btn-icon:hover { border-color: #185FA5; color: #185FA5; background: #f0f6ff; }
-    .btn-icon.danger:hover { border-color: #cc0000; color: #cc0000; background: #fff5f5; }
-
-
-/* ============================================================
-   FILTROS
-   barra de búsqueda con campos y selects
-   ============================================================ */
-
+/* barra de búsqueda con filtros */
 .filters-bar {
     background: #fff;
     border: 1px solid #ccc;
@@ -353,11 +347,7 @@ body {
     align-items: flex-end;
 }
 
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
+.filter-group { display: flex; flex-direction: column; gap: 4px; }
 
     /* etiqueta chiquita arriba del input */
     .filter-group label {
@@ -380,12 +370,7 @@ body {
         min-width: 140px;
     }
 
-
-/* ============================================================
-   TABLA DE DATOS
-   card contenedor + encabezado con meta info + tabla
-   ============================================================ */
-
+/* card que envuelve la tabla */
 .table-card {
     background: #fff;
     border: 1px solid #ccc;
@@ -393,7 +378,7 @@ body {
     overflow: hidden;
 }
 
-/* fila superior que dice "X resultados / Página Y de Z" */
+/* fila superior: "X resultados / Página Y de Z" */
 .table-meta {
     display: flex;
     align-items: center;
@@ -404,37 +389,56 @@ body {
     color: #666;
 }
 
-.gv-medicos {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-}
+
+/* ============================================================
+   TABLAS DE DATOS
+   estilos compartidos por cualquier grilla de listado
+   ============================================================ */
+
+/* tabla de médicos (listado principal) */
+.gv-medicos { width: 100%; border-collapse: collapse; font-size: 13px; }
 
     .gv-medicos th {
-        background: #1a2332;
-        color: #fff;
-        padding: 11px 14px;
-        text-align: left;
-        font-weight: 500;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
+        background: #1a2332; color: #fff;
+        padding: 11px 14px; text-align: left;
+        font-weight: 500; font-size: 12px;
+        text-transform: uppercase; letter-spacing: 0.4px;
     }
 
     .gv-medicos td {
-        padding: 11px 14px;
-        color: #333;
-        border-bottom: 1px solid #f0f0f0;
-        vertical-align: middle;
+        padding: 11px 14px; color: #333;
+        border-bottom: 1px solid #f0f0f0; vertical-align: middle;
     }
 
-    .gv-medicos tr:last-child td { border-bottom: none; }
-    .gv-medicos tr:hover td { background: #f5f8fc; }
+    .gv-medicos tr:last-child td  { border-bottom: none; }
+    .gv-medicos tr:hover td       { background: #f5f8fc; }
+
+/* tabla genérica para cualquier otro listado (pacientes, turnos, etc.) */
+.gv-tabla { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    .gv-tabla th {
+        background: #1a2332; color: #fff;
+        padding: 11px 14px; text-align: left;
+        font-weight: 500; font-size: 12px;
+        text-transform: uppercase; letter-spacing: 0.4px;
+    }
+
+    .gv-tabla td {
+        padding: 11px 14px; color: #333;
+        border-bottom: 1px solid #f0f0f0; vertical-align: middle;
+    }
+
+    .gv-tabla tr:last-child td    { border-bottom: none; }
+    .gv-tabla tr:hover td         { background: #f5f8fc; }
+
+    /* fila de registro inactivo/dado de baja */
+    .gv-tabla tr.inactivo td        { background: #f2f2f2; color: #999; }
+    .gv-tabla tr.inactivo:hover td  { background: #ececec; }
 
 
 /* ============================================================
    BADGES / ETIQUETAS
-   pastillitas de estado (activo/inactivo) y especialidad
+   pastillitas de estado, especialidad y tipo de turno
    ============================================================ */
 
 .badge {
@@ -445,9 +449,17 @@ body {
     font-weight: 500;
 }
 
-.badge-active   { background: #eaf3de; color: #3B6D11; }
-.badge-inactive { background: #fcebeb; color: #A32D2D; }
-.badge-esp      { background: #e6f1fb; color: #0C447C; }
+/* estados de registro */
+.badge-active    { background: #eaf3de; color: #3B6D11; }
+.badge-inactive  { background: #fcebeb; color: #A32D2D; }
+
+/* estados de turno */
+.badge-pendiente  { background: #faeeda; color: #633806; }
+.badge-confirmado { background: #e6f5ee; color: #1a7a4a; }
+.badge-cancelado  { background: #fdecea; color: #c0392b; }
+
+/* especialidad médica */
+.badge-esp { background: #e6f1fb; color: #0C447C; }
 
 
 /* ============================================================
@@ -478,8 +490,8 @@ body {
     background: #fff;
 }
 
-    .pag-btn.active              { background: #185FA5; border-color: #185FA5; color: #fff; }
-    .pag-btn:hover:not(.active)  { border-color: #185FA5; color: #185FA5; }
+    .pag-btn.active             { background: #185FA5; border-color: #185FA5; color: #fff; }
+    .pag-btn:hover:not(.active) { border-color: #185FA5; color: #185FA5; }
 
 /* combobox selector de página */
 .pag-select {
@@ -493,3 +505,171 @@ body {
     cursor: pointer;
     min-width: 60px;
 }
+
+
+/* ============================================================
+   PÁGINAS DE FORMULARIO
+   sistema completo para formularios de alta/edición
+   ============================================================ */
+
+/* wrapper principal: columna centrada de max 860px */
+.form-wrapper {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* banner con los datos del registro que se está editando */
+.banner-editando {
+    background-color: #f0f4fa;
+    border: 1px solid #c5d8f0;
+    border-radius: 8px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: #1a2332;
+}
+
+    .banner-editando .avatar-sm {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        background-color: #185FA5;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px; font-weight: bold; color: #ffffff; flex-shrink: 0;
+    }
+
+    .banner-editando strong { font-weight: bold; }
+    .banner-editando small  { color: #666666; font-size: 12px; }
+
+/* tarjeta blanca para cada sección del formulario (Datos Personales, etc.) */
+.form-card {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+    /* título de sección: "DATOS PERSONALES" en azul mayúscula */
+    .form-card h2 {
+        font-size: 13px; font-weight: bold; color: #185FA5;
+        text-transform: uppercase; letter-spacing: 0.8px;
+        margin: 0 0 20px 0; padding-bottom: 10px;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+/* grid de dos columnas para los campos del form */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* fila de botones al pie: Cancelar | Guardar */
+.form-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* notita informativa dentro de una sección */
+.seccion-nota {
+    font-size: 11px; color: #888888;
+    background-color: #f5f8fc; border: 1px solid #dde8f5;
+    border-radius: 5px; padding: 8px 12px; margin-bottom: 16px;
+}
+
+
+/* ============================================================
+   BOTONES DE FORMULARIO
+   volver, guardar y cancelar — aparecen en casi todos los forms
+   ============================================================ */
+
+/* "← Volver al listado" arriba a la derecha */
+.btn-volver {
+    font-size: 12px; color: #185FA5; text-decoration: none;
+    border: 1px solid #185FA5; padding: 7px 14px;
+    border-radius: 5px; transition: all 0.2s ease; flex-shrink: 0;
+}
+    .btn-volver:hover { background-color: #185FA5; color: #ffffff; }
+
+/* botón principal al pie del form */
+.btn-guardar {
+    height: 38px; padding: 0 28px;
+    background-color: #185FA5; color: #ffffff;
+    border: none; border-radius: 5px;
+    font-size: 14px; font-weight: bold; cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+    .btn-guardar:hover { background-color: #0C447C; }
+
+/* botón secundario al pie del form */
+.btn-cancelar {
+    height: 38px; padding: 0 20px;
+    background-color: transparent; color: #185FA5;
+    border: 1px solid #185FA5; border-radius: 5px;
+    font-size: 13px; cursor: pointer; transition: all 0.2s ease;
+}
+    .btn-cancelar:hover { background-color: #185FA5; color: #ffffff; }
+
+
+/* ============================================================
+   PÁGINAS VER / DETALLE
+   vista de perfil: avatar + datos en grilla de tarjetas
+   ============================================================ */
+
+/* igual a form-wrapper, alias para páginas de solo lectura */
+.perfil-wrapper {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* header con avatar grande + nombre + datos clave */
+.perfil-header {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 28px;
+}
+
+/* grid de tarjetas de info de 2 columnas */
+.perfil-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* cada tarjeta de datos (equivalente a form-card en modo ver) */
+.info-card {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+    .info-card.full-width { grid-column: 1 / -1; }
+
+    .info-card h2 {
+        font-size: 13px; font-weight: bold; color: #185FA5;
+        text-transform: uppercase; letter-spacing: 0.8px;
+        margin: 0 0 18px 0; padding-bottom: 10px;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+/* fila "Nombre: Juan" dentro de una tarjeta */
+.dato-fila {
+    display: flex; justify-content: space-between;
+    align-items: baseline; padding: 9px 0;
+    border-bottom: 1px solid #f0f0f0; font-size: 13px;
+}
+    .dato-fila:last-child { border-bottom: none; }
+
+.dato-label { color: #888888; font-size: 12px; flex-shrink: 0; margin-right: 12px; }
+.dato-valor { color: #1a2332; font-weight: 500; text-align: right; }

@@ -2,11 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>
-    .contenedor { max-width: 100% !important; width: 100%; padding: 0; }
-
-    .page-title { font-size: 22px; font-weight: 500; color: #1a2332; margin-bottom: 4px; }
-    .page-subtitle { font-size: 13px; color: #888; margin-bottom: 24px; }
-
     .stats-grid { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
     .stat-card { background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 16px 20px; flex: 1; min-width: 160px; }
     .stat-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 6px; }
@@ -18,30 +13,16 @@
     .section-title { font-size: 15px; font-weight: 500; color: #1a2332; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
     .today-badge { background: #e6f1fb; color: #0C447C; font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 4px; }
 
-    .table-card { background: #fff; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; }
-
-    .gv-tabla { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .gv-tabla th { background: #1a2332; color: #fff; padding: 11px 14px; text-align: left; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
-    .gv-tabla td { padding: 11px 14px; color: #333; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-    .gv-tabla tr:last-child td { border-bottom: none; }
-    .gv-tabla tr:hover td { background: #f5f8fc; }
-
-    .badge { display: inline-block; padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 500; }
     .badge-presente { background: #eaf3de; color: #3B6D11; }
     .badge-ausente { background: #fcebeb; color: #A32D2D; }
     .badge-pendiente { background: #faeeda; color: #633806; }
     .badge-esp { background: #e6f1fb; color: #0C447C; }
-
-    .btn-icon { border: 1px solid #ccc; background: #fff; border-radius: 5px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #555; font-size: 13px; }
-    .btn-icon:hover { border-color: #185FA5; color: #185FA5; background: #f0f6ff; }
-
-
 </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="contenedor">
+    <div class="contenedor listado">
 
         <div class="page-title">Bienvenido, Administrador</div>
         <div class="page-subtitle">Resumen del día — martes 16 de junio de 2026</div>

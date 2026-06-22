@@ -2,22 +2,12 @@
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
-        /* =====================
-           LAYOUT DETALLE TURNO
-        ===================== */
         .turno-wrapper {
             width: 100%;
             max-width: 860px;
             display: flex;
             flex-direction: column;
             gap: 24px;
-        }
-
-        /* -- ENCABEZADO -- */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
         }
 
         .page-header-left h1 {
@@ -55,21 +45,6 @@
             flex-shrink: 0;
         }
 
-        .btn-volver {
-            font-size: 12px;
-            color: #185FA5;
-            text-decoration: none;
-            border: 1px solid #185FA5;
-            padding: 7px 14px;
-            border-radius: 5px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-volver:hover {
-            background-color: #185FA5;
-            color: #ffffff;
-        }
-
         .btn-cancelar-turno {
             font-size: 12px;
             font-weight: bold;
@@ -88,7 +63,6 @@
             color: #ffffff;
         }
 
-        /* -- BANNER FECHA/HORA -- */
         .banner-fecha {
             background-color: #1a2332;
             border-radius: 8px;
@@ -129,37 +103,12 @@
             background-color: #2e4060;
         }
 
-        /* -- GRID -- */
         .detalle-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        /* -- CARD GENÉRICA -- */
-        .info-card {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 8px;
-            padding: 24px;
-        }
-
-        .info-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .info-card h2 {
-            font-size: 13px;
-            font-weight: bold;
-            color: #185FA5;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin: 0 0 18px 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-        /* -- MINI PERFIL (paciente / médico) -- */
         .mini-perfil {
             display: flex;
             align-items: center;
@@ -205,32 +154,6 @@
 
         .mini-info .mini-link:hover { text-decoration: underline; }
 
-        /* -- FILAS DE DATOS -- */
-        .dato-fila {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 9px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 13px;
-        }
-
-        .dato-fila:last-child { border-bottom: none; }
-
-        .dato-label {
-            color: #888888;
-            font-size: 12px;
-            flex-shrink: 0;
-            margin-right: 12px;
-        }
-
-        .dato-valor {
-            color: #1a2332;
-            font-weight: 500;
-            text-align: right;
-        }
-
-        /* -- TEXTAREA DE OBSERVACIONES -- */
         .observaciones-box {
             width: 100%;
             min-height: 80px;
@@ -246,7 +169,6 @@
             line-height: 1.5;
         }
 
-        /* -- LÍNEA DE TIEMPO DE ESTADO -- */
         .timeline {
             display: flex;
             flex-direction: column;
