@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
+﻿using System.Data;
 
 namespace Datos {
     public class HorariosMedicos {
