@@ -195,6 +195,24 @@ namespace Vistas.Administracion.Medicos
         protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad;
 
         /// <summary>
+        /// btnAgregarHorario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarHorario;
+
+        /// <summary>
+        /// gvHorarios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvHorarios;
+
+        /// <summary>
         /// btnCancelar control.
         /// </summary>
         /// <remarks>

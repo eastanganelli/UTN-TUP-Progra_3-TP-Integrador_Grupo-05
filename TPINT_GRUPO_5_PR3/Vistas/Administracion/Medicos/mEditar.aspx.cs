@@ -2,6 +2,7 @@ using Entidades;
 using Negocio;
 using System;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace Vistas.Administracion.Medicos
 {
@@ -17,6 +18,11 @@ namespace Vistas.Administracion.Medicos
         private Medico medico { get; set; }
         private Persona persona { get; set; }
 
+        private DataTable HorariosVS {
+            get => ViewState["Horarios"] as DataTable;
+            set => ViewState["Horarios"] = value;
+        }
+
         protected void Page_Load(object sender, EventArgs e) {
             if (Request.QueryString["id"] == null) return;
 
@@ -29,6 +35,7 @@ namespace Vistas.Administracion.Medicos
                 CargarProvinciasYLocalidades();
                 Cargar_Banner();
                 CargarFormulario();
+                CargarHorarios(idMedico);
             }
         }
 
@@ -96,7 +103,7 @@ namespace Vistas.Administracion.Medicos
             ddlSexo.SelectedValue = persona.Sexo.ToString().ToUpper();
 
             if (DateTime.TryParse(persona.FechaNacimiento, out DateTime fecha))
-                txtFechaNac.Text = fecha.ToString("yyyy-MM-dd");
+                txtFechaNac.Text = fecha.ToString("dd-MM-yyyy");
         }
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e) {
             int idProvincia = int.Parse(ddlProvincia.SelectedValue);
@@ -118,7 +125,7 @@ namespace Vistas.Administracion.Medicos
                 return;
             }
 
-            var personaActualizada = new Persona {
+            Persona personaActualizada = new Persona {
                 Nombre          = txtNombreForm.Text.Trim(),
                 Apellido        = txtApellidoForm.Text.Trim(),
                 Sexo            = ddlSexo.SelectedValue[0],
@@ -130,7 +137,7 @@ namespace Vistas.Administracion.Medicos
                 Telefono        = txtTelefono.Text.Trim()
             };
 
-            var medicoActualizado = new Medico {
+            Medico medicoActualizado = new Medico {
                 IDMedico       = int.Parse(lblIdMedico.Text),
                 Legajo         = txtLegajo.Text.Trim(),
                 IDEspecialidad = int.Parse(ddlEspecialidad.SelectedValue)
@@ -138,9 +145,11 @@ namespace Vistas.Administracion.Medicos
 
             try {
                 string mensaje = conexionMedicos.ActualizarMedico(personaActualizada, medicoActualizado);
+                GuardarHorarios(medicoActualizado.IDMedico);
                 medico  = conexionMedicos.ObtenerMedico(medicoActualizado.IDMedico);
                 persona = conexionPersonas.ObtenerPersona(medico.IDPersona);
                 Cargar_Banner();
+                CargarHorarios(medicoActualizado.IDMedico);
                 MostrarMensaje(string.IsNullOrWhiteSpace(mensaje) ? "Cambios guardados correctamente." : mensaje, esError: false);
             }
             catch (Exception ex) {
@@ -150,6 +159,88 @@ namespace Vistas.Administracion.Medicos
 
         protected void btnCancelar_Click(object sender, EventArgs e) {
             Response.Redirect("mInicio.aspx");
+        }
+
+        private void CargarHorarios(int idMedico) {
+            DataTable db = conexionHorariosMedicos.ObtenerHorariosDeMedico(idMedico);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id_horario", typeof(int));
+            dt.Columns.Add("DiaSemana",  typeof(int));
+            dt.Columns.Add("HoraInicio", typeof(string));
+            dt.Columns.Add("HoraFin",    typeof(string));
+            foreach (DataRow r in db.Rows)
+                dt.Rows.Add(Convert.ToInt32(r["id_horario"]), Convert.ToInt32(r["DiaSemana"]),
+                    FormatHora(r["HoraInicio"]), FormatHora(r["HoraFin"]));
+            HorariosVS = dt;
+            gvHorarios.DataSource = dt;
+            gvHorarios.DataBind();
+        }
+
+        private string FormatHora(object val) {
+            if (val is TimeSpan ts) return $"{ts.Hours:00}:{ts.Minutes:00}";
+            string s = val?.ToString() ?? string.Empty;
+            return s.Length >= 5 ? s.Substring(0, 5) : s;
+        }
+
+        private void CapturarGrilla() {
+            DataTable dt = HorariosVS;
+            if (dt == null || gvHorarios.Rows.Count == 0) return;
+            for (int i = 0; i < gvHorarios.Rows.Count; i++) {
+                GridViewRow row = gvHorarios.Rows[i];
+                dt.Rows[i]["DiaSemana"]  = int.Parse(((DropDownList)row.FindControl("ddlDia")).SelectedValue);
+                dt.Rows[i]["HoraInicio"] = ((TextBox)row.FindControl("txtHoraInicio")).Text.Trim();
+                dt.Rows[i]["HoraFin"]    = ((TextBox)row.FindControl("txtHoraFin")).Text.Trim();
+            }
+            HorariosVS = dt;
+        }
+
+        private void GuardarHorarios(int idMedico) {
+            CapturarGrilla();
+            DataTable dt = HorariosVS;
+            if (dt == null) return;
+            foreach (DataRow r in dt.Rows) {
+                string hi = r["HoraInicio"].ToString();
+                string hf = r["HoraFin"].ToString();
+                if (string.IsNullOrEmpty(hi) || string.IsNullOrEmpty(hf)) continue;
+                var h = new HorarioMedico {
+                    IDHorario  = Convert.ToInt32(r["id_horario"]),
+                    IDMedico   = idMedico,
+                    DiaSemana  = Convert.ToInt32(r["DiaSemana"]),
+                    HoraInicio = hi,
+                    HoraFin    = hf
+                };
+                if (h.IDHorario == 0) conexionHorariosMedicos.AgregarHorario(h);
+                else                  conexionHorariosMedicos.ActualizarHorario(h);
+            }
+        }
+
+        protected void btnAgregarHorario_Click(object sender, EventArgs e) {
+            CapturarGrilla();
+            DataTable dt = HorariosVS ?? new DataTable();
+            if (!dt.Columns.Contains("id_horario")) {
+                dt.Columns.Add("id_horario", typeof(int));
+                dt.Columns.Add("DiaSemana",  typeof(int));
+                dt.Columns.Add("HoraInicio", typeof(string));
+                dt.Columns.Add("HoraFin",    typeof(string));
+            }
+            dt.Rows.Add(0, 1, "08:00", "17:00");
+            HorariosVS = dt;
+            gvHorarios.DataSource = dt;
+            gvHorarios.DataBind();
+            Response.Redirect("/Administracion/Medicos/mInicio.aspx");
+        }
+
+        protected void gvHorarios_RowDeleting(object sender, GridViewDeleteEventArgs e) {
+            CapturarGrilla();
+            DataTable dt = HorariosVS;
+            int idHorario = Convert.ToInt32(gvHorarios.DataKeys[e.RowIndex].Value);
+            if (idHorario != 0)
+                conexionHorariosMedicos.EliminarHorario(idHorario);
+            dt.Rows.RemoveAt(e.RowIndex);
+            HorariosVS = dt;
+            gvHorarios.DataSource = dt;
+            gvHorarios.DataBind();
+            e.Cancel = true;
         }
 
         private void MostrarMensaje(string texto, bool esError) {

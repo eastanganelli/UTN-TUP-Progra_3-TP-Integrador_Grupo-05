@@ -227,7 +227,7 @@
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Fecha de nacimiento</span>
-                    <span class="dato-valor"><%= persona.FechaNacimiento %></span>
+                    <span class="dato-valor"><%= DateTime.Parse(persona?.FechaNacimiento).ToString("dd-MM-yyyy") ?? "--" %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">DNI</span>
