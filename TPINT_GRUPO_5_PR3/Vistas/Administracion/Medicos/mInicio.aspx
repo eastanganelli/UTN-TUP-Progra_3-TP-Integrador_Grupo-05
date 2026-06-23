@@ -12,7 +12,7 @@
                 <div class="page-title">Médicos</div>
                 <div class="page-subtitle">Gestión de médicos registrados en el sistema</div>
             </div>
-            <button class="btn-primary">+ Nuevo médico</button>
+            <asp:Button ID="btnNuevoMedico" class="btn-primary" runat="server" Text="+ Nuevo médico" OnClick="btnNuevoMedico_Click"/>
         </div>
 
         <div class="filters-bar">

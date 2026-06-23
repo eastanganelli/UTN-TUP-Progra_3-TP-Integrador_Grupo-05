@@ -8,13 +8,12 @@
     <title>Iniciar sesión</title>
     <link rel="stylesheet" href="~/CSS/principal.css" />
     <style>
-        /* login va centrado, sin sidebar */
-        body { background-color: #ffffff; align-items: center; justify-content: center; }
-
-        /* link de olvidé contraseña, solo existe en esta pantalla */
-        .link-olvide { text-align: right; margin-bottom: 16px; }
-        .link-olvide a { font-size: 12px; color: #185FA5; text-decoration: none; }
-        .link-olvide a:hover { text-decoration: underline; }
+        body { background-color: #ffffff; }
+        #form1 {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -73,15 +72,6 @@
                         CssClass="validador"
                         Display="Dynamic"
                         EnableClientScript="false" />
-                </div>
-
-                <%-- Link olvidé contraseña --%>
-                <div class="link-olvide">
-                    <asp:HyperLink
-                        ID="lnkOlvide"
-                        runat="server"
-                        NavigateUrl="#"
-                        Text="¿Olvidaste tu contraseña?" />
                 </div>
 
                 <%-- Botón ingresar --%>

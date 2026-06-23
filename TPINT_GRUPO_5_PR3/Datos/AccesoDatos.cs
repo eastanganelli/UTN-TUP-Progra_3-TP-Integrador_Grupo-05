@@ -18,18 +18,21 @@ namespace Datos {
             }
         }
         public int EjecutarProcedimientoAlmacenado(SqlCommand Comando, String NombreSP) {
-            int FilasCambiadas;
             SqlConnection Conexion = ObtenerConexion();
-            SqlCommand cmd = new SqlCommand();
-            cmd = Comando;
-            cmd.Connection = Conexion;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = NombreSP;
-            FilasCambiadas = cmd.ExecuteNonQuery();
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = NombreSP;
+            int FilasCambiadas = Comando.ExecuteNonQuery();
             Conexion.Close();
             return FilasCambiadas;
         }
-        
+        public int EjecutarProcedimientoAlmacenado(string nombreSP, SqlParameter[] parametros = null) {
+            SqlConnection conexion = ObtenerConexion();
+            SqlCommand cmd = new SqlCommand(nombreSP, conexion);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (parametros != null) cmd.Parameters.AddRange(parametros);
+            return cmd.ExecuteNonQuery();
+        }
         public DataTable ObtenerTabla(string sqlQuery, string tableName) {
             if (string.IsNullOrWhiteSpace(sqlQuery)) throw new ArgumentException("La consulta SQL no puede estar vacía.", nameof(sqlQuery));
             if (string.IsNullOrWhiteSpace(tableName)) throw new ArgumentException("El nombre de la tabla no puede estar vacío.", nameof(tableName));
@@ -58,12 +61,24 @@ namespace Datos {
             return tabla;
         }
 
+        public int ObtenerEscalar(string sqlQuery, SqlParameter[] parametros = null) {
+            using (SqlConnection conn = ObtenerConexion()) {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn)) {
+                    if (parametros != null) cmd.Parameters.AddRange(parametros);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
+        public DataRow ObtenerFila(string sqlQuery, string tableName, SqlParameter[] parametros = null) {
+            DataTable resultado = ObtenerTablaParametros(sqlQuery, tableName, parametros);
+            return resultado.Rows.Count > 0 ? resultado.Rows[0] : null;
+        }
         public int EjecutarConsulta(string consulta) {
-            SqlConnection conexion = new SqlConnection(rutaBaseDeDatos);
-            SqlCommand comando = new SqlCommand(consulta, conexion);
-            int resultado = comando.ExecuteNonQuery();
-            conexion.Close();
-            return resultado;
+            using (SqlConnection conexion = ObtenerConexion()) {
+                using (SqlCommand comando = new SqlCommand(consulta, conexion)) {
+                    return comando.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

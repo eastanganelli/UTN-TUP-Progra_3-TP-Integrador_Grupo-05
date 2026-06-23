@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="~/CSS/principal.css" />
     <style>
         /* logout va centrado igual que login, sin sidebar */
-        body { background-color: #ffffff; align-items: center; justify-content: center; }
+        body { background-color: #ffffff; }
+        #form1 {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
         /* card de logout va centrada internamente */
         .card { text-align: center; }

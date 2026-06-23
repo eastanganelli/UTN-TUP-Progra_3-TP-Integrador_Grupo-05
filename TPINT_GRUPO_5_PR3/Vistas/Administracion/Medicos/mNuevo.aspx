@@ -15,7 +15,8 @@
         .grilla-horarios tr:last-child td { border-bottom: none; }
 
         .grilla-horarios select,
-        .grilla-horarios input[type="text"] {
+        .grilla-horarios input[type="text"],
+        .grilla-horarios input[type="time"] {
             height: 34px; padding: 0 8px; font-size: 12px;
             border: 1px solid #cccccc; border-radius: 4px;
             color: #1a2332; background-color: #fafafa;
@@ -70,7 +71,8 @@
                 <h1>Nuevo Médico</h1>
                 <p>Completá los datos para registrar un nuevo médico en el sistema</p>
             </div>
-            <a href="~/Administracion/Medicos/Medicos.aspx" class="btn-volver">← Volver al listado</a>
+            <a href="mInicio.aspx" class="btn-volver"
+               onclick="return confirm('¿Descartar los datos ingresados y volver al listado?');">← Volver al listado</a>
         </div>
 
         <!-- Mensaje resultado -->
@@ -238,19 +240,26 @@
                 CssClass="grilla-horarios"
                 ShowHeader="true"
                 GridLines="None"
+                DataKeyNames="id_horario"
                 OnRowDeleting="gvHorarios_RowDeleting">
+                <EmptyDataTemplate>
+                    <p style="color:#999;font-size:13px;margin:12px 0;">
+                        No hay horarios cargados. Usá "＋ Agregar día" para agregar uno.
+                    </p>
+                </EmptyDataTemplate>
                 <Columns>
 
                     <asp:TemplateField HeaderText="Día de la semana">
                         <ItemTemplate>
                             <asp:DropDownList ID="ddlDia" runat="server"
-                                SelectedValue='<%# Bind("DiaSemana") %>'>
+                                SelectedValue='<%# Eval("DiaSemana").ToString() %>'>
                                 <asp:ListItem Value="1">Lunes</asp:ListItem>
                                 <asp:ListItem Value="2">Martes</asp:ListItem>
                                 <asp:ListItem Value="3">Miércoles</asp:ListItem>
                                 <asp:ListItem Value="4">Jueves</asp:ListItem>
                                 <asp:ListItem Value="5">Viernes</asp:ListItem>
                                 <asp:ListItem Value="6">Sábado</asp:ListItem>
+                                <asp:ListItem Value="7">Domingo</asp:ListItem>
                             </asp:DropDownList>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -258,16 +267,16 @@
                     <asp:TemplateField HeaderText="Hora inicio">
                         <ItemTemplate>
                             <asp:TextBox ID="txtHoraInicio" runat="server"
-                                Text='<%# Bind("HoraInicio") %>'
-                                MaxLength="5" placeholder="08:00" />
+                                Text='<%# Eval("HoraInicio") %>'
+                                TextMode="Time" />
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Hora fin">
                         <ItemTemplate>
                             <asp:TextBox ID="txtHoraFin" runat="server"
-                                Text='<%# Bind("HoraFin") %>'
-                                MaxLength="5" placeholder="12:00" />
+                                Text='<%# Eval("HoraFin") %>'
+                                TextMode="Time" />
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -277,7 +286,7 @@
                                 CommandName="Delete"
                                 CssClass="btn-eliminar-fila"
                                 CausesValidation="false"
-                                OnClientClick="return confirm('¿Eliminár este horario?');">×</asp:LinkButton>
+                                OnClientClick="return confirm('¿Eliminar este horario?');">×</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -321,7 +330,7 @@
 
         <!-- ACCIONES -->
         <div class="form-acciones">
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
+            <asp:Button ID="btnLimpiar" runat="server" Text="Cancelar"
                 CssClass="btn-limpiar" CausesValidation="false"
                 OnClick="btnLimpiar_Click" />
             <asp:Button ID="btnGuardar" runat="server" Text="Guardar médico"

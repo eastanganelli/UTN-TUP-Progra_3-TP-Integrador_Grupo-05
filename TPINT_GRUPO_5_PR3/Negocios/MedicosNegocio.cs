@@ -26,6 +26,12 @@ namespace Negocio {
         public DataTable ObtenerMedicosPaginados(int NroPagina, int CantPagina) {
             return datosMedicos.ObtenerMedicosPaginado(NroPagina, CantPagina);
         }
+        public DataTable BuscarMedicos(string busqueda, bool? activo, int pagina, int porPagina) {
+            return datosMedicos.BuscarMedicos(busqueda, activo, pagina, porPagina);
+        }
+        public int ContarMedicos(string busqueda, bool? activo) {
+            return datosMedicos.ContarMedicos(busqueda, activo);
+        }
         public int AgregarMedico(Entidades.Persona persona, Entidades.Medico medico, out string mensaje) {
             try {
                 return datosMedicos.AgregarMedico(persona, medico, out mensaje);

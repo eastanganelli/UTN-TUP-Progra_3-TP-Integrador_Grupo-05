@@ -29,7 +29,8 @@
             }
 
             .grilla-horarios select,
-            .grilla-horarios input[type="text"] {
+            .grilla-horarios input[type="text"],
+            .grilla-horarios input[type="time"] {
                 height: 34px;
                 padding: 0 8px;
                 font-size: 12px;
@@ -107,9 +108,6 @@
         <asp:Label ID="lblMensaje" runat="server" Visible="false" />
 
         <div class="banner-editando">
-            <%--<div class="avatar-sm">
-                <asp:Label ID="lblIniciales" runat="server" Text="CM" />
-            </div>--%>
             <div>
                 <strong>
                     <asp:Label ID="lblDocGen" runat="server" Text="" />

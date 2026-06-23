@@ -1,38 +1,30 @@
 ﻿using Entidades;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using System.Data.SqlClient;
 
 namespace Datos {
     public class Personas {
         private AccesoDatos conexion = new AccesoDatos();
         public Persona ObtenerPersona(int id_Persona) {
-            string consulta = $"SELECT * FROM Persona WHERE id_persona = {id_Persona}";
-            var resultado = conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Persona");
-            if (resultado.Rows.Count == 0)
-            {
+            DataRow fila = conexion.ObtenerFila(
+                "SELECT * FROM Persona WHERE id_persona = @id", "Persona",
+                new[] { new SqlParameter("@id", id_Persona) });
+            if (fila == null)
                 throw new Exception($"La Persona con ID [{id_Persona}] fue no encontrada!");
-            }
-            Persona persona = null;
-            if (resultado.Rows.Count > 0)
-            {
-                persona = new Persona
-                {
-                    IDPersona = Convert.ToInt32(resultado.Rows[0]["id_persona"]),
-                    DNI = resultado.Rows[0]["dni"].ToString(),
-                    Nombre = resultado.Rows[0]["nombre"].ToString(),
-                    Apellido = resultado.Rows[0]["apellido"].ToString(),
-                    Sexo = resultado.Rows[0]["sexo"].ToString()[0],
-                    FechaNacimiento = resultado.Rows[0]["fecha_nacimiento"].ToString(),
-                    Direccion = resultado.Rows[0]["direccion"].ToString(),
-                    IDLocalidad = Convert.ToInt32(resultado.Rows[0]["id_localidad"]),
-                    Email = resultado.Rows[0]["email"].ToString(),
-                    Telefono = resultado.Rows[0]["telefono"].ToString(),
-                    Nacionalidad = resultado.Rows[0]["nacionalidad"].ToString()
-                };
-            }
-            return persona;
+            return new Persona {
+                IDPersona       = Convert.ToInt32(fila["id_persona"]),
+                DNI             = fila["dni"].ToString(),
+                Nombre          = fila["nombre"].ToString(),
+                Apellido        = fila["apellido"].ToString(),
+                Sexo            = fila["sexo"].ToString()[0],
+                FechaNacimiento = fila["fecha_nacimiento"].ToString(),
+                Direccion       = fila["direccion"].ToString(),
+                IDLocalidad     = Convert.ToInt32(fila["id_localidad"]),
+                Email           = fila["email"].ToString(),
+                Telefono        = fila["telefono"].ToString(),
+                Nacionalidad    = fila["nacionalidad"].ToString()
+            };
         }
         public DataTable ObtenerPersonas() {
             string consulta = "SELECT * FROM Persona";
