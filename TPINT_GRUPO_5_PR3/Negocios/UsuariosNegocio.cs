@@ -31,6 +31,7 @@ namespace Negocio
         {
             return datosUsuarios.ObtenerUsuariosPaginado(NroPagina, CantPagina);
         }
+
         public Usuario Login(string username, string password)
         {
             if (string.IsNullOrEmpty(username))

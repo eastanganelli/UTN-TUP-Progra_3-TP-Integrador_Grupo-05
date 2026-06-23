@@ -83,7 +83,8 @@
                         ID="lblRolUsuario"
                         runat="server"
                         CssClass="rol"
-                        Text="Sesión activa" />
+                        Text="" />
+
                 </div>
 
                 <hr class="separador" />
@@ -93,7 +94,7 @@
                     <asp:HyperLink
                         ID="lnkCancelar"
                         runat="server"
-                        NavigateUrl="#"
+                        NavigateUrl="/Administracion/Inicio.aspx"
                         CssClass="boton-cancelar"
                         Text="Cancelar" />
 
@@ -103,7 +104,7 @@
                         Text="Cerrar sesión"
                         CssClass="boton-cerrar"
                         UseSubmitBehavior="false"
-                        OnClientClick="return false;" />
+                        OnClick="btnCerrarSesion_Click" />
                 </div>
 
             </div>

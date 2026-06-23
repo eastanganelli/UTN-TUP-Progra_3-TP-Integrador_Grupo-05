@@ -21,7 +21,13 @@ namespace Vistas
         {
             try
             {
-                negocioUsuarios.Login(txtUsuario.Text, txtPassword.Text);
+
+                Usuario usuario = negocioUsuarios.Login(txtUsuario.Text, txtPassword.Text);
+
+                Session["zezion"] = usuario;
+
+                Response.Redirect("/Administracion/Inicio.aspx");
+
             }
 
             catch (Exception ex)

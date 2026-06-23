@@ -80,7 +80,9 @@
     <Content Include="Administracion\Turnos\tNuevo.aspx" />
     <Content Include="Administracion\Turnos\tVer.aspx" />
     <Content Include="CSS\principal.css" />
-    <Content Include="Login.aspx" />
+    <Content Include="Login.aspx">
+      <BrowseToURL>/Administracion/Inicio.aspx</BrowseToURL>
+    </Content>
     <Content Include="Logout.aspx" />
     <Content Include="Administracion\Medicos\mNuevo.aspx" />
     <Content Include="Web.config" />

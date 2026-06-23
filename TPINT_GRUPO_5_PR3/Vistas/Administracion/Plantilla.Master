@@ -33,8 +33,8 @@
             <!-- ACCESO DE USUARIO -->
             <div class="sidebar-user">
                 <div class="user-info">
-                    <asp:Label ID="lblUserName" runat="server" CssClass="nombre" Text="Administrador"></asp:Label>
-                    <asp:LoginStatus ID="LoginStatusMaster" runat="server" LogoutText="Cerrar Sesión" />
+                    <asp:Label ID="lblUserName" runat="server" CssClass="nombre" Text=""></asp:Label>
+                     <asp:HyperLink ID="hlCerrarSesion" runat="server" Text="Cerrar Sesion" NavigateUrl="/Logout.aspx"></asp:HyperLink>
                 </div>
             </div>
         </div>

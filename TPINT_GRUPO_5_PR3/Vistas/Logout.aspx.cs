@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,19 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["zezion"] == null)
+            {
+                Response.Redirect("/Login.aspx");
+            }
 
+            lblRolUsuario.Text = ((Usuario)Session["zezion"]).NombreUsuario;
+        }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("/Login.aspx");
         }
     }
 }
