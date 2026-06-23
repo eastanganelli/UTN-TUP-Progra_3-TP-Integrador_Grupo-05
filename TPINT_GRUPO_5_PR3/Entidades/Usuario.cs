@@ -38,7 +38,7 @@ namespace Entidades {
         public string NombreUsuario { get => username; set => username = value; }
         public string Contrasenya { get => password; set => password = value; }
         public string Rol { get => tipo; set => tipo = value; }
-        public int IDMedico { get => (int)id_medico; set => id_medico = value; }
+        public int? IDMedico { get => (int)id_medico; set => id_medico = value; }
         public bool Estado { get => activo; set => activo = value; }
     }
 }

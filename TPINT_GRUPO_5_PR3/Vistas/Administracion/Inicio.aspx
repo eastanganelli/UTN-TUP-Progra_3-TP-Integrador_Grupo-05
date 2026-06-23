@@ -24,7 +24,7 @@
 
     <div class="contenedor listado">
 
-        <div class="page-title">Bienvenido, Administrador</div>
+        <div class="page-title">Bienvenido, <asp:Label ID="lblRol" runat="server" Text=""></asp:Label></div>
         <div class="page-subtitle">Resumen del día — martes 16 de junio de 2026</div>
 
         <!-- TARJETAS RESUMEN -->

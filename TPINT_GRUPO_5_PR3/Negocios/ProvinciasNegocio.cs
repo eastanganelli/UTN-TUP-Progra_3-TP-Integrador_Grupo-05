@@ -14,7 +14,7 @@ namespace Negocio
         {
             try
             {
-                return datosProvincia.ObtenerProncia(id_provincia);
+                return datosProvincia.ObtenerProvincia(id_provincia);
             }
             catch (Exception ex)
             {

@@ -8,12 +8,14 @@ namespace Datos {
         private AccesoDatos conexion = new AccesoDatos();
         private Usuario MapearUsuario(DataRow fila) {
             return new Usuario {
-                IDUsuario     = Convert.ToInt32(fila["id_usuario"]),
+                IDUsuario = Convert.ToInt32(fila["id_usuario"]),
                 NombreUsuario = fila["username"].ToString(),
-                Contrasenya   = fila["password"].ToString(),
-                Rol           = fila["tipo"].ToString(),
-                IDMedico      = Convert.ToInt32(fila["id_medico"]),
-                Estado        = Convert.ToBoolean(fila["activo"])
+                Contrasenya = fila["password"].ToString(),
+                Rol = fila["tipo"].ToString(),
+                IDMedico = fila["id_medico"] == DBNull.Value
+                        ? (int?)null
+                        : Convert.ToInt32(fila["id_medico"]),
+                Estado = Convert.ToBoolean(fila["activo"])
             };
         }
         public Usuario ObtenerUsuario(int id_usuario) {

@@ -17,18 +17,38 @@ namespace Vistas.Administracion
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["zezion"] == null) {
+            if (Session["zezion"] == null)
+            {
                 Response.Redirect("/Login.aspx");
             }
 
             lblUserName.Text = ((Usuario)Session["zezion"]).NombreUsuario;
 
-            this.nombreClinica = Vistas.Properties.Resources.strNombreClinica.ToString();
+                        if (!IsPostBack)
+                        {
+                            CargarMenu(((Usuario)Session["zezion"]).Rol);
+                        }
+          
         }
 
-        protected void LoginStatusMaster_LoggingOut(object sender, LoginCancelEventArgs e)
-        {
-            Response.Redirect("/Logout.aspx");
+             protected void LoginStatusMaster_LoggingOut(object sender, LoginCancelEventArgs e)
+             {
+                 Response.Redirect("/Logout.aspx");
+             }
+            
+             private void CargarMenu(string rol)
+             {
+                 MenuPrincipal.Items.Clear();
+
+                 MenuPrincipal.Items.Add(new MenuItem("Inicio", "Inicio", "", "~/Administracion/Inicio.aspx"));
+                 MenuPrincipal.Items.Add(new MenuItem("Pacientes", "Pacientes", "", "~/Administracion/Pacientes/pInicio.aspx"));
+                 MenuPrincipal.Items.Add(new MenuItem("Turnos", "Turnos", "", "~/Administracion/Turnos/tInicio.aspx"));
+
+                 if(rol == "admin")
+                 {
+                     MenuPrincipal.Items.Add(new MenuItem("Medicos", "Medicos", "", "~/Administracion/Medicos/mInicio.aspx"));
+                     MenuPrincipal.Items.Add(new MenuItem("Reportes", "Reportes", "", "~/Administracion/Reportes/ReportesInicio.aspx"));
+                 }
+             }
         }
     }
-}

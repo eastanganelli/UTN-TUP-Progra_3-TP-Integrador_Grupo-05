@@ -8,7 +8,7 @@ namespace Datos
     public class Provincias
     {
        private AccesoDatos conexion = new AccesoDatos();
-        public Provincia ObtenerProncia(int id_provincia) {
+        public Provincia ObtenerProvincia(int id_provincia) {
             DataRow fila = conexion.ObtenerFila(
                 "SELECT * FROM Provincia WHERE id_provincia = @id", "Provincia",
                 new[] { new SqlParameter("@id", id_provincia) });
