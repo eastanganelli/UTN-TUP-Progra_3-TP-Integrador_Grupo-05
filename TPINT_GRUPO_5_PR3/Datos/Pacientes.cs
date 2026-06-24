@@ -13,23 +13,38 @@ namespace Datos
 
         public Paciente ObtenerPacientePorId(int idPaciente)
         {
-            string consulta = "SELECT * FROM Paciente WHERE Id_Paciente = @idPaciente";
-            SqlParameter parametro = new SqlParameter("@idPaciente", idPaciente);
-            DataTable tabla = accesoDatos.ObtenerTablaParametros(consulta, "Paciente", new SqlParameter[] { parametro });
-            if (tabla.Rows.Count > 0)
-            {
-                DataRow row = tabla.Rows[0];
-                Paciente paciente = new Paciente
-                {
-                    IdPaciente = Convert.ToInt32(row["Id_Paciente"]),
-                    Estado = Convert.ToBoolean(row["Activo"])
-                };
-                return paciente;
-            }
-            else
-            {
-                return null; 
-            }
+            string consulta = @"SELECT * FROM vw_Pacientes WHERE id_paciente = @idPaciente";
+
+            SqlParameter[] parametros =
+           { new SqlParameter("@idPaciente", idPaciente) };
+
+            DataRow fila = accesoDatos.ObtenerFila(
+                consulta,
+                "Paciente",
+                parametros
+            );
+
+            if (fila == null)
+                return null;
+
+            Paciente paciente = new Paciente();
+
+            paciente.IdPaciente = Convert.ToInt32(fila["id_paciente"]);
+            paciente.IDPersona = Convert.ToInt32(fila["id_persona"]);
+
+            paciente.Nombre = fila["Nombre"].ToString();
+            paciente.Apellido = fila["Apellido"].ToString();
+            paciente.FechaNacimiento = Convert.ToDateTime(fila["FechaNacimiento"]);
+            paciente.Sexo = Convert.ToChar(fila["Sexo"]);
+            paciente.Nacionalidad = fila["Nacionalidad"].ToString();
+            paciente.DNI = fila["DNI"].ToString();
+            paciente.Email = fila["Email"].ToString();
+            paciente.Telefono = fila["Telefono"].ToString();
+            paciente.Direccion = fila["Direccion"].ToString();
+            paciente.IDLocalidad = Convert.ToInt32(fila["Id_Localidad"]);
+            paciente.NombreProvincia = fila["Provincia"].ToString();
+
+            return paciente;
         }
 
         public int CambiarEstadoPaciente(int idPaciente, bool nuevoEstado)
@@ -94,6 +109,22 @@ namespace Datos
                 "Paciente"
             );
             return tabla;
+        }
+
+        public int ModificarPaciente(Paciente paciente)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Parameters.AddWithValue("@IdPaciente", paciente.IdPaciente);
+            cmd.Parameters.AddWithValue("@Nombre", paciente.Nombre);
+            cmd.Parameters.AddWithValue("@Apellido", paciente.Apellido);
+            cmd.Parameters.AddWithValue("@FechaNacimiento", paciente.FechaNacimiento);
+            cmd.Parameters.AddWithValue("@Sexo", paciente.Sexo);
+            cmd.Parameters.AddWithValue("@Nacionalidad", paciente.Nacionalidad);
+            cmd.Parameters.AddWithValue("@Email", paciente.Email);
+            cmd.Parameters.AddWithValue("@Telefono", paciente.Telefono);
+            cmd.Parameters.AddWithValue("@Direccion", paciente.Direccion);
+            cmd.Parameters.AddWithValue("@IdLocalidad", paciente.IDLocalidad);
+            return accesoDatos.EjecutarProcedimientoAlmacenado(cmd, "sp_Paciente_Modificar");
         }
     }
 }

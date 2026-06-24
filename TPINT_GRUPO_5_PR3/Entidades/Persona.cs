@@ -10,11 +10,13 @@ namespace Entidades {
         private string apellido;
         private char sexo;
         private string nacionalidad;
-        private string fecha_nacimiento;
+        private DateTime fecha_nacimiento;
         private string direccion;
         private int id_localidad;
         private string email;
         private string telefono;
+        // Solo para mostrar
+        public string NombreProvincia { get; set; }
         public Persona() {
             this.dni = string.Empty;
             this.id_persona = 0;
@@ -22,13 +24,13 @@ namespace Entidades {
             this.apellido = string.Empty;
             this.sexo = ' ';
             this.nacionalidad = string.Empty;
-            this.fecha_nacimiento = string.Empty;
+            this.fecha_nacimiento = DateTime.MinValue;
             this.direccion = string.Empty;
             this.id_localidad = 0;
             this.email = string.Empty;
             this.telefono = string.Empty;
         }
-        public Persona(string dni, int id_persona, string nombre, string apellido, char sexo, string nacionalidad, string fecha_nacimiento, string direccion, int id_localidad, string email, string telefono) {
+        public Persona(string dni, int id_persona, string nombre, string apellido, char sexo, string nacionalidad, DateTime  fecha_nacimiento, string direccion, int id_localidad, string email, string telefono) {
             this.dni = dni;
             this.id_persona = id_persona;
             this.nombre = nombre;
@@ -47,7 +49,7 @@ namespace Entidades {
         public string Apellido { get => apellido; set => apellido = value; }
         public char Sexo { get => sexo; set => sexo = value; }
         public string Nacionalidad { get => nacionalidad; set => nacionalidad = value; }
-        public string FechaNacimiento { get => fecha_nacimiento; set => fecha_nacimiento = value; }
+        public DateTime FechaNacimiento { get => fecha_nacimiento; set => fecha_nacimiento = value; }
         public string Direccion { get => direccion; set => direccion = value; }
         public int IDLocalidad { get => id_localidad; set => id_localidad = value; }
         public string Email { get => email; set => email = value; }

@@ -69,7 +69,7 @@
                     <asp:DropDownList ID="ddlSexo" runat="server">
                         <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
                         <asp:ListItem Value="M">Masculino</asp:ListItem>
-                        <asp:ListItem Value="F" Selected="True">Femenino</asp:ListItem>
+                        <asp:ListItem Value="F">Femenino</asp:ListItem>
                         <asp:ListItem Value="X">No binario</asp:ListItem>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlSexo"

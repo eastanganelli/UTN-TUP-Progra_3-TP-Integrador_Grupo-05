@@ -54,5 +54,14 @@ namespace Negocio
                 throw new Exception("No se pudo cambiar el estado del paciente. Verifique el ID proporcionado.");
             }
         }
+        public void ModificarPaciente(Paciente paciente)
+        {
+            Pacientes pacientes = new Pacientes();
+            int filasAfectadas = pacientes.ModificarPaciente(paciente);
+            if (filasAfectadas == 0)
+            {
+                throw new Exception("No se pudo modificar el paciente. Verifique los datos proporcionados.");
+            }
+        }
     }
 }

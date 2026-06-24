@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entidades
 {
-    public class Paciente 
+    public class Paciente : Persona
     {
         public Paciente() { }
 

@@ -30,5 +30,10 @@ namespace Datos
             string consulta = $"SELECT * FROM Localidad WHERE id_provincia = {id_Provincia} ORDER BY nombre";
             return conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Localidad");
         }
+        public DataTable ObtenerLocalidadesPorProvinciaNombre(string nombreProvincia)
+        {
+            string consulta = $"SELECT * FROM Localidad WHERE id_provincia = (SELECT id_provincia FROM Provincia WHERE nombre = '{nombreProvincia}') ORDER BY nombre";
+            return conexion.ObtenerTabla(sqlQuery: consulta, tableName: "Localidad");
+        }
     }
 }
