@@ -11,7 +11,6 @@ namespace Vistas.Administracion.Pacientes
 {
     public partial class EditarPaciente : System.Web.UI.Page
     {
-        int idprovincia = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["idPaciente"] != null)
