@@ -155,8 +155,8 @@ namespace Vistas.Administracion.Medicos {
         private void LimpiarFormulario() {
             txtNombre.Text = txtApellido.Text = txtDni.Text = txtLegajo.Text = string.Empty;
             txtFechaNac.Text = txtNacionalidad.Text = txtDireccion.Text = string.Empty;
-            txtTelefono.Text = txtEmail.Text = txtUsername.Text = string.Empty;
-            txtPassword.Text = txtPasswordConfirm.Text = string.Empty;
+            txtTelefono.Text = txtEmail.Text = /*txtUsername.Text =*/ string.Empty;
+            //txtPassword.Text = txtPasswordConfirm.Text = string.Empty;
             ddlSexo.SelectedIndex      = 0;
             ddlProvincia.SelectedIndex = 0;
             ddlEspecialidad.SelectedIndex = 0;

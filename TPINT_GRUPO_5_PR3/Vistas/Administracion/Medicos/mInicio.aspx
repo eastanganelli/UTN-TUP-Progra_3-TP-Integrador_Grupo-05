@@ -20,17 +20,12 @@
                 <label>Buscar</label>
                 <asp:TextBox ID="txtBuscar" runat="server" placeholder="Nombre, apellido o DNI..." style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:200px;" />
             </div>
-            <%--<div class="filter-group">
+            <div class="filter-group">
                 <label>Especialidad</label>
-                <asp:DropDownList ID="ddlEspecialidad" runat="server" style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:160px;">
-                    <asp:ListItem Text="Todas" Value="" />
-                    <asp:ListItem Text="Cardiología" Value="1" />
-                    <asp:ListItem Text="Pediatría" Value="2" />
-                    <asp:ListItem Text="Traumatología" Value="3" />
-                    <asp:ListItem Text="Clínica Médica" Value="4" />
-                    <asp:ListItem Text="Neurología" Value="5" />
+                <asp:DropDownList ID="ddlEspecialidad" runat="server"
+                    style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:160px;">
                 </asp:DropDownList>
-            </div>--%>
+            </div>
             <div class="filter-group">
                 <label>Estado</label>
                 <asp:DropDownList ID="ddlEstado" runat="server" style="height:34px; padding:0 10px; font-size:13px; border:1px solid #ccc; border-radius:5px; background:#fafafa; color:#1a2332; min-width:120px;">
