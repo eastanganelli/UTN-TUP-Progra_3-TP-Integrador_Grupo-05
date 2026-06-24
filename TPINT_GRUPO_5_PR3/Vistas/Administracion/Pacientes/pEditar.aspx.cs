@@ -11,17 +11,22 @@ namespace Vistas.Administracion.Pacientes
 {
     public partial class EditarPaciente : System.Web.UI.Page
     {
+        int idProvincia;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["idPaciente"] != null)
+            if (!IsPostBack)
             {
-                int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
-                CargarPaciente(idPaciente);
+                if (Request.QueryString["idPaciente"] != null)
+                {
+                    int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
+                    CargarPaciente(idPaciente);
+                }
+                else
+                {
+                    throw new Exception("No se proporcionó un ID de paciente válido en la URL.");
+                }
             }
-            else
-            {
-                throw new Exception("No se proporcionó un ID de paciente válido en la URL.");
-            }
+            
         }
 
         public void CargarPaciente(int idPaciente)
@@ -51,8 +56,8 @@ namespace Vistas.Administracion.Pacientes
             
             ddlSexo.SelectedValue = paciente.Sexo.ToString();
 
-
-            CargarProvincias(paciente.NombreProvincia);
+            idProvincia = paciente.IDProvincia;
+            CargarProvincias();
 
             CargarLocalidades();
             ddlLocalidad.SelectedValue = paciente.IDLocalidad.ToString();
@@ -61,22 +66,23 @@ namespace Vistas.Administracion.Pacientes
         }
         
 
-        public void CargarProvincias(string nombreProvincia)
+        public void CargarProvincias()
         {
             ProvinciasNegocio pnegocio = new ProvinciasNegocio();
             ddlProvincia.DataSource = pnegocio.ObtenerProvincias();
-            ddlProvincia.DataTextField = "Nombre";
-            ddlProvincia.DataValueField = "IDProvincia";
+            ddlProvincia.DataTextField = "nombre";
+            ddlProvincia.DataValueField = "id_provincia";
             ddlProvincia.DataBind();
-            ddlProvincia.SelectedValue = nombreProvincia;
+           
+            ddlProvincia.SelectedValue = idProvincia.ToString();
         }
 
         public void CargarLocalidades()
         {
             LocalidadesNegocio lnegocio = new LocalidadesNegocio();
-            ddlLocalidad.DataSource = lnegocio.ObtenerLocalidadesPorProvinciaNombre(nombreProvincia: ddlProvincia.SelectedItem.Text);
-            ddlLocalidad.DataTextField = "Nombre";
-            ddlLocalidad.DataValueField = "IDLocalidad";
+            ddlLocalidad.DataSource = lnegocio.ObtenerLocalidadesPorProvincia(idProvincia);
+            ddlLocalidad.DataTextField = "nombre";
+            ddlLocalidad.DataValueField = "id_localidad";
             ddlLocalidad.DataBind();
         }
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e)

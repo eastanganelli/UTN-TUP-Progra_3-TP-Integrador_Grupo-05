@@ -105,7 +105,7 @@ namespace Vistas.Administracion.Medicos {
                 Apellido        = txtApellido.Text.Trim(),
                 DNI             = txtDni.Text.Trim(),
                 Sexo            = ddlSexo.SelectedValue[0],
-                FechaNacimiento = txtFechaNac.Text,
+                FechaNacimiento = DateTime.Parse(txtFechaNac.Text),
                 Nacionalidad    = txtNacionalidad.Text.Trim(),
                 Direccion       = txtDireccion.Text.Trim(),
                 IDLocalidad     = int.Parse(ddlLocalidad.SelectedValue),

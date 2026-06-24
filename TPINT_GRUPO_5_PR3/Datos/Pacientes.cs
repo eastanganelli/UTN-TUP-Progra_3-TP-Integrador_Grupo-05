@@ -42,7 +42,7 @@ namespace Datos
             paciente.Telefono = fila["Telefono"].ToString();
             paciente.Direccion = fila["Direccion"].ToString();
             paciente.IDLocalidad = Convert.ToInt32(fila["Id_Localidad"]);
-            paciente.NombreProvincia = fila["Provincia"].ToString();
+            paciente.IDProvincia = Convert.ToInt32(fila["ID_Provincia"]);
 
             return paciente;
         }
@@ -114,16 +114,16 @@ namespace Datos
         public int ModificarPaciente(Paciente paciente)
         {
             SqlCommand cmd = new SqlCommand();
-            cmd.Parameters.AddWithValue("@IdPaciente", paciente.IdPaciente);
-            cmd.Parameters.AddWithValue("@Nombre", paciente.Nombre);
-            cmd.Parameters.AddWithValue("@Apellido", paciente.Apellido);
-            cmd.Parameters.AddWithValue("@FechaNacimiento", paciente.FechaNacimiento);
-            cmd.Parameters.AddWithValue("@Sexo", paciente.Sexo);
-            cmd.Parameters.AddWithValue("@Nacionalidad", paciente.Nacionalidad);
-            cmd.Parameters.AddWithValue("@Email", paciente.Email);
-            cmd.Parameters.AddWithValue("@Telefono", paciente.Telefono);
-            cmd.Parameters.AddWithValue("@Direccion", paciente.Direccion);
-            cmd.Parameters.AddWithValue("@IdLocalidad", paciente.IDLocalidad);
+            cmd.Parameters.AddWithValue("@id_paciente", paciente.IdPaciente);
+            cmd.Parameters.AddWithValue("@nombre", paciente.Nombre);
+            cmd.Parameters.AddWithValue("@apellido", paciente.Apellido);
+            cmd.Parameters.AddWithValue("@fecha_nacimiento", paciente.FechaNacimiento);
+            cmd.Parameters.AddWithValue("@sexo", paciente.Sexo);
+            cmd.Parameters.AddWithValue("@nacionalidad", paciente.Nacionalidad);
+            cmd.Parameters.AddWithValue("@email", paciente.Email);
+            cmd.Parameters.AddWithValue("@telefono", paciente.Telefono);
+            cmd.Parameters.AddWithValue("@direccion", paciente.Direccion);
+            cmd.Parameters.AddWithValue("@id_localidad", paciente.IDLocalidad);
             return accesoDatos.EjecutarProcedimientoAlmacenado(cmd, "sp_Paciente_Modificar");
         }
     }

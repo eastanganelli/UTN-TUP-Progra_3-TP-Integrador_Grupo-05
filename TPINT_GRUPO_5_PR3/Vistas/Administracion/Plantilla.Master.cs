@@ -16,6 +16,10 @@ namespace Vistas.Administracion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                nombreClinica = "Mi Clínica";
+            }
 
             if (Session["zezion"] == null)
             {

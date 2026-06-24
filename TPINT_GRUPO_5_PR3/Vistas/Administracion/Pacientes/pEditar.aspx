@@ -13,7 +13,13 @@
                 <h1>Editar Paciente</h1>
                 <p>Modificá los datos del paciente. El DNI no se puede cambiar.</p>
             </div>
-            <a href="~/Administracion/Pacientes/Pacientes.aspx" class="btn-volver">← Volver al listado</a>
+            <asp:HyperLink 
+    ID="hlVolver" 
+    runat="server" 
+    NavigateUrl="~/Administracion/Pacientes/pInicio.aspx" 
+    CssClass="btn-volver">
+    ← Volver al listado
+</asp:HyperLink>
         </div>
 
         <asp:Label ID="lblMensaje" runat="server" Visible="false" />

@@ -88,7 +88,7 @@ namespace Vistas.Administracion.Medicos {
 
             ddlSexo.SelectedValue = persona.Sexo.ToString().ToUpper();
 
-            if (DateTime.TryParse(persona.FechaNacimiento, out DateTime fecha))
+            if (DateTime.TryParse(persona.FechaNacimiento.ToString("dd-MM-yyyy"), out DateTime fecha))
                 txtFechaNac.Text = fecha.ToString("dd-MM-yyyy");
         }
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e) {
@@ -114,7 +114,7 @@ namespace Vistas.Administracion.Medicos {
                 Nombre          = txtNombreForm.Text.Trim(),
                 Apellido        = txtApellidoForm.Text.Trim(),
                 Sexo            = ddlSexo.SelectedValue[0],
-                FechaNacimiento = txtFechaNac.Text,
+                FechaNacimiento = DateTime.Parse(txtFechaNac.Text),
                 Nacionalidad    = txtNacionalidad.Text.Trim(),
                 Direccion       = txtDireccion.Text.Trim(),
                 IDLocalidad     = int.Parse(ddlLocalidad.SelectedValue),

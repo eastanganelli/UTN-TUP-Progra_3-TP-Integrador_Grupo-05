@@ -16,7 +16,7 @@ namespace Entidades {
         private string email;
         private string telefono;
         // Solo para mostrar
-        public string NombreProvincia { get; set; }
+        public int IDProvincia { get; set; }
         public Persona() {
             this.dni = string.Empty;
             this.id_persona = 0;

@@ -18,7 +18,7 @@ namespace Datos {
                 Nombre          = fila["nombre"].ToString(),
                 Apellido        = fila["apellido"].ToString(),
                 Sexo            = fila["sexo"].ToString()[0],
-                FechaNacimiento = fila["fecha_nacimiento"].ToString(),
+                FechaNacimiento = DateTime.Parse(fila["fecha_nacimiento"].ToString()),
                 Direccion       = fila["direccion"].ToString(),
                 IDLocalidad     = Convert.ToInt32(fila["id_localidad"]),
                 Email           = fila["email"].ToString(),
