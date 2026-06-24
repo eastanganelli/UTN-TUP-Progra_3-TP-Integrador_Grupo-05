@@ -79,6 +79,10 @@
     <Content Include="Administracion\Turnos\tEditar.aspx" />
     <Content Include="Administracion\Turnos\tNuevo.aspx" />
     <Content Include="Administracion\Turnos\tVer.aspx" />
+    <Content Include="Administracion\Usuarios\uEditar.aspx" />
+    <Content Include="Administracion\Usuarios\uInicio.aspx" />
+    <Content Include="Administracion\Usuarios\uNuevo.aspx" />
+    <Content Include="Administracion\Usuarios\uVer.aspx" />
     <Content Include="CSS\principal.css" />
     <Content Include="Login.aspx">
       <BrowseToURL>/Administracion/Inicio.aspx</BrowseToURL>
@@ -186,6 +190,34 @@
     <Compile Include="Administracion\Turnos\tVer.aspx.designer.cs">
       <DependentUpon>tVer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administracion\Usuarios\uEditar.aspx.cs">
+      <DependentUpon>uEditar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uEditar.aspx.designer.cs">
+      <DependentUpon>uEditar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uInicio.aspx.cs">
+      <DependentUpon>uInicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uInicio.aspx.designer.cs">
+      <DependentUpon>uInicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uNuevo.aspx.cs">
+      <DependentUpon>uNuevo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uNuevo.aspx.designer.cs">
+      <DependentUpon>uNuevo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uVer.aspx.cs">
+      <DependentUpon>uVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administracion\Usuarios\uVer.aspx.designer.cs">
+      <DependentUpon>uVer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -233,7 +265,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Administracion\Especialidades\" />
-    <Folder Include="Administracion\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entidades\Entidades.csproj">

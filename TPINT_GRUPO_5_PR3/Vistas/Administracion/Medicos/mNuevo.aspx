@@ -297,7 +297,7 @@
         <!-- ========================
              ACCESO AL SISTEMA
         ========================= -->
-        <div class="form-card">
+        <%--<div class="form-card">
             <h2>Acceso al Sistema <small style="color:#888;font-size:11px;text-transform:none;letter-spacing:0;">(opcional)</small></h2>
             <p class="seccion-nota">
                 Si completás usuario y contraseña, el médico podrá acceder al sistema.
@@ -326,7 +326,7 @@
                 </div>
 
             </div>
-        </div>
+        </div>--%>
 
         <!-- ACCIONES -->
         <div class="form-acciones">

@@ -33,35 +33,41 @@ namespace Datos {
             string consulta = $"SELECT * FROM vw_Medicos ORDER BY id_medico ASC OFFSET ({nro_pagina} - 1) * {cantidad_pagina} ROWS FETCH NEXT {cantidad_pagina} ROWS ONLY;";
             return conexion.ObtenerTabla(consulta, "Medico");
         }
-        public DataTable BuscarMedicos(string busqueda, bool? activo, int pagina, int porPagina) {
+        public DataTable BuscarMedicos(string busqueda, bool? activo, int? idEspecialidad, int pagina, int porPagina) {
             string sql = @"SELECT * FROM vw_Medicos
-                           WHERE (@busqueda IS NULL OR nombre  LIKE '%' + @busqueda + '%'
+                           WHERE (@busqueda IS NULL OR nombre   LIKE '%' + @busqueda + '%'
                                                     OR apellido LIKE '%' + @busqueda + '%'
                                                     OR dni      LIKE '%' + @busqueda + '%')
-                           AND   (@activo   IS NULL OR activo  = @activo)
+                           AND   (@activo          IS NULL OR activo          = @activo)
+                           AND   (@id_especialidad IS NULL OR id_especialidad = @id_especialidad)
                            ORDER BY id_medico ASC
                            OFFSET @offset ROWS FETCH NEXT @porPagina ROWS ONLY";
             var pBusqueda = new SqlParameter("@busqueda", SqlDbType.NVarChar, 100);
             pBusqueda.Value = string.IsNullOrEmpty(busqueda) ? (object)DBNull.Value : busqueda;
             var pActivo = new SqlParameter("@activo", SqlDbType.Bit);
             pActivo.Value = activo.HasValue ? (object)(activo.Value ? 1 : 0) : DBNull.Value;
+            var pEsp = new SqlParameter("@id_especialidad", SqlDbType.Int);
+            pEsp.Value = idEspecialidad.HasValue ? (object)idEspecialidad.Value : DBNull.Value;
             return conexion.ObtenerTablaParametros(sql, "Medico", new SqlParameter[] {
-                pBusqueda, pActivo,
+                pBusqueda, pActivo, pEsp,
                 new SqlParameter("@offset",    (pagina - 1) * porPagina),
                 new SqlParameter("@porPagina", porPagina)
             });
         }
-        public int ContarMedicos(string busqueda, bool? activo) {
+        public int ContarMedicos(string busqueda, bool? activo, int? idEspecialidad) {
             string sql = @"SELECT COUNT(*) FROM vw_Medicos
-                           WHERE (@busqueda IS NULL OR nombre  LIKE '%' + @busqueda + '%'
+                           WHERE (@busqueda IS NULL OR nombre   LIKE '%' + @busqueda + '%'
                                                     OR apellido LIKE '%' + @busqueda + '%'
                                                     OR dni      LIKE '%' + @busqueda + '%')
-                           AND   (@activo   IS NULL OR activo  = @activo)";
+                           AND   (@activo          IS NULL OR activo          = @activo)
+                           AND   (@id_especialidad IS NULL OR id_especialidad = @id_especialidad)";
             var pBusqueda = new SqlParameter("@busqueda", SqlDbType.NVarChar, 100);
             pBusqueda.Value = string.IsNullOrEmpty(busqueda) ? (object)DBNull.Value : busqueda;
             var pActivo = new SqlParameter("@activo", SqlDbType.Bit);
             pActivo.Value = activo.HasValue ? (object)(activo.Value ? 1 : 0) : DBNull.Value;
-            return conexion.ObtenerEscalar(sql, new SqlParameter[] { pBusqueda, pActivo });
+            var pEsp = new SqlParameter("@id_especialidad", SqlDbType.Int);
+            pEsp.Value = idEspecialidad.HasValue ? (object)idEspecialidad.Value : DBNull.Value;
+            return conexion.ObtenerEscalar(sql, new SqlParameter[] { pBusqueda, pActivo, pEsp });
         }
         public int AgregarMedico(Persona persona, Medico medico, out string mensaje) {
             SqlParameter pId  = new SqlParameter("@nuevo_id", SqlDbType.Int)           { Direction = ParameterDirection.Output };
