@@ -19,8 +19,13 @@ namespace Datos {
             };
         }
         public DataTable ObtenerMedicos() {
-            string consulta = "SELECT * FROM Medico";
-            return conexion.ObtenerTabla(consulta, "Medico");
+            string sql = @"SELECT m.id_medico,
+                          p.nombre + ' ' + p.apellido AS nombre
+                   FROM Medico m
+                   JOIN Persona p ON p.id_persona = m.id_persona
+                   WHERE m.activo = 1
+                   ORDER BY p.apellido, p.nombre";
+            return conexion.ObtenerTabla(sql, "Medico");
         }
         public int ObtenerCantidadDeMedicos() {
             return conexion.ObtenerEscalar("SELECT COUNT(*) FROM Medico");
