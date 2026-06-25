@@ -81,17 +81,19 @@ namespace Negocio
                 throw new Exception("Error al obtener el usuario por ID: " + ex.Message);
             }
         }
-        public int ObtenerCantidadDeUsuarios()
+        public int ObtenerCantidadDeUsuarios(string buscar = null, string rol = null, string estado = null)
         {
-            return datosUsuarios.ObtenerCantidadDeUsuarios();
+            return datosUsuarios.ObtenerCantidadDeUsuarios(buscar, rol, estado);
         }
-        public int ObtenerCantidadDePaginas(int CantPagina)
+        public int ObtenerCantidadDePaginas(int CantPagina, string buscar = null,
+                                     string rol = null, string estado = null)
         {
-            return datosUsuarios.ObtenerCantidadDePaginas(CantPagina);
+            return datosUsuarios.ObtenerCantidadDePaginas(CantPagina, buscar, rol, estado);
         }
-        public DataTable ObtenerUsuariosPaginados(int NroPagina, int CantPagina)
+        public DataTable ObtenerUsuariosPaginados(int NroPagina, int CantPagina,
+                                            string buscar = null, string rol = null, string estado = null)
         {
-            return datosUsuarios.ObtenerUsuariosPaginado(NroPagina, CantPagina);
+            return datosUsuarios.ObtenerUsuariosPaginado(NroPagina, CantPagina, buscar, rol, estado);
         }
 
         public Usuario Login(string username, string password)

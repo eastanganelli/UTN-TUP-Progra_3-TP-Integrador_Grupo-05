@@ -82,16 +82,52 @@ namespace Datos {
             string consulta = "SELECT * FROM Usuario";
             return conexion.ObtenerTabla(consulta, "Usuario");
         }
-        public int ObtenerCantidadDeUsuarios() {
-            return conexion.ObtenerEscalar("SELECT COUNT(*) FROM Usuario");
+        public int ObtenerCantidadDeUsuarios(string buscar = null, string rol = null, string estado = null)
+        {
+            string sql = @"SELECT COUNT(*) FROM Usuario u
+                   WHERE (@buscar IS NULL OR u.username LIKE '%' + @buscar + '%')
+                   AND   (@rol    IS NULL OR u.tipo     = @rol)
+                   AND   (@estado IS NULL OR u.activo   = @estado)";
+
+            var pBuscar = new SqlParameter("@buscar", SqlDbType.NVarChar, 100);
+            pBuscar.Value = string.IsNullOrEmpty(buscar) ? (object)DBNull.Value : buscar;
+            var pRol = new SqlParameter("@rol", SqlDbType.NVarChar, 50);
+            pRol.Value = string.IsNullOrEmpty(rol) ? (object)DBNull.Value : rol;
+            var pEstado = new SqlParameter("@estado", SqlDbType.Bit);
+            pEstado.Value = string.IsNullOrEmpty(estado) ? (object)DBNull.Value : (estado == "1" ? 1 : 0);
+
+            return conexion.ObtenerEscalar(sql, new SqlParameter[] { pBuscar, pRol, pEstado });
         }
-        public int ObtenerCantidadDePaginas(int cantidad_pagina = 10) {
-            int total = conexion.ObtenerEscalar("SELECT COUNT(*) FROM Usuario");
+        public int ObtenerCantidadDePaginas(int cantidad_pagina = 10, string buscar = null,
+                                      string rol = null, string estado = null)
+        {
+            int total = ObtenerCantidadDeUsuarios(buscar, rol, estado);
             return (int)Math.Ceiling((double)total / cantidad_pagina);
         }
-        public DataTable ObtenerUsuariosPaginado(int nro_pagina, int cantidad_pagina = 10) {
-            string consulta = $"SELECT * FROM Usuario ORDER BY id_usuario ASC LIMIT {cantidad_pagina} OFFSET (({nro_pagina}) * {cantidad_pagina})";
-            return conexion.ObtenerTabla(consulta, "Usuario");
+        public DataTable ObtenerUsuariosPaginado(int nro_pagina, int cantidad_pagina = 10,
+                                            string buscar = null, string rol = null, string estado = null)
+        {
+            int offset = (nro_pagina - 1) * cantidad_pagina;
+            string sql = $@"SELECT u.id_usuario, u.username, u.tipo, u.id_medico, u.activo,
+                           p.nombre + ' ' + p.apellido AS NombreMedico
+                    FROM Usuario u
+                    LEFT JOIN Medico  m ON m.id_medico  = u.id_medico
+                    LEFT JOIN Persona p ON p.id_persona = m.id_persona
+                    WHERE (@buscar IS NULL OR u.username LIKE '%' + @buscar + '%')
+                    AND   (@rol    IS NULL OR u.tipo     = @rol)
+                    AND   (@estado IS NULL OR u.activo   = @estado)
+                    ORDER BY u.id_usuario ASC
+                    OFFSET {offset} ROWS
+                    FETCH NEXT {cantidad_pagina} ROWS ONLY";
+
+            var pBuscar = new SqlParameter("@buscar", SqlDbType.NVarChar, 100);
+            pBuscar.Value = string.IsNullOrEmpty(buscar) ? (object)DBNull.Value : buscar;
+            var pRol = new SqlParameter("@rol", SqlDbType.NVarChar, 50);
+            pRol.Value = string.IsNullOrEmpty(rol) ? (object)DBNull.Value : rol;
+            var pEstado = new SqlParameter("@estado", SqlDbType.Bit);
+            pEstado.Value = string.IsNullOrEmpty(estado) ? (object)DBNull.Value : (estado == "1" ? 1 : 0);
+
+            return conexion.ObtenerTablaParametros(sql, "Usuario", new SqlParameter[] { pBuscar, pRol, pEstado });
         }
     }
 }

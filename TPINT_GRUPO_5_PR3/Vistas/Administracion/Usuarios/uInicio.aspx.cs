@@ -23,25 +23,21 @@ namespace Vistas.Administracion.Usuarios {
             string rol = ddlRol.SelectedValue;
             string estado = ddlEstado.SelectedValue;
 
-            DataTable dt = negocio.ObtenerUsuariosPaginados(pagina, CantPagina);
-            int totalUsaurios = negocio.ObtenerCantidadDeUsuarios();
-            int totalPaginas = negocio.ObtenerCantidadDePaginas(CantPagina);
+            DataTable dt = negocio.ObtenerUsuariosPaginados(pagina, CantPagina, buscar, rol, estado);
+            int totalUsuarios = negocio.ObtenerCantidadDeUsuarios(buscar, rol, estado);
+            int totalPaginas = negocio.ObtenerCantidadDePaginas(CantPagina, buscar, rol, estado);
 
             rptUsuarios.DataSource = dt;
             rptUsuarios.DataBind();
 
-            lblTotalUsuarios.Text = totalUsaurios.ToString();
+            lblTotalUsuarios.Text = totalUsuarios.ToString();
             lblPaginaInfo.Text = $"Página {pagina} de {(totalPaginas == 0 ? 1 : totalPaginas)}";
 
             ddlPagina.Items.Clear();
             for (int i = 1; i <= totalPaginas; i++)
-            {
                 ddlPagina.Items.Add(new ListItem($"Pág. {i}", i.ToString()));
-            }
             if (ddlPagina.Items.FindByValue(pagina.ToString()) != null)
-            {
                 ddlPagina.SelectedValue = pagina.ToString();
-            }
 
             lbtnAnterior.Enabled = pagina > 1;
             lbtnSiguiente.Enabled = pagina < totalPaginas;
@@ -73,7 +69,8 @@ namespace Vistas.Administracion.Usuarios {
         protected void lbtnSiguiente_Click(object sender, EventArgs e) 
         {
             int pagina = (int)ViewState["PaginaActual"];
-            int totalPaginas = negocio.ObtenerCantidadDePaginas(CantPagina);
+            int totalPaginas = negocio.ObtenerCantidadDePaginas(CantPagina,
+                                   txtBuscar.Text.Trim(), ddlRol.SelectedValue, ddlEstado.SelectedValue);
             if (pagina < totalPaginas) CargarGrilla(pagina + 1);
         }
         protected void ddlPagina_SelectedIndexChanged(object sender, EventArgs e) { }

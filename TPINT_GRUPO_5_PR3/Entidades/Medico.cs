@@ -32,5 +32,9 @@ namespace Entidades
         public string Legajo { get => legajo; set => legajo = value; }
         public int IDEspecialidad { get => id_especialidad; set => id_especialidad = value; }
         public bool Estado { get => activo; set => activo = value; }
+
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Especialidad { get; set; }
     }
 }
