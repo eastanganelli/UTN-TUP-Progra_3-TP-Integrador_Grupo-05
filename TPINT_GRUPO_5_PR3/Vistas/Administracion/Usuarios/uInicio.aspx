@@ -1,4 +1,4 @@
-<%@ Page Title="Usuarios - Inicio" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="uInicio.aspx.cs" Inherits="Vistas.Administracion.Usuarios.Usuarios" %>
+﻿<%@ Page Title="Usuarios - Inicio" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="uInicio.aspx.cs" Inherits="Vistas.Administracion.Usuarios.Usuarios" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>

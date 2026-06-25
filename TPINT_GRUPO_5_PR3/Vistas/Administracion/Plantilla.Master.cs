@@ -42,8 +42,9 @@ namespace Vistas.Administracion
             if(rol == "admin")
             {
                 MenuPrincipal.Items.Add(new MenuItem("Medicos", "Medicos", "", "~/Administracion/Medicos/mInicio.aspx"));
+                MenuPrincipal.Items.Add(new MenuItem("Usuarios", "Usuarios", "", "~/Administracion/Usuarios/uInicio.aspx"));
                 MenuPrincipal.Items.Add(new MenuItem("Reportes", "Reportes", "", "~/Administracion/Reportes/ReportesInicio.aspx"));
             }
         }
-        }
     }
+}

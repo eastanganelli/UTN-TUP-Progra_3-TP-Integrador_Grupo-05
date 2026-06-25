@@ -1,4 +1,4 @@
-<%@ Page Title="Usuario - Editar" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="uEditar.aspx.cs" Inherits="Vistas.Administracion.Usuarios.EditarUsuario" %>
+﻿<%@ Page Title="Usuario - Editar" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="uEditar.aspx.cs" Inherits="Vistas.Administracion.Usuarios.EditarUsuario" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>

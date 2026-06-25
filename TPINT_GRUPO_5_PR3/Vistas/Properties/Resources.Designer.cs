@@ -61,7 +61,7 @@ namespace Vistas.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clinica.
+        ///   Looks up a localized string similar to Mi Clínica.
         /// </summary>
         internal static string strNombreClinica {
             get {
