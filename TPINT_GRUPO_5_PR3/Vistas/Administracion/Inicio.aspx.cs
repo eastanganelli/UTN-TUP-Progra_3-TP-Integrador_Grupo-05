@@ -14,7 +14,6 @@ namespace Vistas.Administracion {
                 Usuario usuario = (Usuario)Session["zezion"];
                 lblRol.Text = usuario.Rol == "admin" ? "Administrador" : "Dr. " + usuario.NombreUsuario;
             } catch(NoAccesoPagina ex) {
-                Debug.WriteLine($"NoAccesoPagina: {ex.Message}");
                 Response.Redirect("/Login.aspx");
             }
         }
