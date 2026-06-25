@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Ver Paciente" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pVer.aspx.cs" Inherits="Vistas.Administración.Pacientes.VerPaciente" %>
+﻿<%@ Page Title="Ver Paciente" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="True" CodeBehind="pVer.aspx.cs" Inherits="Vistas.Administracion.Pacientes.pVer" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -71,6 +71,27 @@
             height: 7px;
             border-radius: 50%;
             background-color: #1a7a4a;
+            display: inline-block;
+        }
+
+        .badge-inactivo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #c0392b;
+            background-color: #fdecea;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .badge-inactivo::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #c0392b;
             display: inline-block;
         }
 
@@ -234,17 +255,29 @@
              CABECERA DEL PERFIL
         ============================= -->
         <div class="perfil-header">
-            <div class="perfil-avatar">LR</div>
+            <div class="perfil-avatar">
+                <asp:Label ID="lblIniciales" runat="server"></asp:Label>
+            </div>
 
             <div class="perfil-header-info">
-                <h1>Laura Beatriz Ramírez</h1>
-                <span class="nro-paciente">Paciente N° 00847</span>
-                <p class="sub-info">DNI 30.112.458 &nbsp;|&nbsp; 38 años &nbsp;|&nbsp; Femenino</p>
+                <h1>
+                    <asp:Label ID="lblNombreBanner" runat="server"></asp:Label>
+                </h1>
+                <span class="nro-paciente">
+                <asp:Label ID="lblPaciente" runat="server"></asp:Label>
+                </span>
+                <p class="sub-info">DNI&nbsp;
+                    <asp:Label ID="lblDNIBanner" runat="server"></asp:Label>
+                    &nbsp;|&nbsp;
+                    <asp:Label ID="lblEdadBanner" runat="server"></asp:Label>
+&nbsp;años &nbsp;|&nbsp;
+                    <asp:Label ID="lblSexoBanner" runat="server"></asp:Label>
+                </p>
             </div>
 
             <div class="perfil-estado">
-                <span class="badge-activo">Activa</span>
-                <a href="~/Administracion/Pacientes/Pacientes.aspx" class="btn-volver">← Volver al listado</a>
+                <asp:Label ID="lblEstado" runat="server" CssClass="badge-activo"></asp:Label>
+                            <asp:HyperLink ID="hlVolver"  runat="server" NavigateUrl="~/Administracion/Pacientes/pInicio.aspx" CssClass="btn-volver">← Volver al listado</asp:HyperLink>
             </div>
         </div>
 
@@ -257,20 +290,20 @@
             <div class="info-card">
                 <h2>Datos Personales</h2>
                 <div class="dato-fila">
-                    <span class="dato-label">Nombre completo</span>
-                    <span class="dato-valor">Laura Beatriz Ramírez</span>
+                    <span class="dato-label">Nombre completo</span>&nbsp;
+                    <asp:Label ID="lblNombreCompleto" runat="server"></asp:Label>
                 </div>
                 <div class="dato-fila">
-                    <span class="dato-label">Fecha de nacimiento</span>
-                    <span class="dato-valor">22/09/1986</span>
+                    <span class="dato-label">Fecha de nacimiento</span>&nbsp;
+                    <asp:Label ID="lblFecha" runat="server"></asp:Label>
                 </div>
                 <div class="dato-fila">
-                    <span class="dato-label">DNI</span>
-                    <span class="dato-valor">30.112.458</span>
+                    <span class="dato-label">DNI</span>&nbsp;
+                    <asp:Label ID="lblDNI" runat="server"></asp:Label>
                 </div>
                 <div class="dato-fila">
-                    <span class="dato-label">Género</span>
-                    <span class="dato-valor">Femenino</span>
+                    <span class="dato-label">Género</span>&nbsp;
+                    <asp:Label ID="lblGenero" runat="server"></asp:Label>
                 </div>
             </div>
 
@@ -278,20 +311,16 @@
             <div class="info-card">
                 <h2>Contacto</h2>
                 <div class="dato-fila">
-                    <span class="dato-label">Teléfono</span>
-                    <span class="dato-valor">+54 11 4710-2284</span>
+                    <span class="dato-label">Teléfono</span>&nbsp;
+                    <asp:Label ID="lblTelefono" runat="server"></asp:Label>
                 </div>
                 <div class="dato-fila">
-                    <span class="dato-label">Celular</span>
-                    <span class="dato-valor">+54 9 11 6631-5509</span>
+                    <span class="dato-label">Correo electrónico</span>&nbsp;
+                    <asp:Label ID="lblCorreo" runat="server"></asp:Label>
                 </div>
                 <div class="dato-fila">
-                    <span class="dato-label">Correo electrónico</span>
-                    <span class="dato-valor">l.ramirez@gmail.com</span>
-                </div>
-                <div class="dato-fila">
-                    <span class="dato-label">Dirección</span>
-                    <span class="dato-valor">Av. Corrientes 4820, CABA</span>
+                    <span class="dato-label">Dirección</span>&nbsp;
+                    <asp:Label ID="lblDireccion" runat="server"></asp:Label>
                 </div>
             </div>
 

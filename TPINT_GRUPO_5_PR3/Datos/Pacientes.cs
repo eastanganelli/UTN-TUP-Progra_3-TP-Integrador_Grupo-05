@@ -43,6 +43,7 @@ namespace Datos
             paciente.Direccion = fila["Direccion"].ToString();
             paciente.IDLocalidad = Convert.ToInt32(fila["Id_Localidad"]);
             paciente.IDProvincia = Convert.ToInt32(fila["ID_Provincia"]);
+            paciente.Estado = Convert.ToBoolean(fila["Activo"]);
 
             return paciente;
         }
