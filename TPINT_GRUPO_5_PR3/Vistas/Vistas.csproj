@@ -218,6 +218,7 @@
     <Compile Include="Administracion\Usuarios\uVer.aspx.designer.cs">
       <DependentUpon>uVer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ControlAcceso.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

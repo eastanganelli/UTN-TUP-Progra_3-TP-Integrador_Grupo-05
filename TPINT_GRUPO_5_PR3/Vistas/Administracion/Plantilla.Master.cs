@@ -36,14 +36,14 @@ namespace Vistas.Administracion
             MenuPrincipal.Items.Clear();
 
             MenuPrincipal.Items.Add(new MenuItem("Inicio", "Inicio", "", "~/Administracion/Inicio.aspx"));
-            MenuPrincipal.Items.Add(new MenuItem("Pacientes", "Pacientes", "", "~/Administracion/Pacientes/pInicio.aspx"));
             MenuPrincipal.Items.Add(new MenuItem("Turnos", "Turnos", "", "~/Administracion/Turnos/tInicio.aspx"));
 
             if(rol == "admin")
             {
-                MenuPrincipal.Items.Add(new MenuItem("Medicos", "Medicos", "", "~/Administracion/Medicos/mInicio.aspx"));
-                MenuPrincipal.Items.Add(new MenuItem("Usuarios", "Usuarios", "", "~/Administracion/Usuarios/uInicio.aspx"));
-                MenuPrincipal.Items.Add(new MenuItem("Reportes", "Reportes", "", "~/Administracion/Reportes/ReportesInicio.aspx"));
+                MenuPrincipal.Items.Add(new MenuItem("Medicos",   "Medicos",   "", "~/Administracion/Medicos/mInicio.aspx"));
+                MenuPrincipal.Items.Add(new MenuItem("Pacientes", "Pacientes", "", "~/Administracion/Pacientes/pInicio.aspx"));
+                MenuPrincipal.Items.Add(new MenuItem("Reportes",  "Reportes",  "", "~/Administracion/Reportes/ReportesInicio.aspx"));
+                MenuPrincipal.Items.Add(new MenuItem("Usuarios",  "Usuarios",  "", "~/Administracion/Usuarios/uInicio.aspx"));
             }
         }
     }

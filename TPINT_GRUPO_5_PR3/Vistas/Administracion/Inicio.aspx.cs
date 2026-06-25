@@ -8,17 +8,15 @@ namespace Vistas.Administracion {
     {   
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["zezion"] == null)
-            {
+            try {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin", "medico");
+                Usuario usuario = (Usuario)Session["zezion"];
+                lblRol.Text = usuario.Rol == "admin" ? "Administrador" : "Dr. " + usuario.NombreUsuario;
+            } catch(NoAccesoPagina ex) {
+                Debug.WriteLine($"NoAccesoPagina: {ex.Message}");
                 Response.Redirect("/Login.aspx");
             }
-
-            Usuario usuario = (Usuario)Session["zezion"];
-
-            lblRol.Text = usuario.Rol == "admin" ? "Administrador" : "Dr. " + usuario.NombreUsuario;
-
-            //UsuariosNegocio negocioUsuarios = new UsuariosNegocio();
-            //Debug.WriteLine($"Cantidad de usuarios: {negocioUsuarios.ObtenerCantidadDeUsuarios()}");
         }
     }
 }

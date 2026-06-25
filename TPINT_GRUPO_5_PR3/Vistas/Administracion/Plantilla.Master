@@ -21,11 +21,6 @@
                 <!-- MENU CONTROL -->
                 <asp:Menu ID="MenuPrincipal" runat="server" Orientation="Vertical" RenderingMode="List" CssClass="menu-asp">
                     <Items>
-                        <asp:MenuItem Text="Inicio" NavigateUrl="~/Administracion/Inicio.aspx" />
-                        <asp:MenuItem Text="Medicos" NavigateUrl="~/Administracion/Medicos/mInicio.aspx" />
-                        <asp:MenuItem Text="Pacientes" NavigateUrl="~/Administracion/Pacientes/pInicio.aspx" />
-                        <asp:MenuItem Text="Turnos" NavigateUrl="~/Administracion/Turnos/tInicio.aspx" />
-                        <asp:MenuItem Text="Reportes" NavigateUrl="~/Administracion/Reportes/ReportesInicio.aspx" />
                     </Items>
                 </asp:Menu>
             </div>
