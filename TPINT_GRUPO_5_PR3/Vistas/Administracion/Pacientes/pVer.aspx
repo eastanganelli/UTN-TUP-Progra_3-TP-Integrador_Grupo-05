@@ -244,6 +244,40 @@
             background-color: #e8f0fb;
             color: #185FA5;
         }
+
+        .tabla-historial{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    border:none;
+}
+
+.tabla-historial th{
+    text-align:left;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    color:#8a8a8a;
+    letter-spacing:.5px;
+    padding:12px 8px;
+    border-bottom:1px solid #e8e8e8;
+    background:#fff;
+}
+
+.tabla-historial td{
+    padding:14px 8px;
+    border-bottom:1px solid #efefef;
+    color:#1a2332;
+    vertical-align:middle;
+}
+
+.tabla-historial tr:last-child td{
+    border-bottom:none;
+}
+
+.tabla-historial tr:hover td{
+    background:#fafcff;
+}
     </style>
 </asp:Content>
 
@@ -327,48 +361,51 @@
             <!-- Historial de consultas -->
             <div class="info-card full-width">
                 <h2>Historial de Consultas</h2>
-                <table class="tabla-historial">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Especialidad</th>
-                            <th>Médico</th>
-                            <th>Diagnóstico / Motivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>10/06/2025</td>
-                            <td>Cardiología</td>
-                            <td><span class="medico-ref">Dr. Méndez</span></td>
-                            <td>Seguimiento hipertensión leve</td>
-                        </tr>
-                        <tr>
-                            <td>22/04/2025</td>
-                            <td>Endocrinología</td>
-                            <td><span class="medico-ref">Dra. Torres</span></td>
-                            <td>Control hipotiroidismo – ajuste dosis levotiroxina</td>
-                        </tr>
-                        <tr>
-                            <td>05/02/2025</td>
-                            <td>Clínica Médica</td>
-                            <td><span class="medico-ref">Dr. Gutiérrez</span></td>
-                            <td>Chequeo anual – sin novedades</td>
-                        </tr>
-                        <tr>
-                            <td>18/11/2024</td>
-                            <td>Cardiología</td>
-                            <td><span class="medico-ref">Dr. Méndez</span></td>
-                            <td>Electrocardiograma de rutina</td>
-                        </tr>
-                        <tr>
-                            <td>03/08/2024</td>
-                            <td>Ginecología</td>
-                            <td><span class="medico-ref">Dra. Ibáñez</span></td>
-                            <td>Control anual ginecológico</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <asp:Label ID="lblConsultas" runat="server"></asp:Label>
+                <asp:GridView ID="gvHistorial"
+    runat="server"
+    AutoGenerateColumns="False"
+    CssClass="tabla-historial"
+    GridLines="None"
+    BorderStyle="None"
+    BorderWidth="0"
+    CellPadding="8"
+    ShowHeader="True">
+
+    <HeaderStyle CssClass="gv-header" />
+    <RowStyle CssClass="gv-row" />
+
+    <Columns>
+
+        <asp:TemplateField HeaderText="FECHA">
+            <ItemTemplate>
+                <asp:Label ID="lblFecha" runat="server" Text='<%# Bind("Fecha") %>'></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="ESPECIALIDAD">
+            <ItemTemplate>
+                <asp:Label ID="lblEspecialidad" runat="server" Text='<%# Bind("Especialidad") %>'></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="MÉDICO">
+    <ItemTemplate>
+        <span class="medico-ref">
+            <%# Eval("Medico") %>
+        </span>
+    </ItemTemplate>
+</asp:TemplateField>
+
+        <asp:TemplateField HeaderText="DIAGNÓSTICO / MOTIVO">
+            <ItemTemplate>
+                <asp:Label ID="lblDiagnostico" runat="server" Text='<%# Bind("observacion") %>'></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+
+    </Columns>
+
+</asp:GridView>
             </div>
 
             <!-- Próximos turnos -->

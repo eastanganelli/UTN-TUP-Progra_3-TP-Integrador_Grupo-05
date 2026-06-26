@@ -17,5 +17,10 @@ namespace Negocio {
         {
             return _datosTurnos.ObtenerUltimosTurnos(id_medico, top_limite);
         }
+
+        public DataTable ObtenerTurnosPorPaciente(int idPaciente)
+        {
+            return _datosTurnos.ObtenerTurnosPorPaciente(idPaciente);
+        }
     }
 }

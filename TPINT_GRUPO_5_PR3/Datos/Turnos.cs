@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -42,6 +43,23 @@ namespace Datos {
             return dt;
         }
 
-
+        public DataTable ObtenerTurnosPorPaciente(int idPaciente)
+        {
+            string consulta = @"SELECT
+                                    ta.id_turno as id_turno, 
+                                    ta.Paciente as paciente,
+                                    ta.Medico as medico, 
+                                    ta.Especialidad AS especialidad, 
+                                    CONVERT(varchar, ta.FechaHora, 103) AS fecha,
+                                    CONVERT(varchar, ta.FechaHora, 108) AS horario,
+                                    ta.estado as estado,
+                                    ta.observacion AS observacion
+                                FROM vw_Turnos ta
+                                WHERE ta.id_paciente = @idPaciente
+                                ORDER BY ta.FechaHora DESC";
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@idPaciente", idPaciente));
+            return conexion.ObtenerTablaParametros(consulta, "turnos_paciente", parametros.ToArray());  
+        }
     }
 }

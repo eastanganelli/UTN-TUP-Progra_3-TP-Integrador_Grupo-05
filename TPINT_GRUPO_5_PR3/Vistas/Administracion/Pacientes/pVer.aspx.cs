@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -21,6 +22,8 @@ namespace Vistas.Administracion.Pacientes
                 
                 int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
                 CargarPaciente(idPaciente);
+                lblConsultas.Visible = false;
+                CargarConsultas(idPaciente);
             }
             catch (NoAccesoPagina)
             {
@@ -33,6 +36,23 @@ namespace Vistas.Administracion.Pacientes
 
         }
 
+        public void CargarConsultas(int idPaciente)
+        {
+            TurnosNegocio negocio = new TurnosNegocio();
+            DataTable turnos = negocio.ObtenerTurnosPorPaciente(idPaciente);
+            if (turnos.Rows.Count > 0)
+            {
+                gvHistorial.DataSource = turnos;
+                gvHistorial.DataBind();
+            }
+            else
+            {
+                gvHistorial.Visible = false;
+                lblConsultas.Text = "No se encontraron consultas para este paciente.";
+                lblConsultas.CssClass = "alert alert-info";
+                lblConsultas.Visible = true;
+            }
+        }
         public void CargarPaciente(int idPaciente)
         {
             PacientesNegocio negocio = new PacientesNegocio();
