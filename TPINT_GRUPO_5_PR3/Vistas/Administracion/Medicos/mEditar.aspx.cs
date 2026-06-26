@@ -153,6 +153,7 @@ namespace Vistas.Administracion.Medicos {
             catch (Exception ex) {
                 MostrarMensaje(ex.Message, esError: true);
             }
+            Response.Redirect("/Administracion/Medicos/mInicio.aspx");
         }
         protected void btnCancelar_Click(object sender, EventArgs e) {
             Response.Redirect("mInicio.aspx");

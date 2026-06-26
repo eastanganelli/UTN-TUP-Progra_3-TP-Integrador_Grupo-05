@@ -159,11 +159,11 @@ namespace Vistas.Administracion.Medicos {
 
                 MostrarMensaje(string.IsNullOrEmpty(mensaje) ? "Médico registrado correctamente." : mensaje, esError: false);
                 LimpiarFormulario();
-                Response.Redirect("mInicio.aspx");
             }
             catch (Exception ex) {
                 MostrarMensaje(ex.Message, esError: true);
             }
+            Response.Redirect("mInicio.aspx");
         }
         protected void btnLimpiar_Click(object sender, EventArgs e) {
             LimpiarFormulario();
@@ -171,8 +171,7 @@ namespace Vistas.Administracion.Medicos {
         private void LimpiarFormulario() {
             txtNombre.Text = txtApellido.Text = txtDni.Text = txtLegajo.Text = string.Empty;
             txtFechaNac.Text = txtNacionalidad.Text = txtDireccion.Text = string.Empty;
-            txtTelefono.Text = txtEmail.Text = /*txtUsername.Text =*/ string.Empty;
-            //txtPassword.Text = txtPasswordConfirm.Text = string.Empty;
+            txtTelefono.Text = txtEmail.Text = string.Empty;
             ddlSexo.SelectedIndex      = 0;
             ddlProvincia.SelectedIndex = 0;
             ddlEspecialidad.SelectedIndex = 0;
