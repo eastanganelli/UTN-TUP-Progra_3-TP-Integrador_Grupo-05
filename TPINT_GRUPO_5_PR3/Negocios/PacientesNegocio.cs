@@ -63,5 +63,13 @@ namespace Negocio
                 throw new Exception("No se pudo modificar el paciente. Verifique los datos proporcionados.");
             }
         }
+
+        public int AgregarPaciente(Paciente paciente)
+        {
+            Pacientes pacientes = new Pacientes();
+            int idPaciente = pacientes.AgregarPaciente(paciente);
+           
+            return idPaciente;
+        }
     }
 }

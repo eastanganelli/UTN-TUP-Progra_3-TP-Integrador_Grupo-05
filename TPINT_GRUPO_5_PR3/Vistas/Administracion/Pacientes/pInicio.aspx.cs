@@ -124,5 +124,10 @@ namespace Vistas.Administracion.Pacientes
             }
 
         }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("pNuevo.aspx");
+        }
     }
 }

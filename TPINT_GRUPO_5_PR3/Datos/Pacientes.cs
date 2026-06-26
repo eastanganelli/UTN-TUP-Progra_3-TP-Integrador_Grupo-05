@@ -115,7 +115,21 @@ namespace Datos
         public int ModificarPaciente(Paciente paciente)
         {
             SqlCommand cmd = new SqlCommand();
+            PrepararParametros(paciente, cmd);
             cmd.Parameters.AddWithValue("@id_paciente", paciente.IdPaciente);
+            return accesoDatos.EjecutarProcedimientoAlmacenado(cmd, "sp_Paciente_Modificar");
+        }
+
+        public int AgregarPaciente(Paciente paciente)
+        {
+            SqlCommand cmd = new SqlCommand();
+            PrepararParametros(paciente, cmd);
+            cmd.Parameters.AddWithValue("@dni", paciente.DNI);
+            return accesoDatos.EjecutarProcedimientoAlmacenado(cmd, "sp_Paciente_Alta");
+        }
+
+        public void PrepararParametros(Paciente paciente, SqlCommand cmd)
+        {
             cmd.Parameters.AddWithValue("@nombre", paciente.Nombre);
             cmd.Parameters.AddWithValue("@apellido", paciente.Apellido);
             cmd.Parameters.AddWithValue("@fecha_nacimiento", paciente.FechaNacimiento);
@@ -125,7 +139,7 @@ namespace Datos
             cmd.Parameters.AddWithValue("@telefono", paciente.Telefono);
             cmd.Parameters.AddWithValue("@direccion", paciente.Direccion);
             cmd.Parameters.AddWithValue("@id_localidad", paciente.IDLocalidad);
-            return accesoDatos.EjecutarProcedimientoAlmacenado(cmd, "sp_Paciente_Modificar");
+            
         }
     }
 }

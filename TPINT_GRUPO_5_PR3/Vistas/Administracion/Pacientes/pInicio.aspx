@@ -15,9 +15,9 @@
         <div class="page-header">
             <div>
                 <div class="page-title">Pacientes</div>
-                <div class="page-subtitle">Gestión de pacientes registrados en el sistema</div>
+                <div class="page-subtitle">GestGestión de pacientes registrados en el sistema</div>
             </div>
-            <button class="btn-primary">+ Nuevo paciente</button>
+            <asp:Button class="btn-primary" ID="btnAgregar" runat="server" Text="+ Agregar Paciente" OnClick="btnAgregar_Click" />
         </div>
 
         <div class="filters-bar">

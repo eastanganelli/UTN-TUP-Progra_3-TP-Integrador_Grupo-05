@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Nuevo Paciente" Language="C#" MasterPageFile="~/Administración/Plantilla.Master" AutoEventWireup="true" CodeBehind="pNuevo.aspx.cs" Inherits="Vistas.Administración.Pacientes.pNuevo" %>
+﻿<%@ Page Title="Nuevo Paciente" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="pNuevo.aspx.cs" Inherits="Vistas.Administracion.Pacientes.pNuevo" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -22,11 +22,11 @@
                 <h1>Nuevo Paciente</h1>
                 <p>Completá los datos para registrar un nuevo paciente en el sistema</p>
             </div>
-            <a href="~/Administracion/Pacientes/Pacientes.aspx" class="btn-volver">← Volver al listado</a>
+            <asp:HyperLink ID="hlVolver"  runat="server" NavigateUrl="~/Administracion/Pacientes/pInicio.aspx" CssClass="btn-volver">← Volver al listado</asp:HyperLink>
         </div>
 
         <!-- Mensaje resultado -->
-        <asp:Label ID="lblMensaje" runat="server" Visible="false" />
+        <asp:Label ID="lblMensaje" runat="server"></asp:Label>
 
         <!-- ========================
              DATOS PERSONALES
@@ -84,6 +84,8 @@
                     <asp:TextBox ID="txtNacionalidad" runat="server" MaxLength="100" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtNacionalidad"
                         CssClass="validador" ErrorMessage="La nacionalidad es requerida." Display="Dynamic" />
+                    <asp:RegularExpressionValidator ID="revNacionalidad" runat="server" ControlToValidate="txtNacionalidad" ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]{2,50}$"
+                    ErrorMessage="Ingrese una nacionalidad válida." CssClass="validador" />
                 </div>
 
             </div>
