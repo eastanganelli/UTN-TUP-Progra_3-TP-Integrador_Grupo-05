@@ -25,9 +25,13 @@ namespace Vistas.Administracion.Pacientes
                     lblCantidad.Text = cantidadPacientes.ToString();
                 }
             }
-            catch (NoAccesoPagina ex)
+            catch (NoAccesoPagina)
             {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
 

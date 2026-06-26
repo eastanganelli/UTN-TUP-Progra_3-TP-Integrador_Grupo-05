@@ -22,9 +22,13 @@ namespace Vistas.Administracion.Usuarios {
                     CargarGrilla(1);
                 }
             }
-            catch (NoAccesoPagina ex)
+            catch (NoAccesoPagina)
             {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
 

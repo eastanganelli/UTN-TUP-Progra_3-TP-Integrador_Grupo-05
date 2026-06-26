@@ -17,8 +17,11 @@ namespace Vistas.Administracion {
                 lblRol.Text = usuario.Rol == "admin" ? "Administrador" : "Dr. " + usuario.NombreUsuario;
                 pnlTurnos.Visible = usuario.Rol == "medico";
             }
-            catch (NoAccesoPagina ex) {
+            catch (NoAccesoPagina) {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina) {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
     }

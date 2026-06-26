@@ -12,6 +12,13 @@ namespace Vistas
         public NoAccesoPagina(string mensaje)
             : base(mensaje) { }
     }
+    public class SinPermisoPagina : Exception
+    {
+        public SinPermisoPagina()
+            : base("No tiene permisos para acceder a esta sección.") { }
+        public SinPermisoPagina(string mensaje)
+            : base(mensaje) { }
+    }
     public class ControlAcceso {
         protected Usuario ObtenerUsuario() =>
             HttpContext.Current?.Session?["zezion"] as Usuario;
@@ -32,7 +39,7 @@ namespace Vistas
             if (!EstaAutenticado())
                 throw new NoAccesoPagina("Debe iniciar sesión para acceder.");
             if (!TieneRol(rolesPermitidos))
-                throw new NoAccesoPagina();
+                throw new SinPermisoPagina();
         }
     }
     public class AccesoWidget : ControlAcceso {

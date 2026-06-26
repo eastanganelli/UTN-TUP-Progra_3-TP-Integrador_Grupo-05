@@ -22,9 +22,13 @@ namespace Vistas.Administracion.Pacientes
                 int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
                 CargarPaciente(idPaciente);
             }
-            catch (NoAccesoPagina ex)
+            catch (NoAccesoPagina)
             {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
 
         }

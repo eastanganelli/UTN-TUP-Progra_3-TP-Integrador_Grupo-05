@@ -19,9 +19,13 @@ namespace Vistas.Administracion.Usuarios {
                 if (!IsPostBack)
                     CargarMedicos();
             }
-            catch (NoAccesoPagina ex)
+            catch (NoAccesoPagina)
             {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
 

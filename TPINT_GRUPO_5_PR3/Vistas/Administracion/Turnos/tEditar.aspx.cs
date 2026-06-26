@@ -18,9 +18,13 @@ namespace Vistas.Administracion.Turnos
                 acceso.VerificarAcceso("admin");
                 Usuario usuario = (Usuario)Session["zezion"];
             }
-            catch (NoAccesoPagina ex)
+            catch (NoAccesoPagina)
             {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
     }

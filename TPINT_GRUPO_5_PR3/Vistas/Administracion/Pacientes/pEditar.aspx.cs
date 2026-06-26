@@ -26,9 +26,13 @@ namespace Vistas.Administracion.Pacientes
                     CargarPaciente(idPaciente);
                 }
             }
-            catch (NoAccesoPagina ex)
+            catch (NoAccesoPagina)
             {
                 Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
 
         }
