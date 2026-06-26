@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Entidades;
+using Negocio;
+using System;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Negocio;
-using System.Data;
 
 namespace Vistas.Administracion.Pacientes
 {
@@ -12,10 +13,21 @@ namespace Vistas.Administracion.Pacientes
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                int cantidadPacientes = CargarPacientes();
-                lblCantidad.Text = cantidadPacientes.ToString();
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (!IsPostBack)
+                {
+                    int cantidadPacientes = CargarPacientes();
+                    lblCantidad.Text = cantidadPacientes.ToString();
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
         }
 

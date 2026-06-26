@@ -9,49 +9,55 @@ namespace Negocio
     {
         private Usuarios datosUsuarios = new Usuarios();
 
+        private void ValidarCoherenciaRol(Usuario u)
+        {
+            if (u.Rol == "admin" && u.IDMedico != null)
+                throw new Exception("Un usuario administrador no puede tener un médico asociado.");
+            if (u.Rol == "medico" && u.IDMedico == null)
+                throw new Exception("Un usuario de tipo médico debe tener un médico asociado.");
+        }
+
         public int AgregarUsuario(Usuario u)
         {
             if (string.IsNullOrEmpty(u.NombreUsuario))
-            {
                 throw new Exception("El nombre de usuario es requerido.");
-            }
-            else if (string.IsNullOrEmpty(u.Contrasenya))
-            {
+            if (string.IsNullOrEmpty(u.Contrasenya))
                 throw new Exception("La contraseña es requerida.");
-            }
-            else if (string.IsNullOrEmpty(u.Rol))
-            {
+            if (string.IsNullOrEmpty(u.Rol))
                 throw new Exception("El rol es requerido.");
-            }
+
+            ValidarCoherenciaRol(u);
+
             try
             {
                 return datosUsuarios.AgregarUsuario(u);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el usuario: " + ex.Message);
+                throw new Exception(ex.Message.Contains("UQ_Usr_Medico")
+                    ? "El médico seleccionado ya está asociado a otro usuario."
+                    : "Error al agregar el usuario: " + ex.Message);
             }
         }
 
         public int ModificarUsuario(Usuario u)
         {
             if (u.IDUsuario <= 0)
-            {
                 throw new Exception("ID de usuario inválido.");
-            }
-            else if (string.IsNullOrEmpty(u.NombreUsuario))
-            {
-                throw new Exception("El nombre de usuario es requerido");
-            }
+            if (string.IsNullOrEmpty(u.NombreUsuario))
+                throw new Exception("El nombre de usuario es requerido.");
+
+            ValidarCoherenciaRol(u);
 
             try
             {
                 return datosUsuarios.ModificarUsuario(u);
-
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar el usuario: " + ex.Message);
+                throw new Exception(ex.Message.Contains("UQ_Usr_Medico")
+                    ? "El médico seleccionado ya está asociado a otro usuario."
+                    : "Error al modificar el usuario: " + ex.Message);
             }
         }
         public int DarDeBajaUsuario(int id_usuario)

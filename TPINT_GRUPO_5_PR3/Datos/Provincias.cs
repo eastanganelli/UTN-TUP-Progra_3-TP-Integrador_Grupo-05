@@ -13,7 +13,7 @@ namespace Datos
                 "SELECT * FROM Provincia WHERE id_provincia = @id", "Provincia",
                 new[] { new SqlParameter("@id", id_provincia) });
             if (fila == null)
-                throw new Exception($"La Provincia con ID [{id_provincia}] fue no encontrada!");
+                throw new Exception($"La provincia con ID [{id_provincia}] no fue encontrada.");
             return new Provincia {
                 IDProvincia = Convert.ToInt32(fila["id_provincia"]),
                 Nombre      = fila["nombre"].ToString()

@@ -16,21 +16,16 @@ namespace Datos {
         public DataTable ObtenerTodosLosTurnos()
         {
             SqlConnection conn = conexion.ObtenerConexion();
-            string consulta = @"SELECT t.id_turno, 
-                               pep.apellido + ', ' + pep.nombre AS id_paciente, 
-                               pem.apellido + ', ' + pem.nombre AS id_medico, 
-                               e.nombre AS especialidad, 
-                               CONVERT(varchar, t.fecha_hora, 103) AS fecha,
-                               CONVERT(varchar, t.fecha_hora, 108) AS horario,
-                               t.estado 
-                        FROM Turno t
-                        INNER JOIN Paciente pa ON t.id_paciente = pa.id_paciente
-                        INNER JOIN Persona pep ON pa.id_persona = pep.id_persona
-                        INNER JOIN Medico m ON t.id_medico = m.id_medico
-                        INNER JOIN Persona pem ON m.id_persona = pem.id_persona
-                        INNER JOIN Especialidad e ON m.id_especialidad = e.id_especialidad
-                        WHERE t.activo = 1
-                        ORDER BY t.fecha_hora DESC";
+            string consulta = @"SELECT
+                                    ta.id_turno as id_turno, 
+                                    ta.Paciente as paciente,
+                                    ta.Medico as medico, 
+                                    ta.Especialidad AS especialidad, 
+                                    CONVERT(varchar, ta.FechaHora, 103) AS fecha,
+                                    CONVERT(varchar, ta.FechaHora, 108) AS horario,
+                                    ta.estado as estado
+                                FROM vm_Turnos_Activos ta
+                                ORDER BY ta.FechaHora DESC";
 
             SqlCommand resultado = new SqlCommand(consulta, conn);
             SqlDataAdapter da = new SqlDataAdapter(resultado);

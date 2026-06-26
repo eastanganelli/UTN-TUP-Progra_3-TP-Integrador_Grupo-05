@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Entidades;
+using Negocio;
 using System;
 using System.Data;
 using System.Web.UI.WebControls;
@@ -11,9 +12,19 @@ namespace Vistas.Administracion.Usuarios {
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                CargarGrilla(1);
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin", "medico");
+                Usuario usuario = (Usuario)Session["zezion"];
+                if (!IsPostBack)
+                {
+                    CargarGrilla(1);
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
         }
 

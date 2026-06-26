@@ -1,7 +1,8 @@
+using Entidades;
+using Negocio;
 using System;
 using System.Data;
 using System.Web.UI.WebControls;
-using Negocio;
 
 namespace Vistas.Administracion.Medicos
 {
@@ -12,11 +13,23 @@ namespace Vistas.Administracion.Medicos
         protected int TotalPaginas { get => ViewState["TotalPaginas"] != null ? (int)ViewState["TotalPaginas"] : 1; set => ViewState["TotalPaginas"] = value; }
 
         protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
-                CargarEspecialidades();
-                PaginaActual = 1;
-                CargarMedicos();
+            try
+            {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (!IsPostBack) {
+                    CargarEspecialidades();
+                    PaginaActual = 1;
+                    CargarMedicos();
+                }
             }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
+            }
+
         }
 
         private void CargarEspecialidades() {

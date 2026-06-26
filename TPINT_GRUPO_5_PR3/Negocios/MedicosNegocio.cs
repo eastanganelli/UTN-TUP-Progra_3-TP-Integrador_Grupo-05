@@ -11,7 +11,7 @@ namespace Negocio {
                 return datosMedicos.ObtenerMedico(id_Medico);
             }
             catch (Exception ex) {
-                throw new Exception("Error al obtener el Medico por ID: " + ex.Message);
+                throw new Exception("Error al obtener el médico por ID: " + ex.Message);
             }
         }
         public DataTable ObtenerMedicos() {

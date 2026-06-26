@@ -11,13 +11,19 @@ namespace Vistas.Administracion.Usuarios
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["id"] == null)
+            try
             {
-                Response.Redirect("uInicio.aspx");
-                return;
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (!IsPostBack)
+                    CargarUsuario(Convert.ToInt32(Request.QueryString["id"]));
             }
-            if (!IsPostBack)
-                CargarUsuario(Convert.ToInt32(Request.QueryString["id"]));
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
+            }
         }
 
         private void CargarUsuario(int id)

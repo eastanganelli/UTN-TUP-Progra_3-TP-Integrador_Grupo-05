@@ -23,18 +23,28 @@ namespace Vistas.Administracion.Medicos {
         public Localidad localidad { get; set; }
         public Provincia provincia { get; set; }
         protected void Page_Load(object sender, EventArgs e) {
-            if (Request.QueryString["id"] != null) {
-                string id_medico = Request.QueryString["id"];
-                this.medico = conexionMedicos.ObtenerMedico(Convert.ToInt32(id_medico));
-                //this.usuario = conexionUsuarios.ObtenerUsuario(this.medico.IDMedico);
-                this.persona = conexionPersonas.ObtenerPersona(this.medico.IDPersona);
-                this.especialidad = conexionEspecialidades.ObtenerEspecialidad(this.medico.IDEspecialidad);
-                this.localidad = conexionLocalidades.ObtenerLocalidad(this.persona.IDLocalidad);
-                this.provincia = conexionProvincias.ObtenerProvincia(this.localidad.IDProvincia);
-                rptHorarios.DataSource = conexionHorariosMedicos.ObtenerHorariosDeMedico(Convert.ToInt32(id_medico));
-                rptHorarios.DataBind();
-                rptTurnos.DataSource = conexionTurnos.ObtenerUltimosTurnosDeMedico(Convert.ToInt32(id_medico), TURNOS_FILA);
-                rptTurnos.DataBind();
+            try
+            {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (Request.QueryString["id"] != null) {
+                    string id_medico = Request.QueryString["id"];
+                    this.medico = conexionMedicos.ObtenerMedico(Convert.ToInt32(id_medico));
+                    this.persona = conexionPersonas.ObtenerPersona(this.medico.IDPersona);
+                    this.especialidad = conexionEspecialidades.ObtenerEspecialidad(this.medico.IDEspecialidad);
+                    this.localidad = conexionLocalidades.ObtenerLocalidad(this.persona.IDLocalidad);
+                    this.provincia = conexionProvincias.ObtenerProvincia(this.localidad.IDProvincia);
+                    rptHorarios.DataSource = conexionHorariosMedicos.ObtenerHorariosDeMedico(Convert.ToInt32(id_medico));
+                    rptHorarios.DataBind();
+                    rptTurnos.DataSource = conexionTurnos.ObtenerUltimosTurnosDeMedico(Convert.ToInt32(id_medico), TURNOS_FILA);
+                    rptTurnos.DataBind();
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Datos
                 "SELECT * FROM Especialidad WHERE id_especialidad = @id", "Especialidad",
                 new[] { new SqlParameter("@id", id_Especialidad) });
             if (fila == null)
-                throw new Exception($"La Especialidad con ID [{id_Especialidad}] fue no encontrada!");
+                throw new Exception($"La especialidad con ID [{id_Especialidad}] no fue encontrada.");
             return new Especialidad {
                 IDEspecialidad = Convert.ToInt32(fila["id_especialidad"]),
                 Nombre         = fila["nombre"].ToString()

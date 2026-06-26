@@ -9,7 +9,7 @@ namespace Datos {
         public Medico ObtenerMedico(int id_Medico) {
             DataRow fila = conexion.ObtenerFila("SELECT * FROM Medico WHERE id_medico = @id", "Medico", new[] { new SqlParameter("@id", id_Medico) });
             if (fila == null)
-                throw new Exception($"El Medico con ID [{id_Medico}] fue no encontrado!");
+                throw new Exception($"El médico con ID [{id_Medico}] no fue encontrado.");
             return new Medico {
                 IDMedico       = Convert.ToInt32(fila["id_medico"]),
                 IDPersona      = Convert.ToInt32(fila["id_persona"]),

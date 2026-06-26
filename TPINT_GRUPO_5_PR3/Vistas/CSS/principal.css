@@ -673,3 +673,31 @@ body {
 
 .dato-label { color: #888888; font-size: 12px; flex-shrink: 0; margin-right: 12px; }
 .dato-valor { color: #1a2332; font-weight: 500; text-align: right; }
+
+
+/* ============================================================
+   ALERTAS DE FORMULARIO
+   mensajes de error o éxito mostrados en páginas de alta/edición
+   ============================================================ */
+
+.alerta-error {
+    background-color: #fde8e8;
+    border: 1px solid #e74c3c;
+    color: #c0392b;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    display: block;
+    font-size: 13px;
+}
+
+.alerta-exito {
+    background-color: #eaf3de;
+    border: 1px solid #5aaa2b;
+    color: #3B6D11;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    display: block;
+    font-size: 13px;
+}

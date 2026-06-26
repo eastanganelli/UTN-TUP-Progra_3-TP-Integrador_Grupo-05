@@ -69,8 +69,8 @@
                 <strong><%# Eval("id_turno") %></strong>
             </ItemTemplate>
         </asp:TemplateField>
-        <asp:BoundField DataField="id_paciente" HeaderText="Paciente" />
-        <asp:BoundField DataField="id_medico" HeaderText="Médico" />
+        <asp:BoundField DataField="paciente" HeaderText="Paciente" />
+        <asp:BoundField DataField="medico" HeaderText="Médico" />
         <asp:TemplateField HeaderText="Especialidad">
             <ItemTemplate>
                 <span class="badge badge-esp"><%# Eval("especialidad") %></span>

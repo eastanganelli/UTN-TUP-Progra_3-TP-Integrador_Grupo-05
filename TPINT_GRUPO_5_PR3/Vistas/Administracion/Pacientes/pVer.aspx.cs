@@ -13,15 +13,20 @@ namespace Vistas.Administracion.Pacientes
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["idPaciente"] != null)
+            try
             {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+                
                 int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
                 CargarPaciente(idPaciente);
             }
-            else
+            catch (NoAccesoPagina ex)
             {
-                throw new Exception("No se proporcionó un ID de paciente válido en la URL.");
+                Response.Redirect("/Login.aspx");
             }
+
         }
 
         public void CargarPaciente(int idPaciente)

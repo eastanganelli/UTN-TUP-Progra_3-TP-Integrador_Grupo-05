@@ -10,8 +10,19 @@ namespace Vistas.Administracion.Usuarios {
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-                CargarMedicos();
+            try
+            {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (!IsPostBack)
+                    CargarMedicos();
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
+            }
         }
 
         private void CargarMedicos()

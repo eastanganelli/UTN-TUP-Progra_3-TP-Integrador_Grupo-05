@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,16 @@ namespace Vistas.Administracion.Pacientes
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Datos {
                 "SELECT * FROM Usuario WHERE id_usuario = @id", "Usuario",
                 new[] { new SqlParameter("@id", id_usuario) });
             if (fila == null)
-                throw new Exception($"El Usuario con ID [{id_usuario}] fue no encontrado!");
+                throw new Exception($"El usuario con ID [{id_usuario}] no fue encontrado.");
             return MapearUsuario(fila);
         }
 
@@ -75,7 +75,7 @@ namespace Datos {
                 "SELECT * FROM Usuario WHERE username = @user AND password = @pass", "Usuario",
                 new[] { new SqlParameter("@user", user), new SqlParameter("@pass", contraseña) });
             if (fila == null)
-                throw new Exception("El Usuario o Contraseña es incorrecta!");
+                throw new Exception("El nombre de usuario o la contraseña son incorrectos.");
             return MapearUsuario(fila);
         }
         public DataTable ObtenerUsuarios() {

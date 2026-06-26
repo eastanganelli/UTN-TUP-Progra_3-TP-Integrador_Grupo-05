@@ -18,18 +18,27 @@ namespace Vistas.Administracion.Medicos {
         private DataTable HorariosVS { get => ViewState["Horarios"] as DataTable; set => ViewState["Horarios"] = value; }
 
         protected void Page_Load(object sender, EventArgs e) {
-            if (Request.QueryString["id"] == null) return;
+            try
+            {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
 
-            int idMedico = Convert.ToInt32(Request.QueryString["id"]);
-            medico = conexionMedicos.ObtenerMedico(idMedico);
-            persona = conexionPersonas.ObtenerPersona(medico.IDPersona);
+                int idMedico = Convert.ToInt32(Request.QueryString["id"]);
+                medico = conexionMedicos.ObtenerMedico(idMedico);
+                persona = conexionPersonas.ObtenerPersona(medico.IDPersona);
 
-            if (!IsPostBack) {
-                CargarEspecialidades();
-                CargarProvinciasYLocalidades();
-                Cargar_Banner();
-                CargarFormulario();
-                CargarHorarios(idMedico);
+                if (!IsPostBack) {
+                    CargarEspecialidades();
+                    CargarProvinciasYLocalidades();
+                    Cargar_Banner();
+                    CargarFormulario();
+                    CargarHorarios(idMedico);
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
         }
         private void CargarEspecialidades() {

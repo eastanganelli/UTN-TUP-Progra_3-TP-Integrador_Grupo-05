@@ -14,19 +14,23 @@ namespace Vistas.Administracion.Pacientes
         int idProvincia;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                if (Request.QueryString["idPaciente"] != null)
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (!IsPostBack)
                 {
                     int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
                     CargarPaciente(idPaciente);
                 }
-                else
-                {
-                    throw new Exception("No se proporcionó un ID de paciente válido en la URL.");
-                }
             }
-            
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
+            }
+
         }
 
         public void CargarPaciente(int idPaciente)

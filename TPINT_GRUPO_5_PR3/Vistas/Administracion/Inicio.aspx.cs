@@ -15,11 +15,7 @@ namespace Vistas.Administracion {
                 acceso.VerificarAcceso("admin", "medico");
                 Usuario usuario = (Usuario)Session["zezion"];
                 lblRol.Text = usuario.Rol == "admin" ? "Administrador" : "Dr. " + usuario.NombreUsuario;
-
                 pnlTurnos.Visible = usuario.Rol == "medico";
-
-
-
             }
             catch (NoAccesoPagina ex) {
                 Response.Redirect("/Login.aspx");

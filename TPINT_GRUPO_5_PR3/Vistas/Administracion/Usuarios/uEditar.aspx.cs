@@ -12,24 +12,31 @@ namespace Vistas.Administracion.Usuarios {
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["id"] == null)
+            try
             {
-                Response.Redirect("uInicio.aspx");
-                return;
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                idUsuario = Convert.ToInt32(Request.QueryString["id"]);
+                ViewState["idUsuario"] = idUsuario;
+
+                if (!IsPostBack)
+                {
+                    CargarMedicos();
+                    CargarUsuario(idUsuario);
+                }
+                else
+                {
+                    idUsuario = (int)ViewState["idUsuario"];
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
 
-            idUsuario = Convert.ToInt32(Request.QueryString["id"]);
-            ViewState["idUsuario"] = idUsuario;
-
-            if (!IsPostBack)
-            {
-                CargarMedicos();
-                CargarUsuario(idUsuario);
-            }
-            else
-            {
-                idUsuario = (int)ViewState["idUsuario"];
-            }
+            
         }
 
         private void CargarMedicos()

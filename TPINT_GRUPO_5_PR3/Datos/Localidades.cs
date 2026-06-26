@@ -13,7 +13,7 @@ namespace Datos
                 "SELECT * FROM Localidad WHERE id_localidad = @id", "Localidad",
                 new[] { new SqlParameter("@id", id_Localidad) });
             if (fila == null)
-                throw new Exception($"La Localidad con ID [{id_Localidad}] fue no encontrada!");
+                throw new Exception($"La localidad con ID [{id_Localidad}] no fue encontrada.");
             return new Localidad {
                 IDLocalidad = Convert.ToInt32(fila["id_localidad"]),
                 Nombre      = fila["nombre"].ToString(),

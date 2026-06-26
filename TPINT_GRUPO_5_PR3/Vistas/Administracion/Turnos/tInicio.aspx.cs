@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Entidades;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -44,11 +45,22 @@ namespace Vistas.Administracion.Turnos
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                CargarEspecialidades();
-                CargarListadoDeTurnos();
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin", "medico");
+                Usuario usuario = (Usuario)Session["zezion"];
 
+                if (!IsPostBack)
+                {
+                    CargarEspecialidades();
+                    CargarListadoDeTurnos();
+
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
         }
 
@@ -66,8 +78,8 @@ namespace Vistas.Administracion.Turnos
                         if (!string.IsNullOrWhiteSpace(txtBuscar.Text))
                         {
                             string busqueda = txtBuscar.Text.Trim().ToLower();
-                            string paciente = fila["id_paciente"].ToString().ToLower();
-                            string medico = fila["id_medico"].ToString().ToLower();
+                            string paciente = fila["paciente"].ToString().ToLower();
+                            string medico = fila["medico"].ToString().ToLower();
 
                             if (!paciente.Contains(busqueda) && !medico.Contains(busqueda))
                                 continue; 

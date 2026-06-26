@@ -11,7 +11,7 @@ namespace Datos {
                 "SELECT * FROM Persona WHERE id_persona = @id", "Persona",
                 new[] { new SqlParameter("@id", id_Persona) });
             if (fila == null)
-                throw new Exception($"La Persona con ID [{id_Persona}] fue no encontrada!");
+                throw new Exception($"La persona con ID [{id_Persona}] no fue encontrada.");
             return new Persona {
                 IDPersona       = Convert.ToInt32(fila["id_persona"]),
                 DNI             = fila["dni"].ToString(),

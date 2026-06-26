@@ -16,10 +16,22 @@ namespace Vistas.Administracion.Medicos {
             set => ViewState["HorariosNuevo"] = value;
         }
         protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
-                CargarProvincias();
-                CargarEspecialidades();
-                InicializarHorarios();
+            
+            try
+            {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (!IsPostBack) {
+                    CargarProvincias();
+                    CargarEspecialidades();
+                    InicializarHorarios();
+                }
+            }
+            catch (NoAccesoPagina ex)
+            {
+                Response.Redirect("/Login.aspx");
             }
         }
         private void CargarProvincias() {
