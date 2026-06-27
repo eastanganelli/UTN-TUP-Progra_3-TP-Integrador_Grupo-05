@@ -62,7 +62,8 @@
     ShowHeaderWhenEmpty="true"
     AllowPaging="True"           
     PageSize="10"                
-    OnPageIndexChanging="dgvTurnos_PageIndexChanging">
+    OnPageIndexChanging="dgvTurnos_PageIndexChanging"
+    OnRowCommand="dgvTurnos_RowCommand">
     <Columns>
         <asp:TemplateField HeaderText="#">
             <ItemTemplate>
@@ -88,7 +89,11 @@
         <asp:TemplateField HeaderText="Acciones">
             <ItemTemplate>
                 <button class="btn-icon" title="Ver" type="button">👁</button>
-                <button class="btn-icon danger" title="Cancelar" type="button">🗑</button>
+                <asp:LinkButton runat="server" CssClass="btn-icon danger"
+                    CommandName="Baja" CommandArgument='<%# Eval("id_turno") %>'
+                    OnClientClick="return confirm('¿Está seguro de que desea eliminar este turno?');">
+                    🗑
+                </asp:LinkButton>
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

@@ -1,4 +1,5 @@
 ﻿using Datos;
+using System;
 using System.Data;
 
 namespace Negocio {
@@ -21,6 +22,18 @@ namespace Negocio {
         public DataTable ObtenerTurnosPorPaciente(int idPaciente)
         {
             return _datosTurnos.ObtenerTurnosPorPaciente(idPaciente);
+        }
+
+        public bool EliminarTurnoFisico(int idTurno)
+        {
+            try
+            {
+                return _datosTurnos.EliminarTurnoFisico(idTurno);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en la capa de negocio al eliminar físicamente el turno: " + ex.Message);
+            }
         }
     }
 }

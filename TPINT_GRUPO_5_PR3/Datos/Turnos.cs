@@ -61,5 +61,14 @@ namespace Datos {
             parametros.Add(new SqlParameter("@idPaciente", idPaciente));
             return conexion.ObtenerTablaParametros(consulta, "turnos_paciente", parametros.ToArray());  
         }
+
+        public bool EliminarTurnoFisico(int idTurno)
+        {
+            string sql = "DELETE FROM Turno WHERE id_turno = " + idTurno;
+
+            int filasAfectadas = conexion.EjecutarConsulta(sql);
+
+            return filasAfectadas > 0;
+        }
     }
 }

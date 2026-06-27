@@ -140,6 +140,17 @@ namespace Vistas.Administracion.Turnos
             }
         }
 
+
+        protected void dgvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Baja")
+            {
+                TurnosNegocio negocio = new TurnosNegocio();
+                negocio.EliminarTurnoFisico(Convert.ToInt32(e.CommandArgument));
+                CargarListadoDeTurnos();
+            }
+        }
+
         private void CargarEspecialidades()
         {
             DataTable dt = _negocioEspecialidad.ObtenerEspecialidades();
