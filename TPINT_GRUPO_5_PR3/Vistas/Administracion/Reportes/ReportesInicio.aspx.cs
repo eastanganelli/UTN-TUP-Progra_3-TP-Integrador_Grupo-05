@@ -1,9 +1,6 @@
 ﻿using Entidades;
+using Negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Vistas.Administracion.Reportes
@@ -16,16 +13,27 @@ namespace Vistas.Administracion.Reportes
             {
                 AccesoPagina acceso = new AccesoPagina();
                 acceso.VerificarAcceso("admin");
-                Usuario usuario = (Usuario)Session["zezion"];
             }
-            catch (NoAccesoPagina)
-            {
-                Response.Redirect("/Login.aspx");
-            }
-            catch (SinPermisoPagina)
-            {
-                Response.Redirect("/Administracion/Inicio.aspx");
-            }
+            catch (NoAccesoPagina) { Response.Redirect("/Login.aspx"); }
+            catch (SinPermisoPagina) { Response.Redirect("/Administracion/Inicio.aspx"); }
+        }
+
+        protected void btnGenerar_Click(object sender, EventArgs e)
+        {
+            if (ddlReporte.SelectedIndex == 0) return;
+
+            string desde = txtDesde.Text.Trim();
+            string hasta = txtHasta.Text.Trim();
+            string reporte = ddlReporte.SelectedValue;
+
+            Response.Redirect($"ReportesResultado.aspx?reporte={Server.UrlEncode(reporte)}&desde={desde}&hasta={hasta}");
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            ddlReporte.SelectedIndex = 0;
+            txtDesde.Text = "";
+            txtHasta.Text = "";
         }
     }
 }
