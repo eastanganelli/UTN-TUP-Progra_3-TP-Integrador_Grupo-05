@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 
+
 namespace Negocio {
     public class TurnosNegocio
     {
@@ -34,6 +35,12 @@ namespace Negocio {
             {
                 throw new Exception("Error en la capa de negocio al eliminar físicamente el turno: " + ex.Message);
             }
+        }
+
+        public DataTable ObtenerProximosTurnos(int idPaciente)
+        {
+            Turnos datos = new Turnos();
+            return datos.ObtenerProximosTurnos(idPaciente);
         }
     }
 }

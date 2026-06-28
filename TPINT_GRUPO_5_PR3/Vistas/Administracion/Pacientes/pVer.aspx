@@ -410,47 +410,44 @@
 
             <!-- Próximos turnos -->
             <div class="info-card full-width">
-                <h2>Próximos Turnos</h2>
+    <h2>Próximos Turnos</h2>
 
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>16</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="medico-nombre">Dr. Carlos Méndez</div>
-                        <div class="especialidad">Cardiología – Control post-operatorio</div>
-                    </div>
-                    <span class="turno-hora">09:00 hs</span>
-                    <span class="badge-turno confirmado">Confirmado</span>
+                <asp:Label ID="lblSinTurnos" runat="server"></asp:Label>
+
+   <asp:ListView ID="lvTurnos" runat="server">
+
+    <ItemTemplate>
+
+        <div class="turno-item">
+
+            <div class="turno-fecha">
+                <strong><%# Convert.ToDateTime(Eval("FechaHora")).Day %></strong>
+                <%# Convert.ToDateTime(Eval("FechaHora")).ToString("MMM yyyy") %>
+            </div>
+
+            <div class="turno-detalle">
+                <div class="medico-nombre">
+                    <%# Eval("Medico") %>
                 </div>
 
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>24</strong>
-                        Jun 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="medico-nombre">Dra. Valeria Torres</div>
-                        <div class="especialidad">Endocrinología – Control mensual</div>
-                    </div>
-                    <span class="turno-hora">11:30 hs</span>
-                    <span class="badge-turno pendiente">Pendiente</span>
-                </div>
-
-                <div class="turno-item">
-                    <div class="turno-fecha">
-                        <strong>08</strong>
-                        Jul 2025
-                    </div>
-                    <div class="turno-detalle">
-                        <div class="medico-nombre">Dra. Claudia Ibáñez</div>
-                        <div class="especialidad">Ginecología – Control anual</div>
-                    </div>
-                    <span class="turno-hora">10:00 hs</span>
-                    <span class="badge-turno pendiente">Pendiente</span>
+                <div class="especialidad">
+                    <%# Eval("Especialidad") %>
                 </div>
             </div>
+
+            <span class="turno-hora">
+                <%# Convert.ToDateTime(Eval("FechaHora")).ToString("HH:mm") %> hs
+            </span>
+
+            <span class="badge-turno">
+                <%# Eval("Estado") %>
+            </span>
+
+        </div>
+
+    </ItemTemplate>
+
+</asp:ListView>
         </div>
     </div>
 </asp:Content>

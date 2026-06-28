@@ -72,5 +72,26 @@ namespace Datos {
             });
             return pMsg.Value.ToString().Length > 0;
         }
+
+        public DataTable ObtenerProximosTurnos(int idPaciente)
+        {
+            string consulta = @"SELECT
+                            ta.id_turno,
+                            ta.Paciente AS paciente,
+                            ta.Medico AS medico,
+                            ta.Especialidad AS especialidad,
+                            ta.FechaHora,
+                            ta.estado,
+                            ta.observacion
+                        FROM vw_Turnos ta
+                        WHERE ta.id_paciente = @idPaciente
+                          AND ta.FechaHora >= GETDATE()
+                        ORDER BY ta.FechaHora ASC";
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@idPaciente", idPaciente));
+
+            return conexion.ObtenerTablaParametros(consulta, "proximos_turnos", parametros.ToArray());
+        }
     }
 }

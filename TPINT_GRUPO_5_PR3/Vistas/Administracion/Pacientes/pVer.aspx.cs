@@ -18,12 +18,18 @@ namespace Vistas.Administracion.Pacientes
             {
                 AccesoPagina acceso = new AccesoPagina();
                 acceso.VerificarAcceso("admin");
-                Usuario usuario = (Usuario)Session["zezion"];
-                
+
                 int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
-                CargarPaciente(idPaciente);
-                lblConsultas.Visible = false;
-                CargarConsultas(idPaciente);
+
+                if (!IsPostBack)
+                {
+                    lblConsultas.Visible = false;
+                    lblSinTurnos.Visible = false;
+
+                    CargarPaciente(idPaciente);
+                    CargarConsultas(idPaciente);
+                    CargarProximosTurnos(idPaciente);
+                }
             }
             catch (NoAccesoPagina)
             {
@@ -33,7 +39,6 @@ namespace Vistas.Administracion.Pacientes
             {
                 Response.Redirect("/Administracion/Inicio.aspx");
             }
-
         }
 
         public void CargarConsultas(int idPaciente)
@@ -101,6 +106,29 @@ namespace Vistas.Administracion.Pacientes
             }
 
             return edad;
+        }
+
+        public void CargarProximosTurnos(int idPaciente)
+        {
+            TurnosNegocio negocio = new TurnosNegocio();
+
+            DataTable dt = negocio.ObtenerProximosTurnos(idPaciente);
+
+            if (dt.Rows.Count > 0)
+            {
+                lvTurnos.DataSource = dt;
+                lvTurnos.DataBind();
+
+                lvTurnos.Visible = true;
+                lblSinTurnos.Visible = false;
+            }
+            else
+            {
+                lvTurnos.Visible = false;
+
+                lblSinTurnos.Text = "El paciente no tiene próximos turnos.";
+                lblSinTurnos.Visible = true;
+            }
         }
     }
 }
