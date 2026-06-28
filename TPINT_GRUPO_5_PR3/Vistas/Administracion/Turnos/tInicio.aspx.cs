@@ -146,7 +146,7 @@ namespace Vistas.Administracion.Turnos
             if (e.CommandName == "Baja")
             {
                 TurnosNegocio negocio = new TurnosNegocio();
-                negocio.EliminarTurnoFisico(Convert.ToInt32(e.CommandArgument));
+                negocio.EliminarTurno(Convert.ToInt32(e.CommandArgument));
                 CargarListadoDeTurnos();
             }
         }

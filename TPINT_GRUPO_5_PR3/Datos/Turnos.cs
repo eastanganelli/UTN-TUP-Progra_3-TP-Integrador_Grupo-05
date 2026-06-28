@@ -25,7 +25,7 @@ namespace Datos {
                                     CONVERT(varchar, ta.FechaHora, 103) AS fecha,
                                     CONVERT(varchar, ta.FechaHora, 108) AS horario,
                                     ta.estado as estado
-                                FROM vm_Turnos_Activos ta
+                                FROM vw_Turnos_Activos ta
                                 ORDER BY ta.FechaHora DESC";
 
             SqlCommand resultado = new SqlCommand(consulta, conn);
@@ -62,13 +62,15 @@ namespace Datos {
             return conexion.ObtenerTablaParametros(consulta, "turnos_paciente", parametros.ToArray());  
         }
 
-        public bool EliminarTurnoFisico(int idTurno)
+        public bool EliminarTurno(int idTurno)
         {
-            string sql = "DELETE FROM Turno WHERE id_turno = " + idTurno;
-
-            int filasAfectadas = conexion.EjecutarConsulta(sql);
-
-            return filasAfectadas > 0;
+            SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
+            conexion.EjecutarProcedimientoAlmacenado("sp_Turno_Cancelar", new SqlParameter[]
+            {
+                new SqlParameter("@id_turno", idTurno),
+                pMsg
+            });
+            return pMsg.Value.ToString().Length > 0;
         }
     }
 }
