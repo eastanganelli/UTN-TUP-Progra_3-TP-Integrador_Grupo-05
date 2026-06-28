@@ -46,6 +46,18 @@ namespace Datos {
             SqlParameter[] parametros = { new SqlParameter("@id", id_usuario) };
             return conexion.EjecutarConsultaParametros(consulta, parametros);
         }
+        public int CambiarEstadoUsuario(int id_usuario, bool nuevoEstado)
+        {
+            return conexion.EjecutarConsultaParametros(
+                "UPDATE Usuario SET activo = @activo WHERE id_usuario = @id",
+                new[] { new SqlParameter("@activo", nuevoEstado), new SqlParameter("@id", id_usuario) });
+        }
+        public int CambiarEstadoUsuarioDeMedico(int id_medico, bool nuevoEstado)
+        {
+            return conexion.EjecutarConsultaParametros(
+                "UPDATE Usuario SET activo = @activo WHERE id_medico = @id",
+                new[] { new SqlParameter("@activo", nuevoEstado), new SqlParameter("@id", id_medico) });
+        }
         public Usuario ObtenerUsuario(int id_usuario)
         {
             DataRow fila = conexion.ObtenerFila(

@@ -8,6 +8,7 @@ namespace Negocio
     public class UsuariosNegocio
     {
         private Usuarios datosUsuarios = new Usuarios();
+        private Medicos datosMedicos = new Medicos();
 
         private void ValidarCoherenciaRol(Usuario u)
         {
@@ -73,6 +74,23 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw new Exception("Error al dar de baja el usuario: " + ex.Message);
+            }
+        }
+        public void ToggleEstadoUsuario(int id_usuario)
+        {
+            if (id_usuario <= 0)
+                throw new Exception("ID de usuario inválido.");
+            try
+            {
+                Usuario u = datosUsuarios.ObtenerUsuario(id_usuario);
+                bool nuevoEstado = !u.Estado;
+                datosUsuarios.CambiarEstadoUsuario(id_usuario, nuevoEstado);
+                if (u.IDMedico.HasValue)
+                    datosMedicos.CambiarEstadoMedico(u.IDMedico.Value, nuevoEstado);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cambiar el estado del usuario: " + ex.Message);
             }
         }
 

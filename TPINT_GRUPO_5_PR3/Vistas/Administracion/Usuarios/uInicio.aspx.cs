@@ -89,18 +89,18 @@ namespace Vistas.Administracion.Usuarios {
             if (pagina < totalPaginas) CargarGrilla(pagina + 1);
         }
         protected void ddlPagina_SelectedIndexChanged(object sender, EventArgs e) { }
-        protected void rptUsuarios_ItemCommand(object source, RepeaterCommandEventArgs e) 
+        protected void rptUsuarios_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            if (e.CommandName == "Baja")
+            if (e.CommandName == "ToggleEstado")
             {
                 try
                 {
-                    negocio.DarDeBajaUsuario(Convert.ToInt32(e.CommandArgument));
+                    negocio.ToggleEstadoUsuario(Convert.ToInt32(e.CommandArgument));
                     CargarGrilla((int)ViewState["PaginaActual"]);
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al dar de baja el usuario: " + ex.Message);
+                    throw new Exception("Error al cambiar el estado del usuario: " + ex.Message);
                 }
             }
         }

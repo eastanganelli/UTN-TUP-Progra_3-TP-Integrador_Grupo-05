@@ -5,7 +5,8 @@ using System.Data;
 
 namespace Negocio {
     public class MedicosNegocio {
-        private Medicos datosMedicos = new Medicos();
+        private Medicos  datosMedicos  = new Medicos();
+        private Usuarios datosUsuarios = new Usuarios();
         public Medico ObtenerMedico(int id_Medico) {
             try {
                 return datosMedicos.ObtenerMedico(id_Medico);
@@ -16,6 +17,12 @@ namespace Negocio {
         }
         public DataTable ObtenerMedicos() {
             return datosMedicos.ObtenerMedicos();
+        }
+        public DataTable ObtenerMedicosSinAcceso() {
+            return datosMedicos.ObtenerMedicosSinAcceso();
+        }
+        public DataTable ObtenerMedicosParaEdicion(int? idMedicoActual) {
+            return datosMedicos.ObtenerMedicosParaEdicion(idMedicoActual);
         }
         public int ObtenerCantidadDeMedicos() {
             return datosMedicos.ObtenerCantidadDeMedicos();
@@ -55,6 +62,22 @@ namespace Negocio {
             }
             catch (Exception ex) {
                 throw new Exception("Error al dar de baja el médico: " + ex.Message);
+            }
+        }
+        public void ToggleEstadoMedico(int id_medico) {
+            try {
+                Medico m = datosMedicos.ObtenerMedico(id_medico);
+                bool nuevoEstado = !m.Estado;
+                string mensaje = nuevoEstado
+                    ? datosMedicos.ActivarMedico(id_medico)
+                    : datosMedicos.DarDeBajaMedico(id_medico);
+                if (!string.IsNullOrEmpty(mensaje) &&
+                    !mensaje.Contains("correctamente"))
+                    throw new Exception(mensaje);
+                datosUsuarios.CambiarEstadoUsuarioDeMedico(id_medico, nuevoEstado);
+            }
+            catch (Exception ex) {
+                throw new Exception(ex.Message.StartsWith("Error") ? ex.Message : "Error al cambiar el estado del médico: " + ex.Message);
             }
         }
     }

@@ -33,7 +33,7 @@ namespace Vistas.Administracion.Usuarios {
         {
             ddlMedico.Items.Clear();
             ddlMedico.Items.Add(new ListItem("— Sin médico asociado —", ""));
-            System.Data.DataTable dt = negMedicos.ObtenerMedicos();
+            System.Data.DataTable dt = negMedicos.ObtenerMedicosSinAcceso();
             foreach (System.Data.DataRow row in dt.Rows)
                 ddlMedico.Items.Add(new ListItem(
                     row["nombre"].ToString(),

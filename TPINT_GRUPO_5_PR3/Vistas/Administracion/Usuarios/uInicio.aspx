@@ -86,10 +86,11 @@
                             <asp:HyperLink runat="server"
                                 NavigateUrl='<%# "uEditar.aspx?id=" + Eval("id_usuario") %>'
                                 CssClass="btn-icon" title="Editar">✏️</asp:HyperLink>
-                            <asp:LinkButton runat="server" CssClass="btn-icon danger"
-                                CommandName="Baja" CommandArgument='<%# Eval("id_usuario") %>'
-                                title="Dar de baja"
-                                OnClientClick="return confirm('¿Confirma dar de baja este usuario?');">🗑</asp:LinkButton>
+                            <asp:LinkButton runat="server"
+                                CssClass='<%# Convert.ToBoolean(Eval("activo")) ? "btn-icon danger" : "btn-icon" %>'
+                                CommandName="ToggleEstado" CommandArgument='<%# Eval("id_usuario") %>'
+                                ToolTip='<%# Convert.ToBoolean(Eval("activo")) ? "Dar de baja" : "Reactivar" %>'
+                                OnClientClick='<%# Convert.ToBoolean(Eval("activo")) ? "return confirm(\"¿Confirma dar de baja este usuario?\")" : "return confirm(\"¿Confirma reactivar este usuario?\")" %>'><%# Convert.ToBoolean(Eval("activo")) ? "🗑" : "✔️" %></asp:LinkButton>
                         </td>
                     </tr>
                 </ItemTemplate>

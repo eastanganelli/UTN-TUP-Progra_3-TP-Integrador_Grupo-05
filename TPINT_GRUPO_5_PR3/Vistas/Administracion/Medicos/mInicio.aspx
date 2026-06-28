@@ -15,6 +15,8 @@
             <asp:Button ID="btnNuevoMedico" class="btn-primary" runat="server" Text="+ Nuevo médico" OnClick="btnNuevoMedico_Click"/>
         </div>
 
+        <asp:Label ID="lblMensaje" runat="server" Visible="false" />
+
         <div class="filters-bar">
             <div class="filter-group">
                 <label>Buscar</label>
@@ -80,10 +82,11 @@
                             <asp:HyperLink runat="server"
                                 NavigateUrl='<%# "mEditar.aspx?id=" + Eval("id_medico") %>'
                                 CssClass="btn-icon" title="Editar">✏️</asp:HyperLink>
-                            <asp:LinkButton runat="server" CssClass="btn-icon danger"
-                                CommandName="Baja" CommandArgument='<%# Eval("id_medico") %>'
-                                title="Dar de baja"
-                                OnClientClick="return confirm('¿Confirma dar de baja este médico?');">🗑</asp:LinkButton>
+                            <asp:LinkButton runat="server"
+                                CssClass='<%# Convert.ToBoolean(Eval("activo")) ? "btn-icon danger" : "btn-icon" %>'
+                                CommandName="ToggleEstado" CommandArgument='<%# Eval("id_medico") %>'
+                                ToolTip='<%# Convert.ToBoolean(Eval("activo")) ? "Dar de baja" : "Reactivar" %>'
+                                OnClientClick='<%# ConfirmMensajeMedico(Eval("activo")) %>'><%# Convert.ToBoolean(Eval("activo")) ? "🗑" : "✔️" %></asp:LinkButton>
                         </td>
                     </tr>
                 </ItemTemplate>

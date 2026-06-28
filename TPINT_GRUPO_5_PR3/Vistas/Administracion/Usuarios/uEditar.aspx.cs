@@ -23,8 +23,9 @@ namespace Vistas.Administracion.Usuarios {
 
                 if (!IsPostBack)
                 {
-                    CargarMedicos();
-                    CargarUsuario(idUsuario);
+                    Usuario u = negocio.ObtenerUsuario(idUsuario);
+                    CargarMedicos(u.IDMedico);
+                    CargarUsuario(u);
                 }
                 else
                 {
@@ -43,29 +44,25 @@ namespace Vistas.Administracion.Usuarios {
             
         }
 
-        private void CargarMedicos()
+        private void CargarMedicos(int? idMedicoActual)
         {
             ddlMedico.Items.Clear();
             ddlMedico.Items.Add(new ListItem("— Sin médico asociado —", ""));
-            DataTable dt = negMedicos.ObtenerMedicos();
-            foreach (System.Data.DataRow row in dt.Rows)
+            DataTable dt = negMedicos.ObtenerMedicosParaEdicion(idMedicoActual);
+            foreach (DataRow row in dt.Rows)
                 ddlMedico.Items.Add(new ListItem(
                     row["nombre"].ToString(),
                     row["id_medico"].ToString()));
         }
 
-        private void CargarUsuario(int id)
+        private void CargarUsuario(Usuario u)
         {
-            Usuario u = negocio.ObtenerUsuario(id);
-
-          
             lblUsernameBanner.Text = u.NombreUsuario;
-            lblIdUsuario.Text = u.IDUsuario.ToString();
-            lblRolActual.Text = u.Rol == "admin" ? "Administrador" : "Médico";
+            lblIdUsuario.Text      = u.IDUsuario.ToString();
+            lblRolActual.Text      = u.Rol == "admin" ? "Administrador" : "Médico";
 
-         
-            txtUsername.Text = u.NombreUsuario;
-            ddlRol.SelectedValue = u.Rol;
+            txtUsername.Text       = u.NombreUsuario;
+            ddlRol.SelectedValue   = u.Rol;
             ddlActivo.SelectedValue = u.Estado ? "1" : "0";
 
             if (u.IDMedico.HasValue)

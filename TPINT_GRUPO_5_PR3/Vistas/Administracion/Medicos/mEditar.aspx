@@ -99,7 +99,6 @@
         <div class="page-header">
             <div>
                 <h1>Editar Médico</h1>
-                <p>Modificá los datos. El DNI y el legajo no se pueden editar.</p>
             </div>
             <a href="/Administracion/Medicos/mInicio.aspx" class="btn-volver"
                 onclick="return confirm('¿Descartás los cambios y volvés al listado?');">← Volver al listado</a>
@@ -288,24 +287,6 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-        </div>
-
-        <!-- ========================
-             ACCESO AL SISTEMA
-        ========================= -->
-        <div class="form-card">
-            <h2>Acceso al Sistema</h2>
-            <p class="seccion-nota">
-            <p>Hypervinculo a sección usuario para editar</p>
-        </div>
-
-        <div class="form-acciones">
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
-                CssClass="btn-cancelar" CausesValidation="false"
-                OnClientClick="return confirm('¿Descartás los cambios y volvés al listado?');"
-                OnClick="btnCancelar_Click" />
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
-                CssClass="btn-guardar" OnClick="btnGuardar_Click" />
         </div>
     </div>
 </asp:Content>
