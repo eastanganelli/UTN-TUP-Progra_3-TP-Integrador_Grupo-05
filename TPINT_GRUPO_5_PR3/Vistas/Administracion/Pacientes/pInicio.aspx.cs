@@ -56,12 +56,14 @@ namespace Vistas.Administracion.Pacientes
 
             gvPacientes.DataSource = tabla;
             gvPacientes.DataBind();
+            lblCantidad.Text = tabla.Rows.Count.ToString();
         }
 
         protected void gvPacientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvPacientes.PageIndex = e.NewPageIndex;
-            CargarPacientes();
+           int cantidad = CargarPacientes();
+            lblCantidad.Text = cantidad.ToString();
         }
 
         protected void BtnLimpiar_Click(object sender, EventArgs e)

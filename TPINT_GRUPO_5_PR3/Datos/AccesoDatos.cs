@@ -34,11 +34,14 @@ namespace Datos
         }
         public int EjecutarProcedimientoAlmacenado(string nombreSP, SqlParameter[] parametros = null)
         {
-            SqlConnection conexion = ObtenerConexion();
-            SqlCommand cmd = new SqlCommand(nombreSP, conexion);
-            cmd.CommandType = CommandType.StoredProcedure;
-            if (parametros != null) cmd.Parameters.AddRange(parametros);
-            return cmd.ExecuteNonQuery();
+            using (SqlConnection conexion = ObtenerConexion())
+            using (SqlCommand cmd = new SqlCommand(nombreSP, conexion))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                if (parametros != null) cmd.Parameters.AddRange(parametros);
+                int filas = cmd.ExecuteNonQuery();
+                return filas;
+            }
         }
         public DataTable ObtenerTabla(string sqlQuery, string tableName)
         {

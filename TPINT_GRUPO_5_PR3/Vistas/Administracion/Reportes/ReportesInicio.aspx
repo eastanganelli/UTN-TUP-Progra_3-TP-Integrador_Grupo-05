@@ -96,14 +96,11 @@
 
     <div class="acciones">
 
-        <button type="button" class="btn-secondary">
-            Limpiar
-        </button>
-
-        <button type="button" class="btn-primary">
-            Generar Reporte
-        </button>
-
+       <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
+        CssClass="btn-secondary" CausesValidation="false"
+        OnClick="btnLimpiar_Click" />
+    <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
+        CssClass="btn-primary" OnClick="btnGenerar_Click" />
     </div>
 
 </div>

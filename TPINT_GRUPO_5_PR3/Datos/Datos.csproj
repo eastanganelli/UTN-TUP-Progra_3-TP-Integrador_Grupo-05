@@ -55,6 +55,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Provincias.cs" />
+    <Compile Include="Reportes.cs" />
     <Compile Include="Turnos.cs" />
     <Compile Include="Usuarios.cs" />
   </ItemGroup>

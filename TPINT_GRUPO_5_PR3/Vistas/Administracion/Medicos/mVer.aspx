@@ -204,7 +204,6 @@
                 <h1>Dr. <%= persona.Nombre %> <%= persona.Apellido %></h1>
                 <span class="especialidad-badge"><%= especialidad.Nombre %></span>
                 <p class="matricula">Matrícula N° <%= medico.Legajo %></p>
-                <%--<p class="matricula">Matrícula N° <%= medico.Legajo %> &nbsp;|&nbsp; CABA, Argentina</p>--%>
             </div>
 
             <div class="perfil-estado">
@@ -227,7 +226,7 @@
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Fecha de nacimiento</span>
-                    <span class="dato-valor"><%= DateTime.Parse(persona?.FechaNacimiento).ToString("dd-MM-yyyy") ?? "--" %></span>
+                    <span class="dato-valor"><%= persona?.FechaNacimiento.ToString("dd-MM-yyyy") ?? "--" %></span>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">DNI</span>

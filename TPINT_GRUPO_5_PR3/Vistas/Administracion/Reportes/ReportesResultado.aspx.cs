@@ -1,31 +1,76 @@
 ﻿using Entidades;
+using Negocio;
+using Negocios;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data;
 
 namespace Vistas.Administracion.Reportes
 {
     public partial class ReportesResultado : System.Web.UI.Page
     {
+        private ReportesNegocio negocio = new ReportesNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
                 AccesoPagina acceso = new AccesoPagina();
                 acceso.VerificarAcceso("admin");
-                Usuario usuario = (Usuario)Session["zezion"];
             }
-            catch (NoAccesoPagina)
+            catch (NoAccesoPagina) { Response.Redirect("/Login.aspx"); }
+            catch (SinPermisoPagina) { Response.Redirect("/Administracion/Inicio.aspx"); }
+
+            if (!IsPostBack)
+                CargarReporte();
+        }
+
+        private void CargarReporte()
+        {
+            string reporte = Request.QueryString["reporte"];
+            string desde = Request.QueryString["desde"];
+            string hasta = Request.QueryString["hasta"];
+
+            if (string.IsNullOrEmpty(reporte))
             {
-                Response.Redirect("/Login.aspx");
+                Response.Redirect("ReportesInicio.aspx");
+                return;
             }
-            catch (SinPermisoPagina)
+
+            DateTime? fechaDesde = string.IsNullOrEmpty(desde) ? (DateTime?)null : DateTime.Parse(desde);
+            DateTime? fechaHasta = string.IsNullOrEmpty(hasta) ? (DateTime?)null : DateTime.Parse(hasta);
+
+            DataTable dt;
+
+            switch (reporte)
             {
-                Response.Redirect("/Administracion/Inicio.aspx");
+                case "Turnos por Especialidad":
+                    dt = negocio.TurnosPorEspecialidad(fechaDesde, fechaHasta);
+                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                    break;
+                case "Médicos con más Turnos":
+                    dt = negocio.MedicosConMasTurnos(fechaDesde, fechaHasta);
+                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                    break;
+                default:
+                    Response.Redirect("ReportesInicio.aspx");
+                    break;
             }
+        }
+
+        private void MostrarReporte(DataTable dt, string reporte, DateTime? desde, DateTime? hasta)
+        {
+            // Título y subtítulo
+            lblTitulo.Text = "Reporte: " + reporte;
+            lblPeriodo.Text = desde.HasValue && hasta.HasValue
+                ? $"Desde {desde.Value:dd/MM/yyyy} hasta {hasta.Value:dd/MM/yyyy}"
+                : "Sin filtro de fechas";
+
+            // Total
+            lblTotal.Text = dt.Rows.Count.ToString();
+
+            // Tabla de resultados
+            gvResultado.DataSource = dt;
+            gvResultado.DataBind();
         }
     }
 }

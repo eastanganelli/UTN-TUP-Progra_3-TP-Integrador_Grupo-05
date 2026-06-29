@@ -98,15 +98,29 @@ namespace Vistas.Administracion.Medicos
         }
 
         protected void rptMedicos_ItemCommand(object source, RepeaterCommandEventArgs e) {
-            if (e.CommandName == "Baja") {
-                MedicosNegocio negocio = new MedicosNegocio();
-                negocio.DarDeBajaMedico(Convert.ToInt32(e.CommandArgument));
+            if (e.CommandName == "ToggleEstado") {
+                try {
+                    MedicosNegocio negocio = new MedicosNegocio();
+                    negocio.ToggleEstadoMedico(Convert.ToInt32(e.CommandArgument));
+                    lblMensaje.Visible = false;
+                }
+                catch (Exception ex) {
+                    lblMensaje.Text     = ex.Message;
+                    lblMensaje.CssClass = "alerta-error";
+                    lblMensaje.Visible  = true;
+                }
                 CargarMedicos();
             }
         }
 
         protected void btnNuevoMedico_Click(object sender, EventArgs e) {
             Response.Redirect("mNuevo.aspx");
+        }
+
+        protected string ConfirmMensajeMedico(object activoObj) {
+            return Convert.ToBoolean(activoObj)
+                ? "return confirm('¿Confirma dar de baja este médico?');"
+                : "return confirm('¿Confirma reactivar este médico?');";
         }
     }
 }

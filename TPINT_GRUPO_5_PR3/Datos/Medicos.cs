@@ -19,13 +19,32 @@ namespace Datos {
             };
         }
         public DataTable ObtenerMedicos() {
-            string sql = @"SELECT m.id_medico,
-                          p.nombre + ' ' + p.apellido AS nombre
-                   FROM Medico m
-                   JOIN Persona p ON p.id_persona = m.id_persona
-                   WHERE m.activo = 1
-                   ORDER BY p.apellido, p.nombre";
+            string sql = @"SELECT
+                               m.id_medico,
+	                           m.nombre + ' ' + m.apellido AS nombre
+                           FROM vw_Medicos m
+                           ORDER BY m.apellido, m.nombre";
             return conexion.ObtenerTabla(sql, "Medico");
+        }
+        public DataTable ObtenerMedicosSinAcceso() {
+            string sql = @"SELECT
+                               m.id_medico,
+	                           m.nombre + ' ' + m.apellido AS nombre
+                           FROM vw_Medicos m
+                           WHERE TieneAcceso = 0
+                           ORDER BY m.apellido , m.nombre";
+            return conexion.ObtenerTabla(sql, "Medico");
+        }
+        public DataTable ObtenerMedicosParaEdicion(int? idMedicoActual) {
+            string sql = @"SELECT m.id_medico,
+                                  m.nombre + ' ' + m.apellido AS nombre
+                           FROM vw_Medicos m
+                           WHERE m.TieneAcceso = 0
+                              OR m.id_medico   = @idActual
+                           ORDER BY m.apellido, m.nombre";
+            var p = new SqlParameter("@idActual", SqlDbType.Int);
+            p.Value = idMedicoActual.HasValue ? (object)idMedicoActual.Value : DBNull.Value;
+            return conexion.ObtenerTablaParametros(sql, "Medico", new[] { p });
         }
         public int ObtenerCantidadDeMedicos() {
             return conexion.ObtenerEscalar("SELECT COUNT(*) FROM Medico");
@@ -122,6 +141,7 @@ namespace Datos {
             });
             return pMsg.Value?.ToString() ?? string.Empty;
         }
+<<<<<<< HEAD
 
         public DataTable ObtenerMedicosPorEspecialidad(string idEspecialidad)
         {
@@ -130,6 +150,20 @@ namespace Datos {
                               "WHERE id_especialidad = " + idEspecialidad + " AND activo = 1";
 
             return conexion.ObtenerTabla(consulta, "MedicosFiltrados");
+=======
+        public int CambiarEstadoMedico(int id_medico, bool nuevoEstado) {
+            return conexion.EjecutarConsultaParametros(
+                "UPDATE Medico SET activo = @activo WHERE id_medico = @id",
+                new[] { new SqlParameter("@activo", nuevoEstado), new SqlParameter("@id", id_medico) });
+        }
+        public string ActivarMedico(int id_medico) {
+            SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
+            conexion.EjecutarProcedimientoAlmacenado("sp_Medico_Activar", new SqlParameter[] {
+                new SqlParameter("@id_medico", id_medico),
+                pMsg
+            });
+            return pMsg.Value?.ToString() ?? string.Empty;
+>>>>>>> dc009e74ac4d0a7ad00e43e5a94dc254fcc3319e
         }
     }
 }

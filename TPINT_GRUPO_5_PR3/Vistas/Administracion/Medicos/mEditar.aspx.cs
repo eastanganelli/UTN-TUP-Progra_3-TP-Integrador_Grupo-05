@@ -18,8 +18,7 @@ namespace Vistas.Administracion.Medicos {
         private DataTable HorariosVS { get => ViewState["Horarios"] as DataTable; set => ViewState["Horarios"] = value; }
 
         protected void Page_Load(object sender, EventArgs e) {
-            try
-            {
+            try {
                 AccesoPagina acceso = new AccesoPagina();
                 acceso.VerificarAcceso("admin");
                 Usuario usuario = (Usuario)Session["zezion"];
@@ -36,12 +35,10 @@ namespace Vistas.Administracion.Medicos {
                     CargarHorarios(idMedico);
                 }
             }
-            catch (NoAccesoPagina)
-            {
+            catch (NoAccesoPagina) {
                 Response.Redirect("/Login.aspx");
             }
-            catch (SinPermisoPagina)
-            {
+            catch (SinPermisoPagina) {
                 Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
@@ -100,9 +97,7 @@ namespace Vistas.Administracion.Medicos {
             txtEmail.Text = persona.Email;
 
             ddlSexo.SelectedValue = persona.Sexo.ToString().ToUpper();
-
-            if (DateTime.TryParse(persona.FechaNacimiento.ToString("dd-MM-yyyy"), out DateTime fecha))
-                txtFechaNac.Text = fecha.ToString("dd-MM-yyyy");
+            txtFechaNac.Text = persona.FechaNacimiento.ToString("yyyy-MM-dd");
         }
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e) {
             int idProvincia = int.Parse(ddlProvincia.SelectedValue);
