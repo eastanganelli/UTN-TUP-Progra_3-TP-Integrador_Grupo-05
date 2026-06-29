@@ -88,7 +88,13 @@
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Acciones">
             <ItemTemplate>
-                <button class="btn-icon" title="Ver" type="button">👁</button>
+                <asp:HyperLink runat="server"
+                                NavigateUrl='<%# "tVer.aspx?id=" + Eval("id_turno") %>'
+                                CssClass="btn-icon" title="Ver">👁</asp:HyperLink>
+
+                <asp:HyperLink runat="server"
+    NavigateUrl='<%# "tEditar.aspx?id=" + Eval("id_turno") %>'
+    CssClass="btn-icon" title="Editar">✏️</asp:HyperLink>
                 <asp:LinkButton runat="server" CssClass="btn-icon danger"
                     CommandName="Baja" CommandArgument='<%# Eval("id_turno") %>'
                     OnClientClick="return confirm('¿Está seguro de que desea eliminar este turno?');">

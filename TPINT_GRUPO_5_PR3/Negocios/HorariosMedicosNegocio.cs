@@ -21,5 +21,36 @@ namespace Negocio {
             try { return datosHorarioMedicos.EliminarHorario(id_horario); }
             catch (Exception ex) { throw new Exception("Error al eliminar horario: " + ex.Message); }
         }
+
+        public DataTable ObtenerHorariosDisponibles(string idMedico, string fecha, int diaSemana)
+        {
+            try
+            {
+                return datosHorarioMedicos.ObtenerHorariosDisponibles(idMedico, fecha, diaSemana);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener horarios disponibles: " + ex.Message);
+            }
+        }
+
+        public DataTable FiltrarHorarios(string idMedico, string fecha)
+        {
+            if (string.IsNullOrEmpty(idMedico) || string.IsNullOrEmpty(fecha))
+            {
+                return null;
+            }
+
+            DateTime dt = Convert.ToDateTime(fecha);
+
+            int diaSemana = (int)dt.DayOfWeek;
+
+            if (diaSemana == 0)
+            {
+                diaSemana = 7;
+            }
+
+            return datosHorarioMedicos.ObtenerHorariosDisponibles(idMedico, fecha, diaSemana);
+        }
     }
 }

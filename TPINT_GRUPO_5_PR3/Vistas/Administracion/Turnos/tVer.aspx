@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Ver Turno" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="tVer.aspx.cs" Inherits="Vistas.Administracion.Pacientes.Pacientes" %>
+﻿<%@ Page Title="Ver Turno" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="tVer.aspx.cs" Inherits="Vistas.Administracion.Turnos.Turno_Ver" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -236,100 +236,87 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="turno-wrapper">
-
-        <!-- ============================
-             ENCABEZADO
-        ============================= -->
         <div class="page-header">
             <div class="page-header-left">
                 <h1>Detalle del Turno</h1>
                 <div class="header-meta">
-                    <span class="nro-turno">#0148</span>
-                    <%--<span class="badge-turno confirmado">Confirmado</span>--%>
+                    <span class="page-subtitle">Número de turno: </span>
+                    <asp:Label ID="lblNroTurno" runat="server" CssClass="page-subtitle" />
+                    
                 </div>
             </div>
             <div class="page-header-actions">
-                <a href="~/Administracion/Turnos/Turnos.aspx" class="btn-volver">← Volver al listado</a>
-                <button class="btn-cancelar-turno">Cancelar turno</button>
+                        <asp:Button ID="btnVolver" runat="server" Text="Volver al listado"
+                        CssClass="btn-volver" CausesValidation="false" 
+                        OnClick="btnVolver_Click" />
+                <asp:Button ID="btnCancelarTurno" runat="server" Text="Cancelar turno" CssClass="btn-cancelar-turno" OnClick="btnCancelarTurno_Click" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar este turno?');" />
             </div>
         </div>
-
-        <!-- ============================
-             BANNER FECHA Y HORA
-        ============================= -->
         <div class="banner-fecha">
             <div class="bloque">
                 <span class="bloque-label">Fecha</span>
-                <span class="bloque-valor">Lunes 16 de junio</span>
-                <span class="bloque-sub">2025</span>
+                <asp:Label ID="lblFecha" runat="server" ForeColor="White" />
             </div>
             <div class="separador"></div>
             <div class="bloque">
                 <span class="bloque-label">Hora</span>
-                <span class="bloque-valor">09:00 hs</span>
+                <asp:Label ID="lblHora" runat="server" ForeColor="White" />
                 <span class="bloque-sub">Duración estimada: 30 min</span>
             </div>
             <div class="separador"></div>
             <div class="bloque">
-                <span class="bloque-label">Consultorio</span>
-                <span class="bloque-valor">Dirección</span>
             </div>
         </div>
-
-        <!-- ============================
-             GRID DE DETALLES
-        ============================= -->
         <div class="detalle-grid">
-
-            <!-- Paciente -->
             <div class="info-card">
                 <h2>Paciente</h2>
                 <div class="mini-perfil">
-                    <div class="mini-avatar paciente">LR</div>
+                    <div class="mini-avatar paciente"><asp:Label ID="lblInicialesPaciente" runat="server" /></div>
                     <div class="mini-info">
-                        <div class="mini-nombre">Laura Beatriz Ramírez</div>
-                        <div class="mini-sub">DNI 30.112.458 &nbsp;·&nbsp; 38 años</div>
-                        <a href="~/Administracion/Pacientes/DetallePaciente.aspx?id=847" class="mini-link">Ver ficha completa →</a>
+                        <asp:Label ID="lblPaciente" runat="server" />
+                        <br>
+                        <span class="dato-label">DNI-</span>
+                        <asp:Label ID="lblDNI" runat="server" class="dato-label" />
+                        <br>
+                        <a id="lnkFichaPaciente" runat="server" class="mini-link">Ver ficha completa →</a>
                     </div>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">N° de paciente</span>
-                    <span class="dato-valor">00847</span>
+                    <br>
+                    <asp:Label ID="lblNroPaciente" runat="server" />
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Teléfono</span>
-                    <span class="dato-valor">+54 9 11 6631-5509</span>
+                    <br>
+                    <asp:Label ID="lblTelefono" runat="server" />
                 </div>
             </div>
-
-            <!-- Médico -->
             <div class="info-card">
                 <h2>Médico</h2>
                 <div class="mini-perfil">
-                    <div class="mini-avatar medico">CM</div>
+                    <div class="mini-avatar medico"><asp:Label ID="lblInicialesMedico" runat="server" /></div>
                     <div class="mini-info">
-                        <div class="mini-nombre">Dr. Carlos Méndez</div>
-                        <div class="mini-sub">Cardiología &nbsp;·&nbsp; Mat. 42.381</div>
-                        <%--<a href="~/Administracion/Medicos/DetalleMedico.aspx?id=12" class="mini-link">Ver ficha completa →</a>--%>
+                        <asp:Label ID="lblMedico" runat="server" />
+                        <br>
+                        <a id="lnkFichaMedico" runat="server" class="mini-link">Ver ficha completa →</a>
                     </div>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Especialidad</span>
-                    <span class="dato-valor">Cardiología Clínica</span>
+                    <asp:Label ID="lblEspecialidad" runat="server" />
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Correo</span>
-                    <span class="dato-valor">c.mendez@clinica.com.ar</span>
+                    <asp:Label ID="lblCorreo" runat="server" />
                 </div>
             </div>
-
-            <!-- Motivo y observaciones -->
             <div class="info-card full-width">
                 <h2>Motivo y Observaciones</h2>
                 <div class="dato-fila" style="align-items: flex-start; padding-top: 14px;">
                     <span class="dato-label">Observaciones</span>
                 </div>
-                <textarea class="observaciones-box" readonly>Paciente con antecedente de bypass coronario (marzo 2025). Presenta leve disnea de esfuerzo en los últimos días. Se solicita ECG y perfil lipídico completo previo a la consulta.</textarea>
+                <textarea id="txtObservaciones" runat="server" class="observaciones-box" readonly></textarea>
             </div>
         </div>
     </div>

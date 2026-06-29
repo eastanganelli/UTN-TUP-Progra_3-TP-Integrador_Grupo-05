@@ -1,4 +1,5 @@
 using Entidades;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -44,5 +45,22 @@ namespace Datos {
                 }
             }
         }
+
+        public DataTable ObtenerHorariosDisponibles(string idMedico, string fecha, int diaSemana)
+        {
+            string consulta = "SELECT id_horario, hora_inicio, CONVERT(VARCHAR(5), hora_inicio, 108) + ' hs' AS HoraFormateada " +
+                              "FROM HorarioMedico hm " +
+                              "WHERE hm.id_medico = " + idMedico + " AND hm.dia_semana = " + diaSemana + " " +
+                              "AND CONVERT(VARCHAR(5), hm.hora_inicio, 108) NOT IN (" +
+                              "    SELECT CONVERT(VARCHAR(5), fecha_hora, 108) " +
+                              "    FROM Turno " +
+                              "    WHERE id_medico = " + idMedico + " AND CAST(fecha_hora AS DATE) = '" + fecha + "' AND activo = 1" +
+                              ")";
+
+            return accesoDatos.ObtenerTabla(consulta, "HorariosLibres");
+        }
+
+
     }
 }
+

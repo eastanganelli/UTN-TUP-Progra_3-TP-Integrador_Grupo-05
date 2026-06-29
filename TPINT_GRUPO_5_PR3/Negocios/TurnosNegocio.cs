@@ -42,5 +42,25 @@ namespace Negocio {
             Turnos datos = new Turnos();
             return datos.ObtenerProximosTurnos(idPaciente);
         }
+
+        public DataTable BuscarTurnoPorId(string idTurno)
+        {
+            if (string.IsNullOrEmpty(idTurno)) return null;
+            return _datosTurnos.BuscarTurnoPorId(idTurno);
+        }
+
+        public string InsertarNuevoTurno(string idMedico, string idPaciente, string fechaHora)
+        {
+            try
+            {
+                return _datosTurnos.InsertarTurnoConSP(idMedico, idPaciente, fechaHora);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en la capa de negocio al insertar un nuevo turno: " + ex.Message);
+            }
+        }
+
+
     }
 }

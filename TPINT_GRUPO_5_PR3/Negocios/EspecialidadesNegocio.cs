@@ -25,5 +25,7 @@ namespace Negocio
         {
             return datosEspecialidades.ObtenerEspecialidades();
         }
+
+        
     }
 }

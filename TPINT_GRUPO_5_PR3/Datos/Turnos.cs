@@ -64,13 +64,19 @@ namespace Datos {
 
         public bool EliminarTurno(int idTurno)
         {
-            SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
-            conexion.EjecutarProcedimientoAlmacenado("sp_Turno_Cancelar", new SqlParameter[]
+            try
             {
-                new SqlParameter("@id_turno", idTurno),
-                pMsg
-            });
-            return pMsg.Value.ToString().Length > 0;
+                string consulta = "DELETE FROM Turno WHERE id_turno = " + idTurno;
+
+                int filasAfectadas = conexion.EjecutarConsulta(consulta);
+
+                return filasAfectadas > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error al eliminar turno: " + ex.Message);
+                return false;
+            }
         }
 
         public DataTable ObtenerProximosTurnos(int idPaciente)
@@ -92,6 +98,52 @@ namespace Datos {
             parametros.Add(new SqlParameter("@idPaciente", idPaciente));
 
             return conexion.ObtenerTablaParametros(consulta, "proximos_turnos", parametros.ToArray());
+        }
+
+        public DataTable BuscarTurnoPorId(string idTurno)
+        {
+            string consulta = "SELECT t.id_turno, t.fecha_hora, t.observacion, " +
+                              "t.id_paciente, t.id_medico, " +
+                              "e.nombre AS Especialidad, " +
+                              "pem.nombre AS MedicoNombre, pem.apellido AS MedicoApellido, pem.email AS Correo, " +
+                              "(LEFT(pem.apellido, 1) + LEFT(pem.nombre, 1)) AS InicialesMed, " +
+                              "pep.nombre AS PacienteNombre, pep.apellido AS PacienteApellido, " +
+                              "pep.dni AS DNI, pep.telefono AS Telefono, t.id_paciente AS NroPaciente, " +
+                              "(LEFT(pep.apellido, 1) + LEFT(pep.nombre, 1)) AS InicialesPac " +
+                              "FROM Turno t " +
+                              "INNER JOIN Medico m ON t.id_medico = m.id_medico " +
+                              "INNER JOIN Especialidad e ON m.id_especialidad = e.id_especialidad " +
+                              "INNER JOIN Persona pem ON m.id_persona = pem.id_persona " +
+                              "INNER JOIN Paciente pa ON t.id_paciente = pa.id_paciente " +
+                              "INNER JOIN Persona pep ON pa.id_persona = pep.id_persona " +
+                              "WHERE t.id_turno = " + idTurno;
+
+            return conexion.ObtenerTabla(consulta, "TurnoEspecifico");
+        }
+        public string InsertarTurnoConSP(string idMedico, string idPaciente, string fechaHora)
+        {
+            try
+            {
+                SqlParameter[] parametros = new SqlParameter[]
+                {
+                    new SqlParameter("@id_medico", Convert.ToInt32(idMedico)),
+                    new SqlParameter("@id_paciente", Convert.ToInt32(idPaciente)),
+                    new SqlParameter("@fecha_hora", Convert.ToDateTime(fechaHora)),
+                    new SqlParameter("@nuevo_id", SqlDbType.Int) { Direction = ParameterDirection.Output },
+                    new SqlParameter("@mensaje", SqlDbType.VarChar, 200) { Direction = ParameterDirection.Output }
+                };
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Parameters.AddRange(parametros);
+
+                conexion.EjecutarProcedimientoAlmacenado(cmd, "sp_Turno_Asignar");
+
+                return cmd.Parameters["@mensaje"].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en BD: " + ex.Message);
+            }
         }
     }
 }

@@ -122,5 +122,14 @@ namespace Datos {
             });
             return pMsg.Value?.ToString() ?? string.Empty;
         }
+
+        public DataTable ObtenerMedicosPorEspecialidad(string idEspecialidad)
+        {
+            string consulta = "SELECT id_medico, (Apellido + ', ' + Nombre) AS MedicoCompleto " +
+                              "FROM vw_Medicos " +
+                              "WHERE id_especialidad = " + idEspecialidad + " AND activo = 1";
+
+            return conexion.ObtenerTabla(consulta, "MedicosFiltrados");
+        }
     }
 }

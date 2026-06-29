@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Editar Turno" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="tEditar.aspx.cs" Inherits="Vistas.Administracion.Pacientes.EditarPaciente" %>
+﻿<%@ Page Title="Editar Turno" Language="C#   " MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="tEditar.aspx.cs" Inherits="Vistas.Administracion.Turnos.Turno_Editar" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <style>
@@ -45,11 +45,13 @@
         <div class="page-header">
             <div>
                 <h1>Editar Turno</h1>
-                <p>Podés modificar la fecha, horario, paciente, estado y observaciones.</p>
+                <p>Podés modificar la fecha, horario, estado y observaciones.</p>
             </div>
             <div class="page-header-actions">
-                <a href="~/Administracion/Turnos/DetalleTurno.aspx" class="btn-volver">← Ver detalle</a>
-                <a href="~/Administracion/Turnos/Turnos.aspx" class="btn-volver">← Listado</a>
+                        <%--<asp:Button ID="btnVolver" runat="server" Text="Volver al listado"
+CssClass="btn-volver" CausesValidation="false" 
+OnClick="btnVolver_Click"
+OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perderán los datos que no guardaste.');" />--%>
             </div>
         </div>
 
@@ -59,31 +61,31 @@
             <div>
                 <div class="bloque-label">N° Turno</div>
                 <div class="bloque-valor">
-                    <asp:Label ID="lblNroTurno" runat="server" Text="#0148" />
+                    <asp:Label ID="lblNroTurno" runat="server" />
                 </div>
             </div>
             <div>
                 <div class="bloque-label">Médico</div>
                 <div class="bloque-valor">
-                    <asp:Label ID="lblMedico" runat="server" Text="Dr. Méndez" />
+                    <asp:Label ID="lblMedico" runat="server" />
                 </div>
                 <div class="bloque-sub">
-                    <asp:Label ID="lblEspecialidad" runat="server" Text="Cardiología" />
+                    <asp:Label ID="lblEspecialidad" runat="server" />
                 </div>
             </div>
             <div>
                 <div class="bloque-label">Paciente actual</div>
                 <div class="bloque-valor">
-                    <asp:Label ID="lblPaciente" runat="server" Text="Laura Ramírez" />
+                    <asp:Label ID="lblPaciente" runat="server" />
                 </div>
                 <div class="bloque-sub">
-                    <asp:Label ID="lblDniPaciente" runat="server" Text="DNI 30.112.458" />
+                    <asp:Label ID="lblDniPaciente" runat="server" />
                 </div>
             </div>
             <div>
                 <div class="bloque-label">Estado actual</div>
                 <asp:Label ID="lblEstadoBadge" runat="server"
-                    CssClass="badge-estado confirmado" Text="Confirmado" />
+                    CssClass="badge-estado confirmado" />
             </div>
         </div>
 
@@ -101,37 +103,27 @@
                 <div class="campo">
                     <label>Médico <small style="color:#888;font-weight:normal;">(no editable)</small></label>
                     <asp:TextBox ID="txtMedicoReadOnly" runat="server"
-                        ReadOnly="true" Text="Dr. Carlos Méndez – Cardiología" />
+                        ReadOnly="true" />
                 </div>
 
                 <div class="campo">
                     <label>Especialidad <small style="color:#888;font-weight:normal;">(no editable)</small></label>
                     <asp:TextBox ID="txtEspecialidadReadOnly" runat="server"
-                        ReadOnly="true" Text="Cardiología" />
+                        ReadOnly="true" />
                 </div>
 
                 <div class="campo">
-                    <label>Nueva fecha <span class="req">*</span></label>
-                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date"
-                        Text="2025-06-16"
-                        AutoPostBack="true"
-                        OnTextChanged="txtFecha_TextChanged" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFecha"
-                        CssClass="validador" ErrorMessage="La fecha es requerida." Display="Dynamic" />
+                    <label>Nueva Fecha</label>
+                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtFecha_TextChanged" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFecha" CssClass="validador" ErrorMessage="La fecha es requerida." Display="Dynamic" />
                 </div>
 
                 <div class="campo">
-                    <label>Nuevo horario <span class="req">*</span></label>
-                    <asp:DropDownList ID="ddlHorario" runat="server">
-                        <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                        <asp:ListItem Value="09:00" Selected="True">09:00 hs</asp:ListItem>
-                        <asp:ListItem Value="10:00">10:00 hs</asp:ListItem>
-                        <asp:ListItem Value="11:00">11:00 hs</asp:ListItem>
-                        <asp:ListItem Value="12:00">12:00 hs</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlHorario"
-                        InitialValue="" CssClass="validador"
-                        ErrorMessage="El horario es requerido." Display="Dynamic" />
+                    <label>Nueva Hora</label>
+    <asp:DropDownList ID="ddlHorario" runat="server">
+        <asp:ListItem Value="">-- Seleccioná un horario --</asp:ListItem>
+    </asp:DropDownList>
+    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlHorario" CssClass="validador" ErrorMessage="El horario es requerido." Display="Dynamic" />
                 </div>
 
             </div>
@@ -144,24 +136,6 @@
         </div>
 
         <!-- ========================
-             PACIENTE
-        ========================= -->
-        <div class="form-card">
-            <h2>Paciente</h2>
-            <div class="form-grid">
-                <div class="campo full-width">
-                    <label>Paciente <span class="req">*</span></label>
-                    <asp:DropDownList ID="ddlPaciente" runat="server">
-                        <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlPaciente"
-                        InitialValue="" CssClass="validador"
-                        ErrorMessage="El paciente es requerido." Display="Dynamic" />
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================
              ESTADO
         ========================= -->
         <div class="form-card">
@@ -171,9 +145,6 @@
                     <label>Estado <span class="req">*</span></label>
                     <asp:DropDownList ID="ddlEstado" runat="server">
                         <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
-                        <asp:ListItem Value="Confirmado" Selected="True">Confirmado</asp:ListItem>
-                        <asp:ListItem Value="Pendiente">Pendiente</asp:ListItem>
-                        <asp:ListItem Value="Cancelado">Cancelado</asp:ListItem>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlEstado"
                         InitialValue="" CssClass="validador"
@@ -191,8 +162,7 @@
                 <div class="campo">
                     <label>Observaciones</label>
                     <asp:TextBox ID="txtObservacion" runat="server" TextMode="MultiLine" Rows="4"
-                        MaxLength="500"
-                        Text="Paciente con antecedente de bypass coronario (marzo 2025). Presenta leve disnea de esfuerzo. Se solicita ECG y perfil lipídico previo a la consulta." />
+                        MaxLength="500" />
                 </div>
             </div>
         </div>

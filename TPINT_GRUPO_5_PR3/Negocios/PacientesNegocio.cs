@@ -71,5 +71,11 @@ namespace Negocio
            
             return idPaciente;
         }
+
+       public DataTable ObtenerPacientesActivos()
+        {
+            Pacientes pacientes = new Pacientes();
+            return pacientes.ObtenerPacientesActivos();
+        }
     }
 }
