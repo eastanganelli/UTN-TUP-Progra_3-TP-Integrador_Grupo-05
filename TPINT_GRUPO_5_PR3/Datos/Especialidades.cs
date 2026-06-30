@@ -24,5 +24,20 @@ namespace Datos
             string sqlQuery = "SELECT * FROM Especialidad";
             return conexion.ObtenerTabla(sqlQuery, "Especialidad");
         }
+
+        public DataTable ObtenerMedicosPorEspecialidad(int idEspecialidad)
+        {
+            string consulta = "SELECT m.id_medico, p.nombre, p.apellido " +
+                              "FROM Medico m " +
+                              "INNER JOIN Persona p ON m.id_persona = p.id_persona " +
+                              "WHERE m.id_especialidad = @idEspecialidad";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@idEspecialidad", idEspecialidad)
+            };
+
+            return conexion.ObtenerTablaParametros(consulta, "MedicosPorEspecialidad", parametros);
+        }
     }
 }

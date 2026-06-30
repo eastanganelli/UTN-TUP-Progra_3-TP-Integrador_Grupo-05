@@ -141,5 +141,15 @@ namespace Datos
             cmd.Parameters.AddWithValue("@id_localidad", paciente.IDLocalidad);
             
         }
+
+        public DataTable ObtenerPacientesActivos()
+        {
+            string consulta = @"
+                SELECT id_paciente,
+                       apellido + ', ' + nombre AS nombre
+                FROM vw_Pacientes_Activos
+                ORDER BY apellido, nombre";
+            return accesoDatos.ObtenerTabla(consulta, "pacientes");
+        }
     }
 }

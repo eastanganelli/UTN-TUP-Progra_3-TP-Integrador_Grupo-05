@@ -25,5 +25,11 @@ namespace Negocio
         {
             return datosEspecialidades.ObtenerEspecialidades();
         }
+
+        public DataTable ObtenerMedicosPorEspecialidad(int idEspecialidad)
+        {
+           
+            return datosEspecialidades.ObtenerMedicosPorEspecialidad(idEspecialidad);
+        }
     }
 }

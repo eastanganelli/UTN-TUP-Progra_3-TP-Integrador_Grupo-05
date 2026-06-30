@@ -21,5 +21,6 @@ namespace Negocio {
             try { return datosHorarioMedicos.EliminarHorario(id_horario); }
             catch (Exception ex) { throw new Exception("Error al eliminar horario: " + ex.Message); }
         }
+
     }
 }
