@@ -64,8 +64,6 @@ namespace Negocio {
                 throw new Exception("Error al dar de baja el médico: " + ex.Message);
             }
         }
-<<<<<<< HEAD
-
         public DataTable ObtenerMedicosPorEspecialidad(string idEspecialidad)
         {
             try
@@ -75,7 +73,8 @@ namespace Negocio {
             catch (Exception ex)
             {
                 throw new Exception("Error al obtener médicos por especialidad: " + ex.Message);
-=======
+            }
+        }
         public void ToggleEstadoMedico(int id_medico) {
             try {
                 Medico m = datosMedicos.ObtenerMedico(id_medico);
@@ -90,7 +89,6 @@ namespace Negocio {
             }
             catch (Exception ex) {
                 throw new Exception(ex.Message.StartsWith("Error") ? ex.Message : "Error al cambiar el estado del médico: " + ex.Message);
->>>>>>> dc009e74ac4d0a7ad00e43e5a94dc254fcc3319e
             }
         }
     }

@@ -144,8 +144,12 @@ namespace Datos
 
         public DataTable ObtenerPacientesActivos()
         {
-            string consulta = "SELECT id_paciente, (Apellido + ', ' + Nombre) AS PacienteCompleto FROM vw_Pacientes_Activos";
-            return accesoDatos.ObtenerTabla(consulta, "PacientesActivos");
+            string consulta = @"
+                SELECT id_paciente,
+                       apellido + ', ' + nombre AS nombre
+                FROM vw_Pacientes_Activos
+                ORDER BY apellido, nombre";
+            return accesoDatos.ObtenerTabla(consulta, "pacientes");
         }
     }
 }

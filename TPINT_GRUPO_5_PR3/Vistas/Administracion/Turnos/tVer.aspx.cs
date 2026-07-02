@@ -76,7 +76,7 @@ namespace Vistas.Administracion.Turnos
             if (!string.IsNullOrEmpty(idTurnoStr))
             {
                 int idTurno = int.Parse(idTurnoStr);
-                neg.EliminarTurno(idTurno);
+                neg.EliminarTurnoPermanente(idTurno);
                 Response.Redirect("tInicio.aspx");
             }
         }

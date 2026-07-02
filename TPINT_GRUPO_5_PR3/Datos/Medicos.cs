@@ -141,8 +141,6 @@ namespace Datos {
             });
             return pMsg.Value?.ToString() ?? string.Empty;
         }
-<<<<<<< HEAD
-
         public DataTable ObtenerMedicosPorEspecialidad(string idEspecialidad)
         {
             string consulta = "SELECT id_medico, (Apellido + ', ' + Nombre) AS MedicoCompleto " +
@@ -150,7 +148,7 @@ namespace Datos {
                               "WHERE id_especialidad = " + idEspecialidad + " AND activo = 1";
 
             return conexion.ObtenerTabla(consulta, "MedicosFiltrados");
-=======
+        }
         public int CambiarEstadoMedico(int id_medico, bool nuevoEstado) {
             return conexion.EjecutarConsultaParametros(
                 "UPDATE Medico SET activo = @activo WHERE id_medico = @id",
@@ -163,7 +161,6 @@ namespace Datos {
                 pMsg
             });
             return pMsg.Value?.ToString() ?? string.Empty;
->>>>>>> dc009e74ac4d0a7ad00e43e5a94dc254fcc3319e
         }
     }
 }

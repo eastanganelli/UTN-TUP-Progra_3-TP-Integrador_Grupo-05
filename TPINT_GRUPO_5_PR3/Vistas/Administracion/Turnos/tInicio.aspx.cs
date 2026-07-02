@@ -17,7 +17,32 @@ namespace Vistas.Administracion.Turnos
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            dgvTurnos.PageIndex = 0; 
+            DateTime desde, hasta;
+            bool hayDesde = !string.IsNullOrWhiteSpace(txtDesde.Text);
+            bool hayHasta = !string.IsNullOrWhiteSpace(txtHasta.Text);
+
+            if (hayDesde && !DateTime.TryParse(txtDesde.Text, out desde))
+            {
+                Response.Write("<script>alert('La fecha Desde no es válida.');</script>");
+                return;
+            }
+            if (hayHasta && !DateTime.TryParse(txtHasta.Text, out hasta))
+            {
+                Response.Write("<script>alert('La fecha Hasta no es válida.');</script>");
+                return;
+            }
+            if (hayDesde && hayHasta)
+            {
+                desde = DateTime.Parse(txtDesde.Text);
+                hasta = DateTime.Parse(txtHasta.Text);
+                if (desde.Date > hasta.Date)
+                {
+                    Response.Write("<script>alert('La fecha Desde no puede ser mayor que la fecha Hasta.');</script>");
+                    return;
+                }
+            }
+
+            dgvTurnos.PageIndex = 0;
             CargarListadoDeTurnos();
         }
         protected void btnLimpiar_Click(object sender, EventArgs e)
@@ -86,7 +111,7 @@ namespace Vistas.Administracion.Turnos
                             string medico = fila["medico"].ToString().ToLower();
 
                             if (!paciente.Contains(busqueda) && !medico.Contains(busqueda))
-                                continue; 
+                                continue;
                         }
 
                         if (ddlEspecialidad.SelectedIndex > 0)
@@ -146,7 +171,7 @@ namespace Vistas.Administracion.Turnos
             if (e.CommandName == "Baja")
             {
                 TurnosNegocio negocio = new TurnosNegocio();
-                negocio.EliminarTurno(Convert.ToInt32(e.CommandArgument));
+                negocio.EliminarTurnoPermanente(Convert.ToInt32(e.CommandArgument));
                 CargarListadoDeTurnos();
             }
         }

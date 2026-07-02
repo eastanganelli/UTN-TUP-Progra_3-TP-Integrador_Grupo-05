@@ -30,9 +30,12 @@
             border-radius: 20px;
         }
 
-        .badge-turno.confirmado { background-color: #e6f5ee; color: #1a7a4a; }
-        .badge-turno.pendiente  { background-color: #fff7e6;  color: #b07a00; }
-        .badge-turno.cancelado  { background-color: #fdecea;  color: #c0392b; }
+        .badge-turno.confirmado { background-color: #e6f5ee;
+            color: #1a7a4a; }
+        .badge-turno.pendiente  { background-color: #fff7e6;  color: #b07a00;
+        }
+        .badge-turno.cancelado  { background-color: #fdecea;  color: #c0392b;
+        }
 
         .nro-turno {
             font-size: 13px;
@@ -131,8 +134,10 @@
             flex-shrink: 0;
         }
 
-        .mini-avatar.paciente  { background-color: #1a2332; }
-        .mini-avatar.medico    { background-color: #185FA5; }
+        .mini-avatar.paciente  { background-color: #1a2332;
+        }
+        .mini-avatar.medico    { background-color: #185FA5;
+        }
 
         .mini-info .mini-nombre {
             font-size: 15px;
@@ -152,7 +157,8 @@
             text-decoration: none;
         }
 
-        .mini-info .mini-link:hover { text-decoration: underline; }
+        .mini-info .mini-link:hover { text-decoration: underline;
+        }
 
         .observaciones-box {
             width: 100%;
@@ -198,9 +204,12 @@
             flex-shrink: 0;
         }
 
-        .timeline-dot.activo   { background-color: #185FA5; }
-        .timeline-dot.exito    { background-color: #1a7a4a; }
-        .timeline-dot.cancelado { background-color: #c0392b; }
+        .timeline-dot.activo   { background-color: #185FA5;
+        }
+        .timeline-dot.exito    { background-color: #1a7a4a;
+        }
+        .timeline-dot.cancelado { background-color: #c0392b;
+        }
 
         .timeline-linea {
             width: 2px;
@@ -241,15 +250,18 @@
                 <h1>Detalle del Turno</h1>
                 <div class="header-meta">
                     <span class="page-subtitle">Número de turno: </span>
-                    <asp:Label ID="lblNroTurno" runat="server" CssClass="page-subtitle" />
+       
+                     <asp:Label ID="lblNroTurno" runat="server" CssClass="page-subtitle" />
                     
                 </div>
             </div>
             <div class="page-header-actions">
-                        <asp:Button ID="btnVolver" runat="server" Text="Volver al listado"
+                      
+   <asp:Button ID="btnVolver" runat="server" Text="Volver al listado"
                         CssClass="btn-volver" CausesValidation="false" 
                         OnClick="btnVolver_Click" />
-                <asp:Button ID="btnCancelarTurno" runat="server" Text="Cancelar turno" CssClass="btn-cancelar-turno" OnClick="btnCancelarTurno_Click" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar este turno?');" />
+                <asp:Button ID="btnCancelarTurno" runat="server" Text="Cancelar turno" CssClass="btn-cancelar-turno" OnClick="btnCancelarTurno_Click" OnClientClick="return confirm('¿Estás seguro de que deseas cancelar este turno?');"
+/>
             </div>
         </div>
         <div class="banner-fecha">
@@ -257,13 +269,15 @@
                 <span class="bloque-label">Fecha</span>
                 <asp:Label ID="lblFecha" runat="server" ForeColor="White" />
             </div>
+         
             <div class="separador"></div>
             <div class="bloque">
                 <span class="bloque-label">Hora</span>
                 <asp:Label ID="lblHora" runat="server" ForeColor="White" />
-                <span class="bloque-sub">Duración estimada: 30 min</span>
+                <span class="bloque-sub">Duración estimada:1 hora</span>
             </div>
             <div class="separador"></div>
+ 
             <div class="bloque">
             </div>
         </div>
@@ -271,49 +285,59 @@
             <div class="info-card">
                 <h2>Paciente</h2>
                 <div class="mini-perfil">
+             
                     <div class="mini-avatar paciente"><asp:Label ID="lblInicialesPaciente" runat="server" /></div>
                     <div class="mini-info">
                         <asp:Label ID="lblPaciente" runat="server" />
                         <br>
-                        <span class="dato-label">DNI-</span>
+                
+                         <span class="dato-label">DNI-</span>
                         <asp:Label ID="lblDNI" runat="server" class="dato-label" />
                         <br>
                         <a id="lnkFichaPaciente" runat="server" class="mini-link">Ver ficha completa →</a>
+         
                     </div>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">N° de paciente</span>
                     <br>
+             
                     <asp:Label ID="lblNroPaciente" runat="server" />
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Teléfono</span>
                     <br>
-                    <asp:Label ID="lblTelefono" runat="server" />
+                
+                     <asp:Label ID="lblTelefono" runat="server" />
                 </div>
             </div>
             <div class="info-card">
                 <h2>Médico</h2>
                 <div class="mini-perfil">
-                    <div class="mini-avatar medico"><asp:Label ID="lblInicialesMedico" runat="server" /></div>
+                   
+                  <div class="mini-avatar medico"><asp:Label ID="lblInicialesMedico" runat="server" /></div>
                     <div class="mini-info">
                         <asp:Label ID="lblMedico" runat="server" />
                         <br>
-                        <a id="lnkFichaMedico" runat="server" class="mini-link">Ver ficha completa →</a>
+                      
+   <a id="lnkFichaMedico" runat="server" class="mini-link">Ver ficha completa →</a>
                     </div>
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Especialidad</span>
-                    <asp:Label ID="lblEspecialidad" runat="server" />
+                  
+                     <asp:Label ID="lblEspecialidad" runat="server" />
                 </div>
                 <div class="dato-fila">
                     <span class="dato-label">Correo</span>
                     <asp:Label ID="lblCorreo" runat="server" />
                 </div>
-            </div>
+  
+               </div>
             <div class="info-card full-width">
                 <h2>Motivo y Observaciones</h2>
-                <div class="dato-fila" style="align-items: flex-start; padding-top: 14px;">
+                <div class="dato-fila" style="align-items: flex-start;
+ padding-top: 14px;">
                     <span class="dato-label">Observaciones</span>
                 </div>
                 <textarea id="txtObservaciones" runat="server" class="observaciones-box" readonly></textarea>

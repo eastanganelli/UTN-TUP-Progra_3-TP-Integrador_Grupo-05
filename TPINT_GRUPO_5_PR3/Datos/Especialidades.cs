@@ -24,7 +24,5 @@ namespace Datos
             string sqlQuery = "SELECT * FROM Especialidad";
             return conexion.ObtenerTabla(sqlQuery, "Especialidad");
         }
-
-        
     }
 }

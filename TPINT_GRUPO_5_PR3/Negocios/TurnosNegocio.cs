@@ -25,15 +25,15 @@ namespace Negocio {
             return _datosTurnos.ObtenerTurnosPorPaciente(idPaciente);
         }
 
-        public bool EliminarTurno(int idTurno)
+        public bool EliminarTurnoPermanente(int idTurno)
         {
             try
             {
-                return _datosTurnos.EliminarTurno(idTurno);
+                return _datosTurnos.EliminarTurnoPermanente(idTurno);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error en la capa de negocio al eliminar físicamente el turno: " + ex.Message);
+                throw new Exception("Error en la capa de negocio al eliminar físicamente: " + ex.Message);
             }
         }
 
@@ -49,16 +49,26 @@ namespace Negocio {
             return _datosTurnos.BuscarTurnoPorId(idTurno);
         }
 
-        public string InsertarNuevoTurno(string idMedico, string idPaciente, string fechaHora)
+        public string AsignarTurno(int id_medico, int id_paciente, DateTime fecha_hora)
         {
-            try
-            {
-                return _datosTurnos.InsertarTurnoConSP(idMedico, idPaciente, fechaHora);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error en la capa de negocio al insertar un nuevo turno: " + ex.Message);
-            }
+            if (id_medico <= 0) throw new Exception("Seleccioná un médico válido.");
+            if (id_paciente <= 0) throw new Exception("Seleccioná un paciente válido.");
+            if (fecha_hora < DateTime.Now)
+                throw new Exception("La fecha y hora del turno no puede ser en el pasado.");
+
+            return _datosTurnos.AsignarTurno(id_medico, id_paciente, fecha_hora);
+        }
+        public DataTable ObtenerMedicosPorEspecialidad(int id_especialidad)
+        {
+            return _datosTurnos.ObtenerMedicosPorEspecialidad(id_especialidad);
+        }
+
+        public DataTable ObtenerHorariosDisponibles(int id_medico, DateTime fecha)
+        {
+            if (fecha.Date < DateTime.Today)
+                throw new Exception("No se pueden asignar turnos en fechas pasadas.");
+
+            return _datosTurnos.ObtenerHorariosDisponibles(id_medico, fecha);
         }
 
 
