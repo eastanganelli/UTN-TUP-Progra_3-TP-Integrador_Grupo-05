@@ -13,11 +13,12 @@ namespace Vistas.Administracion.Turnos
     public partial class Turno_Ver : System.Web.UI.Page
     {
         private TurnosNegocio neg = new TurnosNegocio();
+        private bool bckInicio = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                string idTurno = Request.QueryString["id"];
+                string idTurno  = Request.QueryString["id"];
 
                 if (!string.IsNullOrEmpty(idTurno))
                 {
@@ -77,12 +78,18 @@ namespace Vistas.Administracion.Turnos
             {
                 int idTurno = int.Parse(idTurnoStr);
                 neg.EliminarTurnoPermanente(idTurno);
-                Response.Redirect("tInicio.aspx");
+                string bckInicio_ = Request.QueryString["bck_ini"];
+                RetornarAlInicio();
             }
         }
 
-        protected void btnVolver_Click(object sender, EventArgs e)
-        {
+        protected void btnVolver_Click(object sender, EventArgs e) { RetornarAlInicio(); }
+        private void RetornarAlInicio() {
+            string bckInicio_ = Request.QueryString["bck_ini"];
+            if (!string.IsNullOrEmpty(bckInicio_) && bckInicio_ == "1")
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
+            }
             Response.Redirect("tInicio.aspx");
         }
     }

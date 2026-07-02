@@ -4,18 +4,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Datos
-{
-    public class Turnos
-    {
+namespace Datos {
+    public class Turnos {
         private AccesoDatos conexion = new AccesoDatos();
-
         public DataTable ObtenerUltimosTurnos(int id_medico, int top_limite)
         {
             string consulta = $"SELECT TOP ({top_limite}) * FROM vw_Turnos WHERE id_medico = {id_medico} ORDER BY FechaHora DESC";
             return conexion.ObtenerTabla(consulta, "ultimos_turnos");
         }
-
         public DataTable ObtenerTodosLosTurnos()
         {
             SqlConnection conn = conexion.ObtenerConexion();
@@ -44,7 +40,6 @@ namespace Datos
 
             return dt;
         }
-
         public DataTable ObtenerTurnosPorPaciente(int idPaciente)
         {
             string consulta = @"SELECT
@@ -63,7 +58,6 @@ namespace Datos
             parametros.Add(new SqlParameter("@idPaciente", idPaciente));
             return conexion.ObtenerTablaParametros(consulta, "turnos_paciente", parametros.ToArray());
         }
-
         public bool EliminarTurnoPermanente(int idTurno)
         {
             using (SqlConnection conn = conexion.ObtenerConexion())
@@ -78,7 +72,6 @@ namespace Datos
                 }
             }
         }
-
         public DataTable BuscarTurnoPorId(string idTurno)
         {
             string consulta = "SELECT t.id_turno, t.fecha_hora, t.observacion, " +
@@ -116,7 +109,6 @@ namespace Datos
                 });
             return pMsg.Value?.ToString() ?? string.Empty;
         }
-
         public DataTable ObtenerProximosTurnos(int idPaciente)
         {
             string consulta = @"SELECT
@@ -137,7 +129,6 @@ namespace Datos
 
             return conexion.ObtenerTablaParametros(consulta, "proximos_turnos", parametros.ToArray());
         }
-
         public DataTable ObtenerMedicosPorEspecialidad(int id_especialidad)
         {
             string consulta = @"
@@ -149,7 +140,6 @@ namespace Datos
             return conexion.ObtenerTablaParametros(consulta, "medicos",
                 new[] { new SqlParameter("@id_especialidad", id_especialidad) });
         }
-
         public DataTable ObtenerHorariosDisponibles(int id_medico, DateTime fecha)
         {
             int diaSemana = (int)fecha.DayOfWeek; 
@@ -217,7 +207,6 @@ namespace Datos
 
             return resultado;
         }
-
         public DataTable ObtenerTurnosOcupados(int idMedico, string fecha)
         {
             string consulta = "SELECT CONVERT(VARCHAR(5), fecha_hora, 108) AS hora_ocupada " +
@@ -226,13 +215,26 @@ namespace Datos
                               "AND CAST(fecha_hora AS DATE) = @fecha " +
                               "AND activo = 1";
 
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-        new SqlParameter("@idMedico", idMedico),
-        new SqlParameter("@fecha", fecha)
+            SqlParameter[] parametros = new SqlParameter[] {
+                new SqlParameter("@idMedico", idMedico),
+                new SqlParameter("@fecha", fecha)
             };
 
             return conexion.ObtenerTablaParametros(consulta, "TurnosOcupados", parametros);
+        }
+        public DataTable ObtenerTurnosDelDia(int idMedico) {
+            string consulta = @"
+                SELECT
+                     ROW_NUMBER() OVER(ORDER BY Hora ASC) AS Indice
+                    ,id_turno
+                    ,Paciente
+                    ,Hora
+                    ,estado
+                FROM vw_Turnos_Activos
+                WHERE Fecha = CURRENT_DATE";
+            return conexion.ObtenerTablaParametros(consulta, "TurnosDelDia", new SqlParameter[] {
+                new SqlParameter("@idMedico", idMedico)
+            });
         }
     }
 }

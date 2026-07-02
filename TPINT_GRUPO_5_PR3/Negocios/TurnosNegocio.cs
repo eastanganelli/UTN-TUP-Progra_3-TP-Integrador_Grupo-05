@@ -70,7 +70,8 @@ namespace Negocio {
 
             return _datosTurnos.ObtenerHorariosDisponibles(id_medico, fecha);
         }
-
-
+        public DataTable ObtenerTurnosDelDia(int id_medico) {
+            return _datosTurnos.ObtenerTurnosDelDia(id_medico);
+        }
     }
 }

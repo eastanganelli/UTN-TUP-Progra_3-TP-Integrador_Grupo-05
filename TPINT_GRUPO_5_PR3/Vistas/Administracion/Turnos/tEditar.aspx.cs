@@ -27,5 +27,13 @@ namespace Vistas.Administracion.Turnos
                 Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
+        private void RetornarAlInicio() {
+            string bckInicio_ = Request.QueryString["bck_ini"];
+            if (!string.IsNullOrEmpty(bckInicio_) && bckInicio_ == "1")
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
+            }
+            Response.Redirect("tInicio.aspx");
+        }
     }
 }
