@@ -99,7 +99,7 @@ namespace Datos {
             SqlParameter pId = new SqlParameter("@nuevo_id", SqlDbType.Int)
             { Direction = ParameterDirection.Output };
 
-            conexion.EjecutarProcedimientoAlmacenado("sp_Turno_Asignar",
+            conexion.EjecutarProcedimientoAlmacenado("/cave",
                 new SqlParameter[]
                 {
                     new SqlParameter("@id_medico",   id_medico),
@@ -227,11 +227,12 @@ namespace Datos {
                 SELECT
                      ROW_NUMBER() OVER(ORDER BY Hora ASC) AS Indice
                     ,id_turno
+                    ,id_medico
                     ,Paciente
                     ,Hora
                     ,estado
                 FROM vw_Turnos_Activos
-                WHERE Fecha = CURRENT_DATE";
+                WHERE Fecha = CURRENT_DATE AND id_medico = @idMedico";
             return conexion.ObtenerTablaParametros(consulta, "TurnosDelDia", new SqlParameter[] {
                 new SqlParameter("@idMedico", idMedico)
             });
