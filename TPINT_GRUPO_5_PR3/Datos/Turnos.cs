@@ -99,7 +99,7 @@ namespace Datos {
             SqlParameter pId = new SqlParameter("@nuevo_id", SqlDbType.Int)
             { Direction = ParameterDirection.Output };
 
-            conexion.EjecutarProcedimientoAlmacenado("/cave",
+            conexion.EjecutarProcedimientoAlmacenado("sp_Turno_Asignar",
                 new SqlParameter[]
                 {
                     new SqlParameter("@id_medico",   id_medico),
@@ -235,6 +235,54 @@ namespace Datos {
                 WHERE Fecha = CURRENT_DATE AND id_medico = @idMedico";
             return conexion.ObtenerTablaParametros(consulta, "TurnosDelDia", new SqlParameter[] {
                 new SqlParameter("@idMedico", idMedico)
+            });
+        }
+        public DataTable ObtenerEstadisticasDelDia() {
+            string consulta = @"
+                            WITH EstadoDelDia AS (
+	                            SELECT
+                                    id_medico,
+                                    SUM(IIF(estado LIKE 'pendiente',1,0)) AS Pendiente,
+                                    SUM(IIF(estado LIKE 'presente',1,0)) AS Presente,
+                                    SUM(IIF(estado LIKE 'ausente',1,0)) AS Ausente,
+                                    Fecha
+                                FROM vw_Turnos_Activos
+                                GROUP BY id_medico, Fecha, estado
+                            )
+                            SELECT
+                                id_medico,
+                                Pendiente,
+                                Presente,
+                                Ausente,
+                                (Pendiente + Presente + Ausente) AS Total,
+                                Fecha
+                            FROM EstadoDelDia
+                            WHERE Fecha = CURRENT_DATE";
+            return conexion.ObtenerTabla(consulta, "Estadisticas");
+        }
+        public DataTable ObtenerEstadisticasDelDiaMedico(int id_medico) {
+            string consulta = @"
+                            WITH EstadoDelDia AS (
+	                            SELECT
+                                    id_medico,
+                                    SUM(IIF(estado LIKE 'pendiente',1,0)) AS Pendiente,
+                                    SUM(IIF(estado LIKE 'presente',1,0)) AS Presente,
+                                    SUM(IIF(estado LIKE 'ausente',1,0)) AS Ausente,
+                                    Fecha
+                                FROM vw_Turnos_Activos
+                                GROUP BY id_medico, Fecha, estado
+                            )
+                            SELECT
+                                id_medico,
+                                Pendiente,
+                                Presente,
+                                Ausente,
+                                (Pendiente + Presente + Ausente) AS Total,
+                                Fecha
+                            FROM EstadoDelDia
+                            WHERE id_medico = @idMedico AND Fecha = CURRENT_DATE";
+            return conexion.ObtenerTablaParametros(consulta, "Estadisticas", new SqlParameter[] {
+                new SqlParameter("@idMedico", id_medico)
             });
         }
     }

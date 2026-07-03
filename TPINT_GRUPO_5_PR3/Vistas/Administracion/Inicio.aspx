@@ -100,27 +100,23 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Turnos hoy</div>
-                    <div class="stat-number">8</div>
+                    <div class="stat-number"><%= statsHoyAdmin.total %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Pendientes</div>
-                    <div class="stat-number pendiente">5</div>
+                    <div class="stat-number pendiente"><%= statsHoyAdmin.pendientes %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Presentes</div>
-                    <div class="stat-number presente">2</div>
+                    <div class="stat-number presente"><%= statsHoyAdmin.atendidos %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Ausentes</div>
-                    <div class="stat-number ausente">1</div>
+                    <div class="stat-number ausente"><%= statsHoyAdmin.ausentes %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Médicos activos</div>
-                    <div class="stat-number">7</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Pacientes registrados</div>
-                    <div class="stat-number">8</div>
+                    <div class="stat-number"><%= statsHoyAdmin.medicosActivos %></div>
                 </div>
             </div>
         </asp:Panel>
@@ -130,19 +126,19 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Mis turnos hoy</div>
-                    <div class="stat-number">8</div>
+                    <div class="stat-number"><%= turnosDelDia.total %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Pendientes</div>
-                    <div class="stat-number pendiente">5</div>
+                    <div class="stat-number pendiente"><%= turnosDelDia.pendientes %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Presentes</div>
-                    <div class="stat-number presente">2</div>
+                    <div class="stat-number presente"><%= turnosDelDia.atendidos %></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Ausentes</div>
-                    <div class="stat-number ausente">1</div>
+                    <div class="stat-number ausente"><%= turnosDelDia.ausentes %></div>
                 </div>
             </div>
         </asp:Panel>
