@@ -54,6 +54,75 @@
     font-size: 13px;
     color: #444;
 }
+.grafico-card {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.grafico-body {
+    padding: 20px;
+}
+.grafico-columnas {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    overflow-x: auto;
+    padding-top: 10px;
+}
+.grafico-columna {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+    flex: 1;
+}
+.grafico-barras {
+    width: 28px;
+    height: 160px;
+    display: flex;
+    flex-direction: column-reverse;
+    background: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.barra-segmento {
+    width: 100%;
+}
+.barra-pendiente {
+    background: #f0ad4e;
+}
+.barra-presente {
+    background: #5cb85c;
+}
+.barra-ausente {
+    background: #d9534f;
+}
+.grafico-mes {
+    font-size: 11px;
+    color: #666;
+    margin-top: 6px;
+}
+.grafico-total {
+    font-size: 12px;
+    font-weight: bold;
+    color: #1a2332;
+}
+.grafico-referencias {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #444;
+}
+.ref-color {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
 </style>
 </asp:Content>
 
@@ -77,6 +146,34 @@
             <div class="resumen-label">Total registros</div>
             <div class="resumen-valor">
                 <asp:Label ID="lblTotal" runat="server" Text="0" />
+            </div>
+        </div>
+    </div>
+
+    <div class="grafico-card" id="pnlGrafico" runat="server" visible="false">
+        <div class="reporte-header">
+            Turnos por mes
+        </div>
+        <div class="grafico-body">
+            <div class="grafico-columnas">
+                <asp:Repeater ID="rptGrafico" runat="server">
+                    <ItemTemplate>
+                        <div class="grafico-columna">
+                            <div class="grafico-barras">
+                                <div class="barra-segmento barra-pendiente" style='flex-grow:<%# Eval("Pendiente") %>'></div>
+                                <div class="barra-segmento barra-presente" style='flex-grow:<%# Eval("Presente") %>'></div>
+                                <div class="barra-segmento barra-ausente" style='flex-grow:<%# Eval("Ausente") %>'></div>
+                            </div>
+                            <div class="grafico-mes"><%# Eval("NombreMes") %></div>
+                            <div class="grafico-total"><%# Eval("Total") %></div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+            <div class="grafico-referencias">
+                <span><span class="ref-color barra-pendiente"></span>Pendiente</span>
+                <span><span class="ref-color barra-presente"></span>Presente</span>
+                <span><span class="ref-color barra-ausente"></span>Ausente</span>
             </div>
         </div>
     </div>

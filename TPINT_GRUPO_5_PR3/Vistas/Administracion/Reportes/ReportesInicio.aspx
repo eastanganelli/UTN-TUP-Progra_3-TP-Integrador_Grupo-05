@@ -52,43 +52,42 @@
 
         <div class="campo full-width">
             <label>Tipo de Reporte</label>
-            <asp:DropDownList ID="ddlReporte" runat="server">
+            <asp:DropDownList ID="ddlReporte" runat="server"
+                AutoPostBack="true" OnSelectedIndexChanged="ddlReporte_SelectedIndexChanged">
                 <asp:ListItem Text="Seleccione un reporte" />
                 <asp:ListItem Text="Asistencia a Turnos" />
                 <asp:ListItem Text="Turnos por Especialidad" />
                 <asp:ListItem Text="Médicos con más Turnos" />
                 <asp:ListItem Text="Pacientes con más Ausencias" />
+                <asp:ListItem Text="Estado de Turnos por Año" />
             </asp:DropDownList>
         </div>
 
-        <div class="campo">
+        <div class="campo" id="pnlAnio" runat="server">
+            <label>Año</label>
+            <asp:TextBox ID="txtAnio" runat="server" TextMode="Number"></asp:TextBox>
+        </div>
+
+        <div class="campo" id="pnlFechaDesde" runat="server">
             <label>Fecha Desde</label>
             <asp:TextBox ID="txtDesde" runat="server" TextMode="Date"></asp:TextBox>
         </div>
 
-        <div class="campo">
+        <div class="campo" id="pnlFechaHasta" runat="server">
             <label>Fecha Hasta</label>
             <asp:TextBox ID="txtHasta" runat="server" TextMode="Date"></asp:TextBox>
         </div>
 
-        <div class="campo">
+        <div class="campo" id="pnlEspecialidad" runat="server">
             <label>Especialidad</label>
-            <asp:DropDownList ID="ddlEspecialidad" runat="server">
-                <asp:ListItem Text="Todas" />
-                <asp:ListItem Text="Cardiología" />
-                <asp:ListItem Text="Clínica Médica" />
-                <asp:ListItem Text="Pediatría" />
-                <asp:ListItem Text="Dermatología" />
+            <asp:DropDownList ID="ddlEspecialidad" runat="server"
+                AutoPostBack="true" OnSelectedIndexChanged="ddlEspecialidad_SelectedIndexChanged">
             </asp:DropDownList>
         </div>
 
-        <div class="campo">
+        <div class="campo" id="pnlMedico" runat="server">
             <label>Médico</label>
             <asp:DropDownList ID="ddlMedico" runat="server">
-                <asp:ListItem Text="Todos" />
-                <asp:ListItem Text="Dr. Pérez" />
-                <asp:ListItem Text="Dra. Gómez" />
-                <asp:ListItem Text="Dr. Rodríguez" />
             </asp:DropDownList>
         </div>
 

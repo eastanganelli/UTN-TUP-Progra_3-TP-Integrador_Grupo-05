@@ -51,6 +51,13 @@ namespace Vistas.Administracion.Reportes
                     dt = negocio.MedicosConMasTurnos(fechaDesde, fechaHasta);
                     MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
                     break;
+                case "Estado de Turnos por Año":
+                    int anio;
+                    if (!int.TryParse(Request.QueryString["anio"], out anio))
+                        anio = DateTime.Now.Year;
+                    dt = negocio.EstadoTurnosPorAnio(anio);
+                    MostrarReporteEstadoTurnos(dt, anio);
+                    break;
                 default:
                     Response.Redirect("ReportesInicio.aspx");
                     break;
@@ -71,6 +78,28 @@ namespace Vistas.Administracion.Reportes
             // Tabla de resultados
             gvResultado.DataSource = dt;
             gvResultado.DataBind();
+        }
+
+        private void MostrarReporteEstadoTurnos(DataTable dt, int anio)
+        {
+            lblTitulo.Text = "Reporte: Estado de Turnos por Año";
+            lblPeriodo.Text = "Año " + anio;
+
+            int total = 0;
+            foreach (DataRow fila in dt.Rows)
+                total += Convert.ToInt32(fila["Total"]);
+            lblTotal.Text = total.ToString();
+
+            gvResultado.DataSource = dt;
+            gvResultado.DataBind();
+
+            pnlGrafico.Visible = true;
+            rptGrafico.DataSource = dt;
+            rptGrafico.DataBind();
+
+            lblConclusion.Text = anio == DateTime.Now.Year
+                ? "Los datos del año en curso pueden estar incompletos ya que aún no ha finalizado."
+                : "";
         }
     }
 }

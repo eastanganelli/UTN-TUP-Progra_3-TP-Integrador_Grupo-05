@@ -56,6 +56,46 @@ namespace Datos
                 new SqlParameter[] { pDesde, pHasta });
         }
 
+        public DataTable EstadoTurnosPorAnio(int anio)
+        {
+            string sql = @"WITH Meses AS (
+                                SELECT 1 AS Mes
+                                UNION ALL
+                                SELECT Mes + 1 FROM Meses WHERE Mes < 12
+                           ),
+                           TurnosDelAnio AS (
+                                SELECT MONTH(FechaHora) AS Mes,
+                                       SUM(IIF(estado LIKE 'pendiente', 1, 0)) AS Pendiente,
+                                       SUM(IIF(estado LIKE 'presente',  1, 0)) AS Presente,
+                                       SUM(IIF(estado LIKE 'ausente',   1, 0)) AS Ausente
+                                FROM vw_Turnos_Activos
+                                WHERE YEAR(FechaHora) = @anio
+                                GROUP BY MONTH(FechaHora)
+                           )
+                           SELECT m.Mes,
+                                  CASE m.Mes
+                                      WHEN 1  THEN 'Enero'      WHEN 2  THEN 'Febrero'
+                                      WHEN 3  THEN 'Marzo'      WHEN 4  THEN 'Abril'
+                                      WHEN 5  THEN 'Mayo'       WHEN 6  THEN 'Junio'
+                                      WHEN 7  THEN 'Julio'      WHEN 8  THEN 'Agosto'
+                                      WHEN 9  THEN 'Septiembre' WHEN 10 THEN 'Octubre'
+                                      WHEN 11 THEN 'Noviembre'  WHEN 12 THEN 'Diciembre'
+                                  END AS NombreMes,
+                                  ISNULL(t.Pendiente, 0) AS Pendiente,
+                                  ISNULL(t.Presente,  0) AS Presente,
+                                  ISNULL(t.Ausente,   0) AS Ausente,
+                                  ISNULL(t.Pendiente, 0) + ISNULL(t.Presente, 0) + ISNULL(t.Ausente, 0) AS Total
+                           FROM Meses m
+                           LEFT JOIN TurnosDelAnio t ON t.Mes = m.Mes
+                           ORDER BY m.Mes
+                           OPTION (MAXRECURSION 12)";
+
+            var pAnio = new SqlParameter("@anio", SqlDbType.Int);
+            pAnio.Value = anio;
+
+            return conexion.ObtenerTablaParametros(sql, "EstadoTurnosPorAnio",
+                new SqlParameter[] { pAnio });
+        }
 
     }
 }

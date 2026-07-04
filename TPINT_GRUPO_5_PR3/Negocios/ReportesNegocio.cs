@@ -30,6 +30,15 @@ namespace Negocios
             try { return datosReportes.MedicosConMasTurnos(desde, hasta); }
             catch (Exception ex) { throw new Exception("Error al obtener médicos con más turnos: " + ex.Message); }
         }
+
+        public DataTable EstadoTurnosPorAnio(int anio)
+        {
+            if (anio < 2000 || anio > DateTime.Now.Year + 1)
+                throw new Exception("El año ingresado no es válido.");
+
+            try { return datosReportes.EstadoTurnosPorAnio(anio); }
+            catch (Exception ex) { throw new Exception("Error al obtener estado de turnos por año: " + ex.Message); }
+        }
     }
 
 }
