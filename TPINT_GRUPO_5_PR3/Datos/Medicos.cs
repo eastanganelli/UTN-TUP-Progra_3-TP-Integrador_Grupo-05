@@ -54,8 +54,12 @@ namespace Datos {
             return (int)Math.Ceiling((double)total / cantidad_pagina);
         }
         public DataTable ObtenerMedicosPaginado(int nro_pagina, int cantidad_pagina = 10) {
-            string consulta = $"SELECT * FROM vw_Medicos ORDER BY id_medico ASC OFFSET ({nro_pagina} - 1) * {cantidad_pagina} ROWS FETCH NEXT {cantidad_pagina} ROWS ONLY;";
-            return conexion.ObtenerTabla(consulta, "Medico");
+            int offset = (nro_pagina - 1) * cantidad_pagina;
+            string consulta = "SELECT * FROM vw_Medicos ORDER BY id_medico ASC OFFSET @offset ROWS FETCH NEXT @cantidad ROWS ONLY;";
+            return conexion.ObtenerTablaParametros(consulta, "Medico", new[] {
+                new SqlParameter("@offset", offset),
+                new SqlParameter("@cantidad", cantidad_pagina)
+            });
         }
         public DataTable BuscarMedicos(string busqueda, bool? activo, int? idEspecialidad, int pagina, int porPagina) {
             string sql = @"SELECT * FROM vw_Medicos
@@ -145,9 +149,10 @@ namespace Datos {
         {
             string consulta = "SELECT id_medico, (Apellido + ', ' + Nombre) AS MedicoCompleto " +
                               "FROM vw_Medicos " +
-                              "WHERE id_especialidad = " + idEspecialidad + " AND activo = 1";
+                              "WHERE id_especialidad = @idEsp AND activo = 1";
 
-            return conexion.ObtenerTabla(consulta, "MedicosFiltrados");
+            return conexion.ObtenerTablaParametros(consulta, "MedicosFiltrados",
+                new[] { new SqlParameter("@idEsp", idEspecialidad) });
         }
         public int CambiarEstadoMedico(int id_medico, bool nuevoEstado) {
             return conexion.EjecutarConsultaParametros(

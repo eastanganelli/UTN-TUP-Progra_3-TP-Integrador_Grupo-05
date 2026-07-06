@@ -9,8 +9,11 @@ namespace Datos {
         private AccesoDatos conexion = new AccesoDatos();
         public DataTable ObtenerUltimosTurnos(int id_medico, int top_limite)
         {
-            string consulta = $"SELECT TOP ({top_limite}) * FROM vw_Turnos WHERE id_medico = {id_medico} ORDER BY FechaHora DESC";
-            return conexion.ObtenerTabla(consulta, "ultimos_turnos");
+            string consulta = "SELECT TOP (@top) * FROM vw_Turnos WHERE id_medico = @idMedico ORDER BY FechaHora DESC";
+            return conexion.ObtenerTablaParametros(consulta, "ultimos_turnos", new[] {
+                new SqlParameter("@top", top_limite),
+                new SqlParameter("@idMedico", id_medico)
+            });
         }
         public DataTable ObtenerTodosLosTurnos()
         {
@@ -88,9 +91,10 @@ namespace Datos {
                               "INNER JOIN Persona pem ON m.id_persona = pem.id_persona " +
                               "INNER JOIN Paciente pa ON t.id_paciente = pa.id_paciente " +
                               "INNER JOIN Persona pep ON pa.id_persona = pep.id_persona " +
-                              "WHERE t.id_turno = " + idTurno;
+                              "WHERE t.id_turno = @idTurno";
 
-            return conexion.ObtenerTabla(consulta, "TurnoEspecifico");
+            return conexion.ObtenerTablaParametros(consulta, "TurnoEspecifico",
+                new[] { new SqlParameter("@idTurno", idTurno) });
         }
         public string AsignarTurno(int id_medico, int id_paciente, DateTime fecha_hora)
         {

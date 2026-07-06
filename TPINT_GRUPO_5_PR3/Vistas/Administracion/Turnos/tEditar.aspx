@@ -114,7 +114,8 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
 
                 <div class="campo">
                     <label>Nueva Fecha</label>
-                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtFecha_TextChanged" />
+                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true"/>
+<%--                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtFecha_TextChanged" />--%>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFecha" CssClass="validador" ErrorMessage="La fecha es requerida." Display="Dynamic" />
                 </div>
 
@@ -161,19 +162,22 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
             <div class="form-grid una-col">
                 <div class="campo">
                     <label>Observaciones</label>
-                    <asp:TextBox ID="txtObservacion" runat="server" TextMode="MultiLine" Rows="4"
-                        MaxLength="500" />
+                    <asp:TextBox ID="txtObservacion" runat="server" TextMode="MultiLine" Rows="4" MaxLength="500" />
                 </div>
             </div>
         </div>
 
         <!-- ACCIONES -->
         <div class="form-acciones">
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
+            <%--<asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
                 CssClass="btn-cancelar" CausesValidation="false"
-                OnClick="btnCancelar_Click" />
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
-                CssClass="btn-guardar" OnClick="btnGuardar_Click" />
+                OnClick="btnCancelar_Click" />--%>
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
+                CssClass="btn-cancelar" CausesValidation="false"/>
+            <%--<asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
+                CssClass="btn-guardar" OnClick="btnGuardar_Click" />--%>
+            <asp:Button ID="Button1" runat="server" Text="Guardar cambios"
+                CssClass="btn-guardar"/>
         </div>
 
     </div>

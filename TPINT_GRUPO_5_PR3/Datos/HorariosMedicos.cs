@@ -7,8 +7,9 @@ namespace Datos {
     public class HorariosMedicos {
         private AccesoDatos accesoDatos = new AccesoDatos();
         public DataTable ObtenerHorariosDeMedico(int id_medico) {
-            string consulta = $"SELECT * FROM vw_HorariosMedicos WHERE id_medico = {id_medico}";
-            return accesoDatos.ObtenerTabla(consulta, "HorariosMedicos");
+            string consulta = "SELECT * FROM vw_HorariosMedicos WHERE id_medico = @idMedico";
+            return accesoDatos.ObtenerTablaParametros(consulta, "HorariosMedicos",
+                new[] { new SqlParameter("@idMedico", id_medico) });
         }
         public int AgregarHorario(HorarioMedico horario) {
             using (SqlConnection conn = accesoDatos.ObtenerConexion()) {
