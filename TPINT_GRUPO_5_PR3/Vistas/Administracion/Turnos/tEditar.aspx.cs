@@ -2,6 +2,10 @@
 using Negocio;
 using System;
 using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Vistas.Administracion.Turnos
@@ -39,6 +43,17 @@ namespace Vistas.Administracion.Turnos
             {
                 Response.Redirect("/Administracion/Inicio.aspx");
             }
+
+        }
+
+        private void RetornarAlInicio()
+        {
+            string bckInicio_ = Request.QueryString["bck_ini"];
+            if (!string.IsNullOrEmpty(bckInicio_) && bckInicio_ == "1")
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
+            }
+            Response.Redirect("tInicio.aspx");
         }
 
         private void CargarEstados()

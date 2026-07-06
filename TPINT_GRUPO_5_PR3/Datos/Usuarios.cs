@@ -120,7 +120,7 @@ namespace Datos {
                                             string buscar = null, string rol = null, string estado = null)
         {
             int offset = (nro_pagina - 1) * cantidad_pagina;
-            string sql = $@"SELECT u.id_usuario, u.username, u.tipo, u.id_medico, u.activo,
+            string sql = @"SELECT u.id_usuario, u.username, u.tipo, u.id_medico, u.activo,
                            p.nombre + ' ' + p.apellido AS NombreMedico
                     FROM Usuario u
                     LEFT JOIN Medico  m ON m.id_medico  = u.id_medico
@@ -129,8 +129,8 @@ namespace Datos {
                     AND   (@rol    IS NULL OR u.tipo     = @rol)
                     AND   (@estado IS NULL OR u.activo   = @estado)
                     ORDER BY u.id_usuario ASC
-                    OFFSET {offset} ROWS
-                    FETCH NEXT {cantidad_pagina} ROWS ONLY";
+                    OFFSET @offset ROWS
+                    FETCH NEXT @cantidad ROWS ONLY";
 
             var pBuscar = new SqlParameter("@buscar", SqlDbType.NVarChar, 100);
             pBuscar.Value = string.IsNullOrEmpty(buscar) ? (object)DBNull.Value : buscar;
@@ -139,7 +139,11 @@ namespace Datos {
             var pEstado = new SqlParameter("@estado", SqlDbType.Bit);
             pEstado.Value = string.IsNullOrEmpty(estado) ? (object)DBNull.Value : (estado == "1" ? 1 : 0);
 
-            return conexion.ObtenerTablaParametros(sql, "Usuario", new SqlParameter[] { pBuscar, pRol, pEstado });
+            return conexion.ObtenerTablaParametros(sql, "Usuario", new SqlParameter[] {
+                pBuscar, pRol, pEstado,
+                new SqlParameter("@offset", offset),
+                new SqlParameter("@cantidad", cantidad_pagina)
+            });
         }
     }
 }
