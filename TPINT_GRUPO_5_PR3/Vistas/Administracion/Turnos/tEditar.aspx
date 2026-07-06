@@ -48,10 +48,6 @@
                 <p>Podés modificar la fecha, horario, estado y observaciones.</p>
             </div>
             <div class="page-header-actions">
-                        <%--<asp:Button ID="btnVolver" runat="server" Text="Volver al listado"
-CssClass="btn-volver" CausesValidation="false" 
-OnClick="btnVolver_Click"
-OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perderán los datos que no guardaste.');" />--%>
             </div>
         </div>
 

@@ -74,7 +74,7 @@ namespace Datos {
         }
         public DataTable BuscarTurnoPorId(string idTurno)
         {
-            string consulta = "SELECT t.id_turno, t.fecha_hora, t.observacion, " +
+            string consulta = "SELECT t.id_turno, t.fecha_hora, t.estado, t.observacion, " +
                               "t.id_paciente, t.id_medico, " +
                               "e.nombre AS Especialidad, " +
                               "pem.nombre AS MedicoNombre, pem.apellido AS MedicoApellido, pem.email AS Correo, " +
@@ -284,6 +284,111 @@ namespace Datos {
             return conexion.ObtenerTablaParametros(consulta, "Estadisticas", new SqlParameter[] {
                 new SqlParameter("@idMedico", id_medico)
             });
+        }
+
+        public DataTable ObtenerHorariosDisponiblesExcluyendoTurno(int id_medico, DateTime fecha, int idTurnoActual)
+        {
+            int diaSemana = (int)fecha.DayOfWeek;
+            if (diaSemana == 0) diaSemana = 7;
+
+            string consultaBloques = @"
+                SELECT
+                CONVERT(varchar(5), h.hora_inicio, 108) AS inicio,
+                CONVERT(varchar(5), h.hora_fin,    108) AS fin
+                FROM HorarioMedico h
+                WHERE h.id_medico  = @id_medico
+                AND h.dia_semana = @dia_semana";
+
+            DataTable bloques = conexion.ObtenerTablaParametros(consultaBloques, "bloques",
+                new SqlParameter[]
+                {
+                    new SqlParameter("@id_medico",  id_medico),
+                    new SqlParameter("@dia_semana", diaSemana)
+                });
+
+            string consultaOcupados = @"
+                SELECT CONVERT(varchar(5), fecha_hora, 108) AS hora_ocupada
+                FROM Turno
+                WHERE id_medico  = @id_medico
+                AND CONVERT(date, fecha_hora) = @fecha
+                AND id_turno <> @idTurno
+                AND activo = 1";
+
+            DataTable ocupados = conexion.ObtenerTablaParametros(consultaOcupados, "ocupados",
+                new SqlParameter[]
+                {
+                    new SqlParameter("@id_medico", id_medico),
+                    new SqlParameter("@fecha",     fecha.Date),
+                    new SqlParameter("@idTurno",   idTurnoActual)
+                });
+
+            DataTable resultado = new DataTable("horarios");
+            resultado.Columns.Add("hora", typeof(string));
+            resultado.Columns.Add("label", typeof(string));
+
+            foreach (DataRow bloque in bloques.Rows)
+            {
+                string inicio = bloque["inicio"].ToString();
+                string fin = bloque["fin"].ToString();
+
+                int horaInicio = int.Parse(inicio.Substring(0, 2));
+                int horaFin = int.Parse(fin.Substring(0, 2));
+
+                for (int h = horaInicio; h < horaFin; h++)
+                {
+                    string horaStr = h.ToString("00") + ":00";
+
+                    bool ocupada = false;
+                    foreach (DataRow ocup in ocupados.Rows)
+                    {
+                        if (ocup["hora_ocupada"].ToString() == horaStr)
+                        {
+                            ocupada = true;
+                            break;
+                        }
+                    }
+
+                    if (!ocupada)
+                        resultado.Rows.Add(horaStr, horaStr + " hs");
+                }
+            }
+
+            return resultado;
+        }
+
+        public bool ExisteOtroTurnoEnEseHorario(int idMedico, DateTime fechaHora, int idTurnoActual)
+        {
+            string consulta = @"SELECT COUNT(*) FROM Turno
+                        WHERE id_medico = @idMedico
+                          AND fecha_hora = @fechaHora
+                          AND id_turno <> @idTurno
+                          AND activo = 1";
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@idMedico", idMedico),
+                new SqlParameter("@fechaHora", fechaHora),
+                new SqlParameter("@idTurno", idTurnoActual)
+            };
+            int cantidad = conexion.ObtenerEscalar(consulta, parametros);
+            return cantidad > 0;
+        }
+        public int ModificarTurno(int idTurno, DateTime fechaHora, string estado, string observacion)
+        {
+            string consulta = @"UPDATE Turno
+                        SET fecha_hora = @fechaHora,
+                            estado = @estado,
+                            observacion = @observacion
+                        WHERE id_turno = @idTurno";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@fechaHora", fechaHora),
+                new SqlParameter("@estado", estado),
+                new SqlParameter("@observacion", string.IsNullOrWhiteSpace(observacion) ? (object)DBNull.Value : observacion.Trim()),
+                new SqlParameter("@idTurno", idTurno)
+            };
+
+            return conexion.EjecutarConsultaParametros(consulta, parametros);
         }
     }
 }

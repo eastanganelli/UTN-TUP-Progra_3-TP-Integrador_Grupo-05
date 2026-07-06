@@ -142,7 +142,7 @@ namespace Vistas.Administracion.Turnos
                 if (fecha.Date < DateTime.Today)
                 {
                     pnlConflicto.Visible = true;
-                    lblConflicto.Text = "⚠ No se pueden asignar turnos en fechas pasadas.";
+                    lblConflicto.Text = " No se pueden asignar turnos en fechas pasadas.";
                     return;
                 }
 
@@ -269,9 +269,9 @@ namespace Vistas.Administracion.Turnos
         }
         private void MostrarAlerta(string texto)
         {
-            string textoEscapado = texto.Replace("'", "\\'").Replace("\r", "").Replace("\n", " ");
-            string script = $"alert('{textoEscapado}');";
-            ClientScript.RegisterStartupScript(this.GetType(), "AlertaTurno", script, true);
+            lblMensaje.Text = texto;
+            lblMensaje.CssClass = "alerta-error";
+            lblMensaje.Visible = true;
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)

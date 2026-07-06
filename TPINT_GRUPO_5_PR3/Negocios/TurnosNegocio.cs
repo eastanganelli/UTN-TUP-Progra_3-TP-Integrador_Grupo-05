@@ -79,5 +79,28 @@ namespace Negocio {
         public DataTable ObtenerEstadisticasDelDiaMedico(int idMedico) {
             return _datosTurnos.ObtenerEstadisticasDelDiaMedico(idMedico);
         }
+
+        public DataTable ObtenerHorariosParaEditar(int idMedico, DateTime fecha, int idTurno)
+        {
+            return _datosTurnos.ObtenerHorariosDisponiblesExcluyendoTurno(idMedico, fecha, idTurno);
+        }
+
+        public string ModificarTurno(int idTurno, int idMedico, DateTime fechaHora, string estado, string observacion)
+        {
+            if (string.IsNullOrEmpty(estado))
+                throw new Exception("Seleccioná un estado para el turno.");
+
+            if (estado == "presente" && string.IsNullOrWhiteSpace(observacion))
+                throw new Exception("Los turnos marcados como presente requieren una observación.");
+
+            if (_datosTurnos.ExisteOtroTurnoEnEseHorario(idMedico, fechaHora, idTurno))
+                throw new Exception("El médico ya tiene otro turno asignado en ese día y horario.");
+
+            int filas = _datosTurnos.ModificarTurno(idTurno, fechaHora, estado, observacion);
+            if (filas == 0)
+                throw new Exception("No se pudo actualizar el turno.");
+
+            return "Turno modificado correctamente.";
+        }
     }
 }
