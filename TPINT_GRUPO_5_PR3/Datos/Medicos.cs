@@ -7,15 +7,25 @@ namespace Datos {
     public class Medicos {
         private AccesoDatos conexion = new AccesoDatos();
         public Medico ObtenerMedico(int id_Medico) {
-            DataRow fila = conexion.ObtenerFila("SELECT * FROM Medico WHERE id_medico = @id", "Medico", new[] { new SqlParameter("@id", id_Medico) });
+            DataRow fila = conexion.ObtenerFila("SELECT * FROM vw_Medicos WHERE IDMedico = @id", "vw_Medicos", new[] { new SqlParameter("@id", id_Medico) });
             if (fila == null)
                 throw new Exception($"El médico con ID [{id_Medico}] no fue encontrado.");
             return new Medico {
-                IDMedico       = Convert.ToInt32(fila["id_medico"]),
-                IDPersona      = Convert.ToInt32(fila["id_persona"]),
-                Legajo         = fila["legajo"].ToString(),
-                IDEspecialidad = Convert.ToInt32(fila["id_especialidad"]),
-                Estado         = Convert.ToBoolean(fila["activo"])
+                IDMedico = Convert.ToInt32(fila["IDMedico"]),
+                IDPersona = Convert.ToInt32(fila["IDPersona"]),
+                Legajo = fila["Legajo"].ToString(),
+                IDEspecialidad = Convert.ToInt32(fila["IDEspecialidad"]),
+                Estado = Convert.ToBoolean(fila["Activo"]),
+
+                DNI = fila["DNIMedico"].ToString(),
+                Nombre = fila["Nombre"].ToString(),
+                Apellido = fila["Apellido"].ToString(),
+                Sexo = fila["Sexo"].ToString()[0],
+                Nacionalidad = fila["Nacionalidad"].ToString(),
+                FechaNacimiento = Convert.ToDateTime(fila["FechaNacimiento"]),
+                Direccion = fila["Direccion"].ToString(),
+                Email = fila["Email"].ToString(),
+                Telefono = fila["Telefono"].ToString()
             };
         }
         public DataTable ObtenerMedicos() {

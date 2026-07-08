@@ -68,7 +68,10 @@ namespace Vistas.Administracion {
             }
         }
         private void CargarVistaMedico(string nombreUsuario, int idMedico) {
-            lblRol.Text = "Dr. " + nombreUsuario;
+            Medico medico = new Medico();
+            MedicosNegocio medicosNegocio = new MedicosNegocio();
+            medico = medicosNegocio.ObtenerMedico(idMedico);
+            lblRol.Text = "Dr. " + medico.Apellido;
             pnlStatsMedico.Visible = true;
             pnlTurnos.Visible = true;
 
