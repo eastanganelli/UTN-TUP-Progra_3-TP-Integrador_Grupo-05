@@ -1,11 +1,7 @@
-﻿using Entidades;
+using Entidades;
 using Negocio;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Vistas.Administracion.Turnos
@@ -15,57 +11,10 @@ namespace Vistas.Administracion.Turnos
         private TurnosNegocio _negocioTurnos = new TurnosNegocio();
         private EspecialidadesNegocio _negocioEspecialidad = new EspecialidadesNegocio();
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
+        // Helper usado en ASPX data-binding para el botón de borrar
+        protected bool EsAdmin()
         {
-            DateTime desde, hasta;
-            bool hayDesde = !string.IsNullOrWhiteSpace(txtDesde.Text);
-            bool hayHasta = !string.IsNullOrWhiteSpace(txtHasta.Text);
-
-            if (hayDesde && !DateTime.TryParse(txtDesde.Text, out desde))
-            {
-                Response.Write("<script>alert('La fecha Desde no es válida.');</script>");
-                return;
-            }
-            if (hayHasta && !DateTime.TryParse(txtHasta.Text, out hasta))
-            {
-                Response.Write("<script>alert('La fecha Hasta no es válida.');</script>");
-                return;
-            }
-            if (hayDesde && hayHasta)
-            {
-                desde = DateTime.Parse(txtDesde.Text);
-                hasta = DateTime.Parse(txtHasta.Text);
-                if (desde.Date > hasta.Date)
-                {
-                    Response.Write("<script>alert('La fecha Desde no puede ser mayor que la fecha Hasta.');</script>");
-                    return;
-                }
-            }
-
-            dgvTurnos.PageIndex = 0;
-            CargarListadoDeTurnos();
-        }
-        protected void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            txtBuscar.Text = "";
-            ddlEspecialidad.SelectedIndex = 0;
-            txtDesde.Text = "";
-            txtHasta.Text = "";
-            ddlEstado.SelectedIndex = 0;
-
-            CargarListadoDeTurnos();
-        }
-
-        protected void btnNuevoTurno_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("tNuevo.aspx");
-        }
-
-
-        protected void dgvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            dgvTurnos.PageIndex = e.NewPageIndex;
-            CargarListadoDeTurnos();
+            return ((Usuario)Session["zezion"])?.Rol == "admin";
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -78,9 +27,23 @@ namespace Vistas.Administracion.Turnos
 
                 if (!IsPostBack)
                 {
-                    CargarEspecialidades();
-                    CargarListadoDeTurnos();
+                    bool esMedico = usuario.Rol == "medico";
 
+                    if (esMedico)
+                    {
+                        // Medico: ocultar filtros no aplicables y botón nuevo turno
+                        btnNuevoTurno.Visible        = false;
+                        pnlFiltroEspecialidad.Visible = false;
+                        pnlFiltroDesde.Visible        = false;
+                        pnlFiltroHasta.Visible        = false;
+                        txtBuscar.Attributes["placeholder"] = "Buscar por paciente...";
+                    }
+                    else
+                    {
+                        CargarEspecialidades();
+                    }
+
+                    CargarListadoDeTurnos();
                 }
             }
             catch (NoAccesoPagina)
@@ -93,100 +56,118 @@ namespace Vistas.Administracion.Turnos
             }
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            dgvTurnos.PageIndex = 0;
+            CargarListadoDeTurnos();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            if (ddlEspecialidad.Items.Count > 0) ddlEspecialidad.SelectedIndex = 0;
+            txtDesde.Text = "";
+            txtHasta.Text = "";
+            ddlEstado.SelectedIndex = 0;
+            CargarListadoDeTurnos();
+        }
+
+        protected void btnNuevoTurno_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("tNuevo.aspx");
+        }
+
+        protected void dgvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvTurnos.PageIndex = e.NewPageIndex;
+            CargarListadoDeTurnos();
+        }
+
+        protected void dgvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Baja" && EsAdmin())
+            {
+                _negocioTurnos.EliminarTurnoPermanente(Convert.ToInt32(e.CommandArgument));
+                CargarListadoDeTurnos();
+            }
+        }
+
         private void CargarListadoDeTurnos()
         {
             try
             {
-                DataTable dtOriginal = _negocioTurnos.ListarTurnos();
+                Usuario usuario = (Usuario)Session["zezion"];
+                bool esMedico   = usuario.Rol == "medico";
+
+                DataTable dtOriginal = esMedico
+                    ? _negocioTurnos.ObtenerTurnosPorMedico((int)usuario.IDMedico)
+                    : _negocioTurnos.ListarTurnos();
+
                 DataTable dtFiltrado = dtOriginal.Clone();
 
-                if (dtOriginal != null && dtOriginal.Rows.Count > 0)
+                foreach (DataRow fila in dtOriginal.Rows)
                 {
-                    foreach (DataRow fila in dtOriginal.Rows)
+                    // Buscar: medico filtra solo por paciente; admin por paciente y medico
+                    if (!string.IsNullOrWhiteSpace(txtBuscar.Text))
                     {
-                        if (!string.IsNullOrWhiteSpace(txtBuscar.Text))
-                        {
-                            string busqueda = txtBuscar.Text.Trim().ToLower();
-                            string paciente = fila["paciente"].ToString().ToLower();
-                            string medico = fila["medico"].ToString().ToLower();
+                        string busqueda = txtBuscar.Text.Trim().ToLower();
+                        string paciente = fila["paciente"].ToString().ToLower();
 
-                            if (!paciente.Contains(busqueda) && !medico.Contains(busqueda))
-                                continue;
-                        }
+                        bool coincide = paciente.Contains(busqueda);
+                        if (!esMedico)
+                            coincide = coincide || fila["medico"].ToString().ToLower().Contains(busqueda);
 
+                        if (!coincide) continue;
+                    }
+
+                    // Filtros exclusivos de admin
+                    if (!esMedico)
+                    {
                         if (ddlEspecialidad.SelectedIndex > 0)
                         {
                             string espSeleccionada = ddlEspecialidad.SelectedItem.Text.Trim().ToLower();
-                            string espFila = fila["especialidad"].ToString().ToLower();
-
-                            if (espFila != espSeleccionada)
-                                continue;
+                            if (fila["especialidad"].ToString().ToLower() != espSeleccionada) continue;
                         }
-
-                        if (ddlEstado.SelectedIndex > 0)
-                        {
-                            string estSeleccionado = ddlEstado.SelectedItem.Text.Trim().ToLower();
-                            string estFila = fila["estado"].ToString().ToLower();
-
-                            if (estFila != estSeleccionado)
-                                continue;
-                        }
-
-                        dtFiltrado.ImportRow(fila);
                     }
 
-                    dgvTurnos.DataSource = dtFiltrado;
-                    dgvTurnos.DataBind();
-
-                    lblContador.Text = dtFiltrado.Rows.Count.ToString();
-
-                    int porPagina = dgvTurnos.PageSize;
-                    int totalPaginas = (int)Math.Ceiling((double)dtFiltrado.Rows.Count / porPagina);
-                    lblTotalPaginas.Text = totalPaginas == 0 ? "1" : totalPaginas.ToString();
-
-                    if (dgvTurnos.PageIndex >= totalPaginas && totalPaginas > 0)
+                    // Estado: aplica a todos
+                    if (ddlEstado.SelectedIndex > 0)
                     {
-                        dgvTurnos.PageIndex = totalPaginas - 1;
+                        string estSeleccionado = ddlEstado.SelectedItem.Text.Trim().ToLower();
+                        if (fila["estado"].ToString().ToLower() != estSeleccionado) continue;
                     }
-                    lblPaginaActual.Text = (dgvTurnos.PageIndex + 1).ToString();
+
+                    dtFiltrado.ImportRow(fila);
                 }
-                else
-                {
-                    dgvTurnos.DataSource = null;
-                    dgvTurnos.DataBind();
-                    lblContador.Text = "0";
-                    lblPaginaActual.Text = "1";
-                    lblTotalPaginas.Text = "1";
-                }
+
+                dgvTurnos.DataSource = dtFiltrado;
+                dgvTurnos.DataBind();
+
+                lblContador.Text = dtFiltrado.Rows.Count.ToString();
+
+                int porPagina    = dgvTurnos.PageSize;
+                int totalPaginas = (int)Math.Ceiling((double)dtFiltrado.Rows.Count / porPagina);
+                if (totalPaginas == 0) totalPaginas = 1;
+                lblTotalPaginas.Text = totalPaginas.ToString();
+
+                if (dgvTurnos.PageIndex >= totalPaginas)
+                    dgvTurnos.PageIndex = totalPaginas - 1;
+                lblPaginaActual.Text = (dgvTurnos.PageIndex + 1).ToString();
             }
             catch (Exception ex)
             {
-                Response.Write("<script>alert('Error al filtrar: " + ex.Message + "');</script>");
-            }
-        }
-
-
-        protected void dgvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Baja")
-            {
-                TurnosNegocio negocio = new TurnosNegocio();
-                negocio.EliminarTurnoPermanente(Convert.ToInt32(e.CommandArgument));
-                CargarListadoDeTurnos();
+                Response.Write("<script>alert('Error al cargar turnos: " + ex.Message.Replace("'", "\\'") + "');</script>");
             }
         }
 
         private void CargarEspecialidades()
         {
             DataTable dt = _negocioEspecialidad.ObtenerEspecialidades();
-            ddlEspecialidad.DataSource = dt;
-
+            ddlEspecialidad.DataSource     = dt;
             ddlEspecialidad.DataValueField = "id_especialidad";
-            ddlEspecialidad.DataTextField = "nombre";
+            ddlEspecialidad.DataTextField  = "nombre";
             ddlEspecialidad.DataBind();
             ddlEspecialidad.Items.Insert(0, new ListItem(" Seleccione Especialidad ", "0"));
         }
-
-
     }
 }

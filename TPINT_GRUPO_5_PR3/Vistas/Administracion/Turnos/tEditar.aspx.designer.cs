@@ -78,6 +78,15 @@ namespace Vistas.Administracion.Turnos
         protected global::System.Web.UI.WebControls.Label lblEstadoBadge;
 
         /// <summary>
+        /// pnlFechaHorario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFechaHorario;
+
+        /// <summary>
         /// txtMedicoReadOnly control.
         /// </summary>
         /// <remarks>
@@ -132,6 +141,15 @@ namespace Vistas.Administracion.Turnos
         protected global::System.Web.UI.WebControls.Label lblConflicto;
 
         /// <summary>
+        /// pnlEstado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEstado;
+
+        /// <summary>
         /// ddlEstado control.
         /// </summary>
         /// <remarks>
@@ -139,6 +157,15 @@ namespace Vistas.Administracion.Turnos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
+
+        /// <summary>
+        /// pnlObservacion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlObservacion;
 
         /// <summary>
         /// txtObservacion control.
@@ -159,12 +186,12 @@ namespace Vistas.Administracion.Turnos
         protected global::System.Web.UI.WebControls.Button btnCancelar;
 
         /// <summary>
-        /// Button1 control.
+        /// btnGuardar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnGuardar;
     }
 }

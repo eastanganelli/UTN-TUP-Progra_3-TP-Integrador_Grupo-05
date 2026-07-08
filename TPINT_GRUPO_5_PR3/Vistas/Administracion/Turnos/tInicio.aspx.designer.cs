@@ -33,6 +33,15 @@ namespace Vistas.Administracion.Turnos
         protected global::System.Web.UI.WebControls.TextBox txtBuscar;
 
         /// <summary>
+        /// pnlFiltroEspecialidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFiltroEspecialidad;
+
+        /// <summary>
         /// ddlEspecialidad control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,24 @@ namespace Vistas.Administracion.Turnos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad;
+
+        /// <summary>
+        /// pnlFiltroDesde control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFiltroDesde;
+
+        /// <summary>
+        /// pnlFiltroHasta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFiltroHasta;
 
         /// <summary>
         /// txtDesde control.

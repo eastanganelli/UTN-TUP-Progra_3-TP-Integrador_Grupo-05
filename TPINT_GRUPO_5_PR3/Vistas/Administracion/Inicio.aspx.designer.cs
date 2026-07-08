@@ -42,6 +42,24 @@ namespace Vistas.Administracion
         protected global::System.Web.UI.WebControls.Panel pnlStatsMedico;
 
         /// <summary>
+        /// pnlTurnosAdmin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTurnosAdmin;
+
+        /// <summary>
+        /// rptTurnosAdmin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptTurnosAdmin;
+
+        /// <summary>
         /// pnlTurnos control.
         /// </summary>
         /// <remarks>

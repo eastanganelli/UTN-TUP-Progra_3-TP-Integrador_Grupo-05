@@ -73,6 +73,12 @@ namespace Negocio {
         public DataTable ObtenerTurnosDelDia(int id_medico) {
             return _datosTurnos.ObtenerTurnosDelDia(id_medico);
         }
+        public DataTable ObtenerTurnosDelDiaAdmin() {
+            return _datosTurnos.ObtenerTurnosDelDiaAdmin();
+        }
+        public DataTable ObtenerTurnosPorMedico(int idMedico) {
+            return _datosTurnos.ObtenerTurnosPorMedico(idMedico);
+        }
         public DataTable ObtenerEstadisticasDelDia() {
             return _datosTurnos.ObtenerEstadisticasDelDia();
         }

@@ -114,10 +114,6 @@
                     <div class="stat-label">Ausentes</div>
                     <div class="stat-number ausente"><%= statsHoyAdmin.ausentes %></div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Médicos activos</div>
-                    <div class="stat-number"><%= statsHoyAdmin.medicosActivos %></div>
-                </div>
             </div>
         </asp:Panel>
 
@@ -140,6 +136,48 @@
                     <div class="stat-label">Ausentes</div>
                     <div class="stat-number ausente"><%= turnosDelDia.ausentes %></div>
                 </div>
+            </div>
+        </asp:Panel>
+
+        <!-- TABLA TURNOS ADMIN -->
+        <asp:Panel ID="pnlTurnosAdmin" runat="server" Visible="false">
+            <div class="section-title">
+                Turnos de hoy
+                <span class="today-badge"><%= fechaActual %></span>
+            </div>
+            <div class="table-card">
+                <asp:Repeater ID="rptTurnosAdmin" runat="server">
+                    <HeaderTemplate>
+                        <table class="gv-tabla">
+                            <thead>
+                                <tr>
+                                    <th>Paciente</th>
+                                    <th>Médico</th>
+                                    <th>Horario</th>
+                                    <th>Especialidad</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <tr>
+                            <td><strong><%# Eval("Paciente") %></strong></td>
+                            <td><%# Eval("Medico") %></td>
+                            <td><%# Eval("Horario") %></td>
+                            <td><span class="badge-esp" style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;"><%# Eval("Especialidad") %></span></td>
+                            <td>
+                                <span class='badge-<%# Eval("Estado") %>' style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;">
+                                    <%# Eval("Estado") %>
+                                </span>
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        </tbody>
+                        </table>
+                    </FooterTemplate>
+                </asp:Repeater>
             </div>
         </asp:Panel>
 

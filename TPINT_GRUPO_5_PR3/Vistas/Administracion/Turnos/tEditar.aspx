@@ -90,6 +90,7 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
         <!-- ========================
              FECHA Y HORARIO
         ========================= -->
+        <asp:Panel ID="pnlFechaHorario" runat="server">
         <div class="form-card">
             <h2>Fecha y Horario</h2>
             <p class="seccion-nota">
@@ -109,8 +110,7 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
 
                 <div class="campo">
                     <label>Nueva Fecha</label>
-                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true"/>
-                    <%--<asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtFecha_TextChanged" />--%>
+                    <asp:TextBox ID="txtFecha" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtFecha_TextChanged" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFecha" CssClass="validador" ErrorMessage="La fecha es requerida." Display="Dynamic" />
                 </div>
 
@@ -129,12 +129,15 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
                 <asp:Label ID="lblConflicto" runat="server" Text="⚠ El médico ya tiene un turno en este día y horario. Seleccioná otro." />
             </asp:Panel>
         </div>
+        </asp:Panel>
 
         <!-- ========================
-             ESTADO
+             ESTADO (solo medico, turno pasado)
         ========================= -->
+        <asp:Panel ID="pnlEstado" runat="server" Visible="false">
         <div class="form-card">
             <h2>Estado del Turno</h2>
+            <p class="seccion-nota">Solo el médico asignado puede cambiar el estado de turnos ya realizados.</p>
             <div class="form-grid">
                 <div class="campo full-width">
                     <label>Estado <span class="req">*</span></label>
@@ -145,12 +148,15 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
                 </div>
             </div>
         </div>
+        </asp:Panel>
 
         <!-- ========================
-             OBSERVACIONES
+             OBSERVACIONES (solo medico, turno pasado)
         ========================= -->
+        <asp:Panel ID="pnlObservacion" runat="server" Visible="false">
         <div class="form-card">
             <h2>Observaciones</h2>
+            <p class="seccion-nota">Solo el médico asignado puede agregar observaciones a turnos ya realizados.</p>
             <div class="form-grid una-col">
                 <div class="campo">
                     <label>Observaciones</label>
@@ -158,13 +164,12 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
                 </div>
             </div>
         </div>
+        </asp:Panel>
 
         <!-- ACCIONES -->
         <div class="form-acciones">
-            <%--<asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn-cancelar" CausesValidation="false" OnClick="btnCancelar_Click" />--%>
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn-cancelar" CausesValidation="false"/>
-            <%--<asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios" CssClass="btn-guardar" OnClick="btnGuardar_Click" />--%>
-            <asp:Button ID="Button1" runat="server" Text="Guardar cambios" CssClass="btn-guardar"/>
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn-cancelar" CausesValidation="false" OnClick="btnCancelar_Click" />
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios" CssClass="btn-guardar" OnClick="btnGuardar_Click" />
         </div>
 
     </div>

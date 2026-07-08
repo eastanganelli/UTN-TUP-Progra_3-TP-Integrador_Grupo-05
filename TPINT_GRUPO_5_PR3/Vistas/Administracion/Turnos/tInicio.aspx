@@ -32,20 +32,25 @@
                 <label>Buscar</label>
                 <asp:TextBox ID="txtBuscar" runat="server" placeholder="Paciente o médico..." Style="height: 34px; padding: 0 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; background: #fafafa; color: #1a2332; min-width: 200px;" />
             </div>
+            <asp:Panel ID="pnlFiltroEspecialidad" runat="server">
             <div class="filter-group">
                 <label>Especialidad</label>
                 <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="tu-clase-css">
                 </asp:DropDownList>
             </div>
+            </asp:Panel>
+            <asp:Panel ID="pnlFiltroDesde" runat="server">
             <div class="filter-group">
-
                 <label>Desde</label>
                 <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" Style="height: 34px; padding: 0 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; background: #fafafa; color: #1a2332; min-width: 140px;" />
             </div>
+            </asp:Panel>
+            <asp:Panel ID="pnlFiltroHasta" runat="server">
             <div class="filter-group">
                 <label>Hasta</label>
                 <asp:TextBox ID="txtHasta" runat="server" TextMode="Date" Style="height: 34px; padding: 0 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; background: #fafafa; color: #1a2332; min-width: 140px;" />
             </div>
+            </asp:Panel>
             <div class="filter-group">
                 <label>Estado</label>
                 <asp:DropDownList ID="ddlEstado" runat="server" Style="height: 34px; padding: 0 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; background: #fafafa; color: #1a2332; min-width: 130px;">
@@ -114,6 +119,7 @@
                             NavigateUrl='<%# "tEditar.aspx?id=" + Eval("id_turno") %>'
                             CssClass="btn-icon" title="Editar">✏️</asp:HyperLink>
                         <asp:LinkButton runat="server" CssClass="btn-icon danger"
+                            Visible='<%# EsAdmin() %>'
                             CommandName="Baja" CommandArgument='<%# Eval("id_turno") %>'
                             OnClientClick="return confirm('¿Está seguro de que desea eliminar este turno?');">
                     🗑

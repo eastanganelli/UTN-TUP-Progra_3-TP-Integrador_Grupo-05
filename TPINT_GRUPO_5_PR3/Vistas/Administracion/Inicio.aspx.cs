@@ -42,28 +42,30 @@ namespace Vistas.Administracion {
         private void CargarVistaAdmin() {
             lblRol.Text = "Administrador";
             pnlStatsAdmin.Visible = true;
+            pnlTurnosAdmin.Visible = true;
+
+            TurnosNegocio turnosNegocio = new TurnosNegocio();
 
             try {
-                TurnosNegocio turnosNegocio = new TurnosNegocio();
                 DataTable dtStats = turnosNegocio.ObtenerEstadisticasDelDia();
                 int pendientes = SumarColumna(dtStats, "Pendiente");
-                int atendidos = SumarColumna(dtStats, "Presente");
-                int ausentes = SumarColumna(dtStats, "Ausente");
-                int total = SumarColumna(dtStats, "Total");
-
-                statsHoyAdmin = new statsAdmin(total, atendidos, pendientes, ausentes, 0);
+                int atendidos  = SumarColumna(dtStats, "Presente");
+                int ausentes   = SumarColumna(dtStats, "Ausente");
+                int total      = SumarColumna(dtStats, "Total");
+                statsHoyAdmin  = new statsAdmin(total, atendidos, pendientes, ausentes, 0);
             }
             catch (Exception ex) {
                 Debug.WriteLine("Error al obtener estadísticas del día (admin): " + ex.Message);
             }
 
-            //try {
-            //    MedicosNegocio medicosNegocio = new MedicosNegocio();
-            //    statsHoyAdmin.medicosActivos = medicosNegocio.ObtenerCantidadDeMedicos();
-            //}
-            //catch (Exception ex) {
-            //    Debug.WriteLine("Error al obtener cantidad de médicos activos: " + ex.Message);
-            //}
+            try {
+                DataTable dtTurnos = turnosNegocio.ObtenerTurnosDelDiaAdmin();
+                rptTurnosAdmin.DataSource = dtTurnos;
+                rptTurnosAdmin.DataBind();
+            }
+            catch (Exception ex) {
+                Debug.WriteLine("Error al cargar turnos del día (admin): " + ex.Message);
+            }
         }
         private void CargarVistaMedico(string nombreUsuario, int idMedico) {
             lblRol.Text = "Dr. " + nombreUsuario;

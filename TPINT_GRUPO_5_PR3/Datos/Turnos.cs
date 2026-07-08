@@ -226,6 +226,39 @@ namespace Datos {
 
             return conexion.ObtenerTablaParametros(consulta, "TurnosOcupados", parametros);
         }
+        public DataTable ObtenerTurnosPorMedico(int idMedico)
+        {
+            string consulta = @"
+                SELECT
+                    ta.id_turno                              AS id_turno,
+                    ta.Paciente                              AS paciente,
+                    ta.Medico                                AS medico,
+                    ta.Especialidad                          AS especialidad,
+                    CONVERT(varchar, ta.FechaHora, 103)      AS fecha,
+                    CONVERT(varchar(5), ta.FechaHora, 108)   AS horario,
+                    ta.estado                                AS estado
+                FROM vw_Turnos_Activos ta
+                WHERE ta.id_medico = @idMedico
+                ORDER BY ta.FechaHora DESC";
+            return conexion.ObtenerTablaParametros(consulta, "TurnosMedico",
+                new[] { new SqlParameter("@idMedico", idMedico) });
+        }
+
+        public DataTable ObtenerTurnosDelDiaAdmin()
+        {
+            string consulta = @"
+                SELECT
+                    ta.Paciente     AS Paciente,
+                    ta.Medico       AS Medico,
+                    CONVERT(varchar(5), ta.FechaHora, 108) AS Horario,
+                    ta.Especialidad AS Especialidad,
+                    ta.estado       AS Estado
+                FROM vw_Turnos_Activos ta
+                WHERE CONVERT(date, ta.FechaHora) = CONVERT(date, GETDATE() AT TIME ZONE 'Argentina Standard Time')
+                ORDER BY ta.FechaHora ASC";
+            return conexion.ObtenerTabla(consulta, "TurnosDelDiaAdmin");
+        }
+
         public DataTable ObtenerTurnosDelDia(int idMedico) {
             string consulta = @"
                 SELECT
@@ -236,7 +269,7 @@ namespace Datos {
                     ,Hora
                     ,estado
                 FROM vw_Turnos_Activos
-                WHERE Fecha = CURRENT_DATE AND id_medico = @idMedico";
+                WHERE Fecha = CAST(SYSUTCDATETIME() AT TIME ZONE 'UTC' AT TIME ZONE 'Argentina Standard Time' AS DATE) AND id_medico = @idMedico";
             return conexion.ObtenerTablaParametros(consulta, "TurnosDelDia", new SqlParameter[] {
                 new SqlParameter("@idMedico", idMedico)
             });
@@ -251,7 +284,7 @@ namespace Datos {
                                     SUM(IIF(estado LIKE 'ausente',1,0)) AS Ausente,
                                     Fecha
                                 FROM vw_Turnos_Activos
-                                GROUP BY id_medico, Fecha, estado
+                                GROUP BY id_medico, Fecha
                             )
                             SELECT
                                 id_medico,
@@ -261,7 +294,7 @@ namespace Datos {
                                 (Pendiente + Presente + Ausente) AS Total,
                                 Fecha
                             FROM EstadoDelDia
-                            WHERE Fecha = CURRENT_DATE";
+                            WHERE Fecha = CAST(SYSUTCDATETIME() AT TIME ZONE 'UTC' AT TIME ZONE 'Argentina Standard Time' AS DATE)";
             return conexion.ObtenerTabla(consulta, "Estadisticas");
         }
         public DataTable ObtenerEstadisticasDelDiaMedico(int id_medico) {
@@ -274,7 +307,7 @@ namespace Datos {
                                     SUM(IIF(estado LIKE 'ausente',1,0)) AS Ausente,
                                     Fecha
                                 FROM vw_Turnos_Activos
-                                GROUP BY id_medico, Fecha, estado
+                                GROUP BY id_medico, Fecha
                             )
                             SELECT
                                 id_medico,
@@ -284,7 +317,7 @@ namespace Datos {
                                 (Pendiente + Presente + Ausente) AS Total,
                                 Fecha
                             FROM EstadoDelDia
-                            WHERE id_medico = @idMedico AND Fecha = CURRENT_DATE";
+                            WHERE id_medico = @idMedico AND Fecha = CAST(SYSUTCDATETIME() AT TIME ZONE 'UTC' AT TIME ZONE 'Argentina Standard Time' AS DATE)";
             return conexion.ObtenerTablaParametros(consulta, "Estadisticas", new SqlParameter[] {
                 new SqlParameter("@idMedico", id_medico)
             });
