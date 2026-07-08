@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entidades
 {
-    public class Medico
+    public class Medico : Persona
     {
         private int id_medico;
         private int id_persona;
