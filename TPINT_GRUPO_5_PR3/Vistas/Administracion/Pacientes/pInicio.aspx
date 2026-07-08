@@ -4,7 +4,21 @@
 <style>
     .grid-container {
     width: 100%;
-    overflow-x: auto;}
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.gv-tabla {
+    min-width: 1800px; 
+    border-collapse: collapse;
+}
+
+.gv-tabla th,
+.gv-tabla td {
+    padding: 10px;
+    white-space: nowrap;
+    vertical-align: middle;
+}
 </style>
 </asp:Content>
 
@@ -15,7 +29,7 @@
         <div class="page-header">
             <div>
                 <div class="page-title">Pacientes</div>
-                <div class="page-subtitle">GestGestión de pacientes registrados en el sistema</div>
+                <div class="page-subtitle">Gestión de pacientes registrados en el sistema</div>
             </div>
             <asp:Button class="btn-primary" ID="btnAgregar" runat="server" Text="+ Agregar Paciente" OnClick="btnAgregar_Click" />
         </div>
