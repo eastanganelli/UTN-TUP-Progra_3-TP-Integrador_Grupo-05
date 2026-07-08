@@ -24,7 +24,7 @@
                 <div class="page-subtitle">Gestión de turnos asignados en el sistema</div>
             </div>
             <asp:Button ID="btnNuevoTurno" runat="server" Text="+ Nuevo turno"
-                CssClass="btn-primary" PostBackUrl="tNuevo.aspx" OnClick="btnNuevoTurno_Click" />
+                CssClass="btn-primary" OnClick="btnNuevoTurno_Click" />
         </div>
 
         <div class="filters-bar">

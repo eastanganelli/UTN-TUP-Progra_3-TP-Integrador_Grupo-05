@@ -185,7 +185,11 @@
         <div class="reporte-body">
             <asp:GridView ID="gvResultado" runat="server"
                 CssClass="gv-tabla" AutoGenerateColumns="true"
-                GridLines="None" />
+                GridLines="None">
+                <EmptyDataTemplate>
+                    <p style="color:#888; font-size:13px; padding:20px 0;">Sin resultados para los filtros seleccionados.</p>
+                </EmptyDataTemplate>
+            </asp:GridView>
             <div class="conclusion">
                 <asp:Label ID="lblConclusion" runat="server" Text="" />
             </div>

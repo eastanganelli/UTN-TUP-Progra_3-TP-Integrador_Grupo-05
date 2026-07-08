@@ -19,8 +19,8 @@ namespace Datos
                            FROM Turno t
                            JOIN Medico       m ON m.id_medico       = t.id_medico
                            JOIN Especialidad e ON e.id_especialidad = m.id_especialidad
-                           WHERE (@desde IS NULL OR t.fecha >= @desde)
-                           AND   (@hasta IS NULL OR t.fecha <= @hasta)
+                           WHERE (@desde IS NULL OR CONVERT(DATE, t.fecha_hora) >= @desde)
+                           AND   (@hasta IS NULL OR CONVERT(DATE, t.fecha_hora) <= @hasta)
                            GROUP BY e.nombre
                            ORDER BY TotalTurnos DESC";
 
@@ -42,8 +42,8 @@ namespace Datos
                            JOIN Medico       m ON m.id_medico       = t.id_medico
                            JOIN Persona      p ON p.id_persona      = m.id_persona
                            JOIN Especialidad e ON e.id_especialidad = m.id_especialidad
-                           WHERE (@desde IS NULL OR t.fecha >= @desde)
-                           AND   (@hasta IS NULL OR t.fecha <= @hasta)
+                           WHERE (@desde IS NULL OR CONVERT(DATE, t.fecha_hora) >= @desde)
+                           AND   (@hasta IS NULL OR CONVERT(DATE, t.fecha_hora) <= @hasta)
                            GROUP BY p.nombre, p.apellido, e.nombre
                            ORDER BY TotalTurnos DESC";
 
@@ -97,5 +97,46 @@ namespace Datos
                 new SqlParameter[] { pAnio });
         }
 
+        public DataTable AsistenciaATurnos(DateTime? desde = null, DateTime? hasta = null)
+        {
+            string sql = @"SELECT paciente AS Paciente,
+                                  SUM(IIF(estado = 'presente',  1, 0)) AS Presentes,
+                                  SUM(IIF(estado = 'ausente',   1, 0)) AS Ausentes,
+                                  SUM(IIF(estado = 'pendiente', 1, 0)) AS Pendientes,
+                                  COUNT(*) AS TotalTurnos
+                           FROM vw_Turnos_Activos
+                           WHERE (@desde IS NULL OR CAST(FechaHora AS DATE) >= @desde)
+                           AND   (@hasta IS NULL OR CAST(FechaHora AS DATE) <= @hasta)
+                           GROUP BY paciente
+                           ORDER BY TotalTurnos DESC";
+
+            var pDesde = new SqlParameter("@desde", SqlDbType.Date);
+            pDesde.Value = desde.HasValue ? (object)desde.Value : DBNull.Value;
+            var pHasta = new SqlParameter("@hasta", SqlDbType.Date);
+            pHasta.Value = hasta.HasValue ? (object)hasta.Value : DBNull.Value;
+
+            return conexion.ObtenerTablaParametros(sql, "AsistenciaATurnos",
+                new SqlParameter[] { pDesde, pHasta });
+        }
+
+        public DataTable PacientesConMasAusencias(DateTime? desde = null, DateTime? hasta = null)
+        {
+            string sql = @"SELECT paciente AS Paciente,
+                                  COUNT(*) AS TotalAusencias
+                           FROM vw_Turnos_Activos
+                           WHERE estado = 'ausente'
+                           AND   (@desde IS NULL OR CAST(FechaHora AS DATE) >= @desde)
+                           AND   (@hasta IS NULL OR CAST(FechaHora AS DATE) <= @hasta)
+                           GROUP BY paciente
+                           ORDER BY TotalAusencias DESC";
+
+            var pDesde = new SqlParameter("@desde", SqlDbType.Date);
+            pDesde.Value = desde.HasValue ? (object)desde.Value : DBNull.Value;
+            var pHasta = new SqlParameter("@hasta", SqlDbType.Date);
+            pHasta.Value = hasta.HasValue ? (object)hasta.Value : DBNull.Value;
+
+            return conexion.ObtenerTablaParametros(sql, "PacientesConMasAusencias",
+                new SqlParameter[] { pDesde, pHasta });
+        }
     }
 }

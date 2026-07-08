@@ -288,5 +288,15 @@
                 </Columns>
             </asp:GridView>
         </div>
+
+        <div class="form-acciones" style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px;">
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
+                CssClass="btn-outline" CausesValidation="false"
+                OnClick="btnCancelar_Click"
+                OnClientClick="return confirm('¿Descartás los cambios?');" />
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
+                CssClass="btn-primary"
+                OnClick="btnGuardar_Click" />
+        </div>
     </div>
 </asp:Content>

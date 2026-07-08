@@ -1,6 +1,7 @@
 ﻿using Entidades;
 using Negocio;
 using System;
+using System.Data;
 using System.Diagnostics;
 
 namespace Vistas.Administracion.Medicos {
@@ -36,10 +37,15 @@ namespace Vistas.Administracion.Medicos {
                     this.especialidad = conexionEspecialidades.ObtenerEspecialidad(this.medico.IDEspecialidad);
                     this.localidad = conexionLocalidades.ObtenerLocalidad(this.persona.IDLocalidad);
                     this.provincia = conexionProvincias.ObtenerProvincia(this.localidad.IDProvincia);
-                    rptHorarios.DataSource = conexionHorariosMedicos.ObtenerHorariosDeMedico(Convert.ToInt32(id_medico));
+                    DataTable dtHorarios = conexionHorariosMedicos.ObtenerHorariosDeMedico(Convert.ToInt32(id_medico));
+                    rptHorarios.DataSource = dtHorarios;
                     rptHorarios.DataBind();
-                    rptTurnos.DataSource = conexionTurnos.ObtenerUltimosTurnosDeMedico(Convert.ToInt32(id_medico), TURNOS_FILA);
+                    lblSinHorarios.Visible = dtHorarios.Rows.Count == 0;
+
+                    DataTable dtTurnos = conexionTurnos.ObtenerUltimosTurnosDeMedico(Convert.ToInt32(id_medico), TURNOS_FILA);
+                    rptTurnos.DataSource = dtTurnos;
                     rptTurnos.DataBind();
+                    lblSinTurnos.Visible = dtTurnos.Rows.Count == 0;
                 }
             }
             catch (NoAccesoPagina)

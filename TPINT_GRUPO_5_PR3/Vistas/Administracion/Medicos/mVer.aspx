@@ -207,7 +207,7 @@
             </div>
 
             <div class="perfil-estado">
-                <span class='<%# Convert.ToBoolean(medico.Estado) ? "badge badge-active" : "badge badge-inactive" %>'><%# Convert.ToBoolean(medico.Estado) ? "Activo" : "Inactivo" %></span>
+                <span class='<%= Convert.ToBoolean(medico.Estado) ? "badge badge-active" : "badge badge-inactive" %>'><%= Convert.ToBoolean(medico.Estado) ? "Activo" : "Inactivo" %></span>
                 <a href="/Administracion/Medicos/mInicio.aspx" class="btn-volver">← Volver al listado</a>
             </div>
         </div>

@@ -88,7 +88,11 @@ namespace Vistas.Administracion.Usuarios {
                                    txtBuscar.Text.Trim(), ddlRol.SelectedValue, ddlEstado.SelectedValue);
             if (pagina < totalPaginas) CargarGrilla(pagina + 1);
         }
-        protected void ddlPagina_SelectedIndexChanged(object sender, EventArgs e) { }
+        protected void ddlPagina_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(ddlPagina.SelectedValue, out int pagina))
+                CargarGrilla(pagina);
+        }
         protected void rptUsuarios_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (e.CommandName == "ToggleEstado")

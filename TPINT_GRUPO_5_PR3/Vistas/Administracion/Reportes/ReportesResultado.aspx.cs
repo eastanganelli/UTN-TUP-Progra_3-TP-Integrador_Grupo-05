@@ -58,6 +58,14 @@ namespace Vistas.Administracion.Reportes
                     dt = negocio.EstadoTurnosPorAnio(anio);
                     MostrarReporteEstadoTurnos(dt, anio);
                     break;
+                case "Asistencia a Turnos":
+                    dt = negocio.AsistenciaATurnos(fechaDesde, fechaHasta);
+                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                    break;
+                case "Pacientes con más Ausencias":
+                    dt = negocio.PacientesConMasAusencias(fechaDesde, fechaHasta);
+                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                    break;
                 default:
                     Response.Redirect("ReportesInicio.aspx");
                     break;

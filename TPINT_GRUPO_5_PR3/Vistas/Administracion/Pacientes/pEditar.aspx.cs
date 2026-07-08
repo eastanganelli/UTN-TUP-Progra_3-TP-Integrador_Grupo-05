@@ -95,6 +95,7 @@ namespace Vistas.Administracion.Pacientes
         }
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e)
         {
+            idProvincia = Convert.ToInt32(ddlProvincia.SelectedValue);
             CargarLocalidades();
         }
 

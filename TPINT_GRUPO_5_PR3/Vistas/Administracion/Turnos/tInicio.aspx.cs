@@ -128,6 +128,25 @@ namespace Vistas.Administracion.Turnos
                             string espSeleccionada = ddlEspecialidad.SelectedItem.Text.Trim().ToLower();
                             if (fila["especialidad"].ToString().ToLower() != espSeleccionada) continue;
                         }
+
+                        // fecha columna viene como "dd/MM/yyyy"
+                        if (!string.IsNullOrWhiteSpace(txtDesde.Text) || !string.IsNullOrWhiteSpace(txtHasta.Text))
+                        {
+                            if (DateTime.TryParseExact(fila["fecha"].ToString(), "dd/MM/yyyy",
+                                System.Globalization.CultureInfo.InvariantCulture,
+                                System.Globalization.DateTimeStyles.None, out DateTime fechaFila))
+                            {
+                                if (!string.IsNullOrWhiteSpace(txtDesde.Text) &&
+                                    DateTime.TryParse(txtDesde.Text, out DateTime desde) &&
+                                    fechaFila.Date < desde.Date)
+                                    continue;
+
+                                if (!string.IsNullOrWhiteSpace(txtHasta.Text) &&
+                                    DateTime.TryParse(txtHasta.Text, out DateTime hasta) &&
+                                    fechaFila.Date > hasta.Date)
+                                    continue;
+                            }
+                        }
                     }
 
                     // Estado: aplica a todos

@@ -87,7 +87,9 @@ namespace Vistas.Administracion.Reportes
             string anio = txtAnio.Text.Trim();
             string reporte = ddlReporte.SelectedValue;
 
-            Response.Redirect($"ReportesResultado.aspx?reporte={Server.UrlEncode(reporte)}&desde={desde}&hasta={hasta}&anio={anio}");
+            string especialidad = ddlEspecialidad.SelectedValue;
+            string medico = ddlMedico.SelectedValue;
+            Response.Redirect($"ReportesResultado.aspx?reporte={Server.UrlEncode(reporte)}&desde={desde}&hasta={hasta}&anio={anio}&especialidad={especialidad}&medico={medico}");
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
