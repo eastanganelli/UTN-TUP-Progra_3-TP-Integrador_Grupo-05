@@ -71,7 +71,21 @@ namespace Vistas.Administracion {
             Medico medico = new Medico();
             MedicosNegocio medicosNegocio = new MedicosNegocio();
             medico = medicosNegocio.ObtenerMedico(idMedico);
-            lblRol.Text = "Dr. " + medico.Apellido;
+
+            lblRol.Text = "Bienvenid";
+
+            if (medico.Sexo == 'F')
+            {
+                lblRol.Text += "a Dra. " + medico.Apellido;
+            }
+            else if (medico.Sexo == 'M')
+            {
+                lblRol.Text += "o Dr. " + medico.Apellido;
+            }
+            else
+             {
+                lblRol.Text += "o " + medico.Apellido;
+            }
             pnlStatsMedico.Visible = true;
             pnlTurnos.Visible = true;
 
