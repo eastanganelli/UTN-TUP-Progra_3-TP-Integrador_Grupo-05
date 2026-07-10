@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="ReportesResultado.aspx.cs" Inherits="Vistas.Administracion.Reportes.ReportesResultado" %>
+﻿<%@ Page Title="Reporte - Resultado" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="ReportesResultado.aspx.cs" Inherits="Vistas.Administracion.Reportes.ReportesResultado" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 <style>

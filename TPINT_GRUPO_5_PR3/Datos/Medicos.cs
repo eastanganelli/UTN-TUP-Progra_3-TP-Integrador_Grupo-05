@@ -155,14 +155,16 @@ namespace Datos {
             });
             return pMsg.Value?.ToString() ?? string.Empty;
         }
-        public DataTable ObtenerMedicosPorEspecialidad(string idEspecialidad)
+        public DataTable ObtenerMedicosPorEspecialidad(int id_especialidad)
         {
-            string consulta = "SELECT id_medico, (Apellido + ', ' + Nombre) AS MedicoCompleto " +
-                              "FROM vw_Medicos " +
-                              "WHERE IDEspecialidad = @idEsp AND Activo = 1";
-
-            return conexion.ObtenerTablaParametros(consulta, "MedicosFiltrados",
-                new[] { new SqlParameter("@idEsp", idEspecialidad) });
+            string consulta = @"
+                SELECT IDMedico,
+                       Apellido + ', ' + Nombre AS nombre
+                FROM vw_Medicos_Activos
+                WHERE IDEspecialidad = @id_especialidad
+                ORDER BY Apellido, Nombre";
+            return conexion.ObtenerTablaParametros(consulta, "medicos",
+                new[] { new SqlParameter("@id_especialidad", id_especialidad) });
         }
         public int CambiarEstadoMedico(int id_medico, bool nuevoEstado) {
             return conexion.EjecutarConsultaParametros(

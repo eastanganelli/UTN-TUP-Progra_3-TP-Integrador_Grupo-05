@@ -18,6 +18,11 @@ namespace Vistas.Administracion.Turnos
         {
             if (!IsPostBack)
             {
+                Usuario usuario = (Usuario)Session["zezion"];
+                if (usuario.Rol == "medico") {
+                    btnCancelarTurno.Visible = false;
+                    btnCancelarTurno.Enabled = false;
+                }
                 string idTurno  = Request.QueryString["id"];
 
                 if (!string.IsNullOrEmpty(idTurno))

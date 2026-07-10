@@ -21,6 +21,9 @@ namespace Negocio {
         public DataTable ObtenerMedicosSinAcceso() {
             return datosMedicos.ObtenerMedicosSinAcceso();
         }
+        public DataTable ObtenerMedicosPorEspecialidad(int id_especialidad) {
+            return datosMedicos.ObtenerMedicosPorEspecialidad(id_especialidad);
+        }
         public DataTable ObtenerMedicosParaEdicion(int? idMedicoActual) {
             return datosMedicos.ObtenerMedicosParaEdicion(idMedicoActual);
         }
@@ -62,17 +65,6 @@ namespace Negocio {
             }
             catch (Exception ex) {
                 throw new Exception("Error al dar de baja el médico: " + ex.Message);
-            }
-        }
-        public DataTable ObtenerMedicosPorEspecialidad(string idEspecialidad)
-        {
-            try
-            {
-                return datosMedicos.ObtenerMedicosPorEspecialidad(idEspecialidad);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener médicos por especialidad: " + ex.Message);
             }
         }
         public void ToggleEstadoMedico(int id_medico) {

@@ -136,17 +136,6 @@ namespace Datos {
 
             return conexion.ObtenerTablaParametros(consulta, "proximos_turnos", parametros.ToArray());
         }
-        public DataTable ObtenerMedicosPorEspecialidad(int id_especialidad)
-        {
-            string consulta = @"
-                SELECT id_medico,
-                       apellido + ', ' + nombre AS nombre
-                FROM vw_Medicos_Activos
-                WHERE id_especialidad = @id_especialidad
-                ORDER BY apellido, nombre";
-            return conexion.ObtenerTablaParametros(consulta, "medicos",
-                new[] { new SqlParameter("@id_especialidad", id_especialidad) });
-        }
         public DataTable ObtenerHorariosDisponibles(int id_medico, DateTime fecha)
         {
             int diaSemana = (int)fecha.DayOfWeek; 

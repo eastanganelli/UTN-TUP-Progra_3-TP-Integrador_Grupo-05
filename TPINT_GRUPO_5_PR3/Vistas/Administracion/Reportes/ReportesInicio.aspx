@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="ReportesInicio.aspx.cs" Inherits="Vistas.Administracion.Reportes.ReportesInicio" %>
+﻿<%@ Page Title="Reporteria" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="ReportesInicio.aspx.cs" Inherits="Vistas.Administracion.Reportes.ReportesInicio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 

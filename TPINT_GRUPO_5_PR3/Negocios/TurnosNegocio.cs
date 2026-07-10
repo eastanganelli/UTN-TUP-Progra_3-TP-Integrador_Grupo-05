@@ -58,11 +58,6 @@ namespace Negocio {
 
             return _datosTurnos.AsignarTurno(id_medico, id_paciente, fecha_hora);
         }
-        public DataTable ObtenerMedicosPorEspecialidad(int id_especialidad)
-        {
-            return _datosTurnos.ObtenerMedicosPorEspecialidad(id_especialidad);
-        }
-
         public DataTable ObtenerHorariosDisponibles(int id_medico, DateTime fecha)
         {
             if (fecha.Date < DateTime.Today)

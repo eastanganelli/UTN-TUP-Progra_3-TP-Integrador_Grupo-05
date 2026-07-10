@@ -44,12 +44,12 @@ namespace Vistas.Administracion.Reportes
         private void CargarMedicos(int? idEspecialidad)
         {
             DataTable dt = idEspecialidad.HasValue
-                ? negTurnos.ObtenerMedicosPorEspecialidad(idEspecialidad.Value)
+                ? negMedicos.ObtenerMedicosPorEspecialidad((int)idEspecialidad)
                 : negMedicos.ObtenerMedicos();
 
             ddlMedico.Items.Clear();
             ddlMedico.DataSource = dt;
-            ddlMedico.DataValueField = "id_medico";
+            ddlMedico.DataValueField = "IDMedico";
             ddlMedico.DataTextField = "nombre";
             ddlMedico.DataBind();
             ddlMedico.Items.Insert(0, new ListItem("Todos", ""));

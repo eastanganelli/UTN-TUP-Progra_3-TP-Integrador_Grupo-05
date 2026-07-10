@@ -8,6 +8,7 @@ namespace Vistas.Administracion.Turnos
 {
     public partial class Turno_Nuevo : System.Web.UI.Page
     {
+        private MedicosNegocio _negMedicos = new MedicosNegocio();
         private TurnosNegocio _negTurnos = new TurnosNegocio();
         private EspecialidadesNegocio _negEsp = new EspecialidadesNegocio();
         private PacientesNegocio _negPa = new PacientesNegocio();
@@ -48,9 +49,9 @@ namespace Vistas.Administracion.Turnos
         {
             ddlMedico.Items.Clear();
 
-            DataTable dt = _negTurnos.ObtenerMedicosPorEspecialidad(idEspecialidad);
+            DataTable dt = _negMedicos.ObtenerMedicosPorEspecialidad(idEspecialidad);
             ddlMedico.DataSource = dt;
-            ddlMedico.DataValueField = "id_medico";
+            ddlMedico.DataValueField = "IDMedico";
             ddlMedico.DataTextField = "nombre";
             ddlMedico.DataBind();
             ddlMedico.Items.Insert(0, new ListItem("-- Seleccioná --", ""));
