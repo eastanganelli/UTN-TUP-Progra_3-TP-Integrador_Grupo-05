@@ -262,7 +262,6 @@ namespace Vistas.Administracion.Turnos
             ddlHorario.Items.Add(new ListItem("-- Seleccioná médico y fecha primero --", ""));
 
             ddlPaciente.SelectedIndex = 0;
-            txtObservacion.Text = "";
             pnlConflicto.Visible = false;
 
             LimpiarBanner();

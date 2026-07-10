@@ -181,20 +181,6 @@
             </div>
         </div>
 
-        <div class="form-card">
-            <h2>Observaciones</h2>
-           
-  <div class="form-grid una-col">
-                <div class="campo">
-                    <label>Motivo / Observaciones iniciales</label>
-                    <asp:TextBox ID="txtObservacion" runat="server" TextMode="MultiLine"
-                        Rows="3" MaxLength="500"
-         
-                placeholder="Describí el motivo del turno (opcional)..." />
-                </div>
-            </div>
-        </div>
-
         <div class="form-acciones">
             <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
          

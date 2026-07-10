@@ -68,7 +68,7 @@
                             <strong><%# Eval("Apellido") %>, <%# Eval("Nombre") %></strong><br />
                             <span style="font-size:11px;color:#888"><%# Eval("Email") %></span>
                         </td>
-                        <td><%# Eval("DNI") %></td>
+                        <td><%# Eval("DNIMedico") %></td>
                         <td><span class="badge badge-esp"><%# Eval("Especialidad") %></span></td>
                         <td>
                             <span class='<%# Convert.ToBoolean(Eval("Activo")) ? "badge badge-active" : "badge badge-inactive" %>'>
@@ -77,16 +77,16 @@
                         </td>
                         <td>
                             <asp:HyperLink runat="server"
-                                NavigateUrl='<%# "mVer.aspx?id=" + Eval("id_medico") %>'
+                                NavigateUrl='<%# "mVer.aspx?id=" + Eval("IDMedico") %>'
                                 CssClass="btn-icon" title="Ver">👁</asp:HyperLink>
                             <asp:HyperLink runat="server"
-                                NavigateUrl='<%# "mEditar.aspx?id=" + Eval("id_medico") %>'
+                                NavigateUrl='<%# "mEditar.aspx?id=" + Eval("IDMedico") %>'
                                 CssClass="btn-icon" title="Editar">✏️</asp:HyperLink>
                             <asp:LinkButton runat="server"
-                                CssClass='<%# Convert.ToBoolean(Eval("activo")) ? "btn-icon danger" : "btn-icon" %>'
-                                CommandName="ToggleEstado" CommandArgument='<%# Eval("id_medico") %>'
-                                ToolTip='<%# Convert.ToBoolean(Eval("activo")) ? "Dar de baja" : "Reactivar" %>'
-                                OnClientClick='<%# ConfirmMensajeMedico(Eval("activo")) %>'><%# Convert.ToBoolean(Eval("activo")) ? "🗑" : "✔️" %></asp:LinkButton>
+                                CssClass='<%# Convert.ToBoolean(Eval("Activo")) ? "btn-icon danger" : "btn-icon" %>'
+                                CommandName="ToggleEstado" CommandArgument='<%# Eval("IDMedico") %>'
+                                ToolTip='<%# Convert.ToBoolean(Eval("Activo")) ? "Dar de baja" : "Reactivar" %>'
+                                OnClientClick='<%# ConfirmMensajeMedico(Eval("Activo")) %>'><%# Convert.ToBoolean(Eval("activo")) ? "🗑" : "✔️" %></asp:LinkButton>
                         </td>
                     </tr>
                 </ItemTemplate>

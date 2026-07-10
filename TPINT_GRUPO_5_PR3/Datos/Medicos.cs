@@ -30,28 +30,28 @@ namespace Datos {
         }
         public DataTable ObtenerMedicos() {
             string sql = @"SELECT
-                               m.id_medico,
-	                           m.nombre + ' ' + m.apellido AS nombre
+                               m.IDMedico,
+	                           m.Nombre + ' ' + m.Apellido AS nombre
                            FROM vw_Medicos m
-                           ORDER BY m.apellido, m.nombre";
+                           ORDER BY m.Apellido, m.Nombre";
             return conexion.ObtenerTabla(sql, "Medico");
         }
         public DataTable ObtenerMedicosSinAcceso() {
             string sql = @"SELECT
-                               m.id_medico,
-	                           m.nombre + ' ' + m.apellido AS nombre
+                               m.IDMedico,
+	                           m.Nombre + ' ' + m.Apellido AS nombre
                            FROM vw_Medicos m
                            WHERE TieneAcceso = 0
-                           ORDER BY m.apellido , m.nombre";
+                           ORDER BY m.Apellido , m.Nombre";
             return conexion.ObtenerTabla(sql, "Medico");
         }
         public DataTable ObtenerMedicosParaEdicion(int? idMedicoActual) {
-            string sql = @"SELECT m.id_medico,
-                                  m.nombre + ' ' + m.apellido AS nombre
+            string sql = @"SELECT m.IDMedico,
+                                  m.Nombre + ' ' + m.Apellido AS nombre
                            FROM vw_Medicos m
                            WHERE m.TieneAcceso = 0
-                              OR m.id_medico   = @idActual
-                           ORDER BY m.apellido, m.nombre";
+                              OR m.IDMedico    = @idActual
+                           ORDER BY m.Apellido, m.Nombre";
             var p = new SqlParameter("@idActual", SqlDbType.Int);
             p.Value = idMedicoActual.HasValue ? (object)idMedicoActual.Value : DBNull.Value;
             return conexion.ObtenerTablaParametros(sql, "Medico", new[] { p });
@@ -65,7 +65,7 @@ namespace Datos {
         }
         public DataTable ObtenerMedicosPaginado(int nro_pagina, int cantidad_pagina = 10) {
             int offset = (nro_pagina - 1) * cantidad_pagina;
-            string consulta = "SELECT * FROM vw_Medicos ORDER BY id_medico ASC OFFSET @offset ROWS FETCH NEXT @cantidad ROWS ONLY;";
+            string consulta = "SELECT * FROM vw_Medicos ORDER BY IDMedico ASC OFFSET @offset ROWS FETCH NEXT @cantidad ROWS ONLY;";
             return conexion.ObtenerTablaParametros(consulta, "Medico", new[] {
                 new SqlParameter("@offset", offset),
                 new SqlParameter("@cantidad", cantidad_pagina)
@@ -73,12 +73,12 @@ namespace Datos {
         }
         public DataTable BuscarMedicos(string busqueda, bool? activo, int? idEspecialidad, int pagina, int porPagina) {
             string sql = @"SELECT * FROM vw_Medicos
-                           WHERE (@busqueda IS NULL OR nombre   LIKE '%' + @busqueda + '%'
-                                                    OR apellido LIKE '%' + @busqueda + '%'
-                                                    OR dni      LIKE '%' + @busqueda + '%')
-                           AND   (@activo          IS NULL OR activo          = @activo)
-                           AND   (@id_especialidad IS NULL OR id_especialidad = @id_especialidad)
-                           ORDER BY id_medico ASC
+                           WHERE (@busqueda IS NULL OR Nombre   LIKE '%' + @busqueda + '%'
+                                                    OR Apellido LIKE '%' + @busqueda + '%'
+                                                    OR DNIMedico      LIKE '%' + @busqueda + '%')
+                           AND   (@activo          IS NULL OR Activo          = @activo)
+                           AND   (@id_especialidad IS NULL OR IDEspecialidad  = @id_especialidad)
+                           ORDER BY IDMedico ASC
                            OFFSET @offset ROWS FETCH NEXT @porPagina ROWS ONLY";
             var pBusqueda = new SqlParameter("@busqueda", SqlDbType.NVarChar, 100);
             pBusqueda.Value = string.IsNullOrEmpty(busqueda) ? (object)DBNull.Value : busqueda;
@@ -94,11 +94,11 @@ namespace Datos {
         }
         public int ContarMedicos(string busqueda, bool? activo, int? idEspecialidad) {
             string sql = @"SELECT COUNT(*) FROM vw_Medicos
-                           WHERE (@busqueda IS NULL OR nombre   LIKE '%' + @busqueda + '%'
-                                                    OR apellido LIKE '%' + @busqueda + '%'
-                                                    OR dni      LIKE '%' + @busqueda + '%')
-                           AND   (@activo          IS NULL OR activo          = @activo)
-                           AND   (@id_especialidad IS NULL OR id_especialidad = @id_especialidad)";
+                           WHERE (@busqueda IS NULL OR Nombre   LIKE '%' + @busqueda + '%'
+                                                    OR Apellido LIKE '%' + @busqueda + '%'
+                                                    OR DNIMedico      LIKE '%' + @busqueda + '%')
+                           AND   (@activo          IS NULL OR Activo         = @activo)
+                           AND   (@id_especialidad IS NULL OR IDEspecialidad = @id_especialidad)";
             var pBusqueda = new SqlParameter("@busqueda", SqlDbType.NVarChar, 100);
             pBusqueda.Value = string.IsNullOrEmpty(busqueda) ? (object)DBNull.Value : busqueda;
             var pActivo = new SqlParameter("@activo", SqlDbType.Bit);
@@ -159,7 +159,7 @@ namespace Datos {
         {
             string consulta = "SELECT id_medico, (Apellido + ', ' + Nombre) AS MedicoCompleto " +
                               "FROM vw_Medicos " +
-                              "WHERE id_especialidad = @idEsp AND activo = 1";
+                              "WHERE IDEspecialidad = @idEsp AND Activo = 1";
 
             return conexion.ObtenerTablaParametros(consulta, "MedicosFiltrados",
                 new[] { new SqlParameter("@idEsp", idEspecialidad) });

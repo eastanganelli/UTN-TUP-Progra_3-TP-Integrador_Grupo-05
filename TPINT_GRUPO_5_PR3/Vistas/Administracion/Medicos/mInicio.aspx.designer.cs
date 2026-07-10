@@ -24,6 +24,15 @@ namespace Vistas.Administracion.Medicos
         protected global::System.Web.UI.WebControls.Button btnNuevoMedico;
 
         /// <summary>
+        /// lblMensaje control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
         /// txtBuscar control.
         /// </summary>
         /// <remarks>
@@ -33,15 +42,6 @@ namespace Vistas.Administracion.Medicos
         protected global::System.Web.UI.WebControls.TextBox txtBuscar;
 
         /// <summary>
-        /// ddlEstado control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
-
-        /// <summary>
         /// ddlEspecialidad control.
         /// </summary>
         /// <remarks>
@@ -49,6 +49,15 @@ namespace Vistas.Administracion.Medicos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidad;
+
+        /// <summary>
+        /// ddlEstado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
 
         /// <summary>
         /// btnBuscar control.
@@ -121,7 +130,5 @@ namespace Vistas.Administracion.Medicos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbtnSiguiente;
-
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }
