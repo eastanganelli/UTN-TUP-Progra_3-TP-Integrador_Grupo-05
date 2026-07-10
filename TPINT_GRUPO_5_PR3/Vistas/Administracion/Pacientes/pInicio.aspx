@@ -207,7 +207,8 @@
                                     CommandName="ToggleEstado"
                                     CommandArgument='<%# Bind("Id_Paciente") %>'
                                     CssClass="btn-icon"
-                                    ToolTip='<%# Convert.ToBoolean(Eval("Activo")) ? "Dar de baja" : "Reactivar" %>'>
+                                    ToolTip='<%# Convert.ToBoolean(Eval("Activo")) ? "Dar de baja" : "Reactivar" %>'
+                                OnClientClick="return confirm('¿Está seguro de que desea cambiar el estado de este paciente?');">
     
                                     <%# Convert.ToBoolean(Eval("Activo")) ? "🗑" : "✔️" %>
                             </asp:LinkButton>

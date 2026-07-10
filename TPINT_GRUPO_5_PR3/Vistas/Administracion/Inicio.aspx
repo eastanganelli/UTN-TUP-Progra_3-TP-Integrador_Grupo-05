@@ -90,7 +90,7 @@
     <div class="contenedor listado">
 
         <div class="page-title">
-            Bienvenido,
+            
             <asp:Label ID="lblRol" runat="server" Text=""></asp:Label>
         </div>
         <div class="page-subtitle">Resumen del día — <%= fechaActual %></div>

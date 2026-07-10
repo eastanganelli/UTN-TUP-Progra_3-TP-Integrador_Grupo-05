@@ -16,8 +16,19 @@ namespace Vistas.Administracion.Pacientes
         {
             try
             {
-                AccesoPagina acceso = new AccesoPagina();
-                acceso.VerificarAcceso("admin");
+                Usuario usuario = (Usuario)Session["zezion"];
+
+                if (usuario != null)
+                {
+                    if (usuario.Rol == "admin")
+                    {
+                        hlVolver.NavigateUrl = "~/Administracion/Pacientes/pInicio.aspx";
+                    }
+                    else if (usuario.Rol == "medico")
+                    {
+                        hlVolver.NavigateUrl = "~/Administracion/Turnos/tInicio.aspx";
+                    }
+                }
 
                 int idPaciente = int.Parse(Request.QueryString["idPaciente"]);
 
@@ -35,10 +46,7 @@ namespace Vistas.Administracion.Pacientes
             {
                 Response.Redirect("/Login.aspx");
             }
-            catch (SinPermisoPagina)
-            {
-                Response.Redirect("/Administracion/Inicio.aspx");
-            }
+            
         }
 
         public void CargarConsultas(int idPaciente)
