@@ -17,31 +17,17 @@ namespace Datos {
         }
         public DataTable ObtenerTodosLosTurnos()
         {
-            SqlConnection conn = conexion.ObtenerConexion();
             string consulta = @"SELECT
-                                    ta.id_turno as id_turno, 
+                                    ta.id_turno as id_turno,
                                     ta.Paciente as paciente,
-                                    ta.Medico as medico, 
-                                    ta.Especialidad AS especialidad, 
+                                    ta.Medico as medico,
+                                    ta.Especialidad AS especialidad,
                                     CONVERT(varchar, ta.FechaHora, 103) AS fecha,
                                     CONVERT(varchar, ta.FechaHora, 108) AS horario,
                                     ta.estado as estado
                                 FROM vw_Turnos_Activos ta
                                 ORDER BY ta.FechaHora DESC";
-
-            SqlCommand resultado = new SqlCommand(consulta, conn);
-            SqlDataAdapter da = new SqlDataAdapter(resultado);
-            DataTable dt = new DataTable();
-
-            try
-            {
-                da.Fill(dt);
-            }
-            catch (Exception ex)
-            {
-            }
-
-            return dt;
+            return conexion.ObtenerTabla(consulta, "TurnosActivos");
         }
         public DataTable ObtenerTurnosPorPaciente(int idPaciente)
         {
@@ -64,19 +50,12 @@ namespace Datos {
 
             return conexion.ObtenerTablaParametros(consulta, "turnos_paciente", parametros.ToArray());
         }
-        public bool EliminarTurnoPermanente(int idTurno)
+        public bool EliminarTurno(int idTurno)
         {
-            using (SqlConnection conn = conexion.ObtenerConexion())
-            {
-                string consulta = "DELETE FROM Turno WHERE id_turno = @id_turno";
-
-                using (SqlCommand cmd = new SqlCommand(consulta, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id_turno", idTurno);
-                    int filasAfectadas = cmd.ExecuteNonQuery(); 
-                    return filasAfectadas > 0;
-                }
-            }
+            int filas = conexion.EjecutarConsultaParametros(
+                "UPDATE Turno SET activo = 0 WHERE id_turno = @id_turno",
+                new[] { new SqlParameter("@id_turno", idTurno) });
+            return filas > 0;
         }
         public DataTable BuscarTurnoPorId(string idTurno)
         {

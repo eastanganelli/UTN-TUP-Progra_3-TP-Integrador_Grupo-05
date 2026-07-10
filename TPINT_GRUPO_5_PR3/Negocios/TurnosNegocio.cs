@@ -25,11 +25,11 @@ namespace Negocio {
             return _datosTurnos.ObtenerTurnosPorPaciente(idPaciente);
         }
 
-        public bool EliminarTurnoPermanente(int idTurno)
+        public bool EliminarTurno(int idTurno)
         {
             try
             {
-                return _datosTurnos.EliminarTurnoPermanente(idTurno);
+                return _datosTurnos.EliminarTurno(idTurno);
             }
             catch (Exception ex)
             {

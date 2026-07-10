@@ -99,9 +99,6 @@ namespace Vistas.Administracion.Turnos
             AplicarVisibilidad(esMedico, fechaHora, estadoActual);
         }
 
-        // Reglas de visibilidad:
-        // - pnlFechaHorario: visible solo para admin en turnos futuros O pasados con estado "pendiente"
-        // - pnlEstado/pnlObservacion: visible solo para medico en turnos estrictamente pasados
         private void AplicarVisibilidad(bool esMedico, DateTime fechaTurno, string estadoOriginal)
         {
             bool esAdmin   = !esMedico;
@@ -109,15 +106,24 @@ namespace Vistas.Administracion.Turnos
             bool esFuturo  = !esPasado;
             bool pendiente = string.Equals(estadoOriginal, "pendiente", StringComparison.OrdinalIgnoreCase);
 
-            // Admin puede cambiar fecha solo si turno es futuro o (pasado pero pendiente)
-            pnlFechaHorario.Visible  = esAdmin && (esFuturo || pendiente);
+            pnlFechaHorario.Visible = esAdmin && (esFuturo || pendiente);
+            pnlEstado.Visible = esMedico && esPasado;
+            string estadoSeleccionado = ddlEstado.SelectedValue;
+            pnlObservacion.Visible = esMedico && esPasado &&
+                string.Equals(estadoSeleccionado, "presente", StringComparison.OrdinalIgnoreCase);
 
-            // Solo medico con turno pasado (o hoy) puede editar estado/observacion
-            pnlEstado.Visible        = esMedico && esPasado;
-            pnlObservacion.Visible   = esMedico && esPasado;
-
-            // Medico con turno futuro no tiene nada editable: ocultar Guardar
             btnGuardar.Visible = !(esMedico && esFuturo);
+        }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Usuario usuario = (Usuario)Session["zezion"];
+            bool esMedico = usuario.Rol == "medico";
+            DateTime fechaTurno = ViewState["FechaTurno"] != null
+                ? (DateTime)ViewState["FechaTurno"]
+                : DateTime.MaxValue;
+            string estadoOriginal = ViewState["EstadoOriginal"]?.ToString() ?? "pendiente";
+            AplicarVisibilidad(esMedico, fechaTurno, estadoOriginal);
         }
 
         private void MostrarBadgeEstado(string estado)
@@ -143,7 +149,7 @@ namespace Vistas.Administracion.Turnos
         {
             ddlEstado.Items.Clear();
             ddlEstado.Items.Add(new ListItem("-- Seleccioná --", ""));
-            ddlEstado.Items.Add(new ListItem("Pendiente", "pendiente"));
+            //ddlEstado.Items.Add(new ListItem("Pendiente", "pendiente"));
             ddlEstado.Items.Add(new ListItem("Presente",  "presente"));
             ddlEstado.Items.Add(new ListItem("Ausente",   "ausente"));
         }

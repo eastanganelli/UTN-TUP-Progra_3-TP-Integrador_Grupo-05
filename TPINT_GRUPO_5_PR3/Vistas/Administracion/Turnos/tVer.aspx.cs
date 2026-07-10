@@ -82,7 +82,7 @@ namespace Vistas.Administracion.Turnos
             if (!string.IsNullOrEmpty(idTurnoStr))
             {
                 int idTurno = int.Parse(idTurnoStr);
-                neg.EliminarTurnoPermanente(idTurno);
+                neg.EliminarTurno(idTurno);
                 string bckInicio_ = Request.QueryString["bck_ini"];
                 RetornarAlInicio();
             }

@@ -141,7 +141,7 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
             <div class="form-grid">
                 <div class="campo full-width">
                     <label>Estado <span class="req">*</span></label>
-                    <asp:DropDownList ID="ddlEstado" runat="server">
+                    <asp:DropDownList ID="ddlEstado" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
                         <asp:ListItem Value="">-- Seleccioná --</asp:ListItem>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlEstado" InitialValue="" CssClass="validador" ErrorMessage="El estado es requerido." Display="Dynamic" />

@@ -34,8 +34,6 @@ namespace Vistas.Administracion.Turnos
                         // Medico: ocultar filtros no aplicables y botón nuevo turno
                         btnNuevoTurno.Visible        = false;
                         pnlFiltroEspecialidad.Visible = false;
-                        pnlFiltroDesde.Visible        = false;
-                        pnlFiltroHasta.Visible        = false;
                         txtBuscar.Attributes["placeholder"] = "Buscar por paciente...";
                     }
                     else
@@ -87,7 +85,7 @@ namespace Vistas.Administracion.Turnos
         {
             if (e.CommandName == "Baja" && EsAdmin())
             {
-                _negocioTurnos.EliminarTurnoPermanente(Convert.ToInt32(e.CommandArgument));
+                _negocioTurnos.EliminarTurno(Convert.ToInt32(e.CommandArgument));
                 CargarListadoDeTurnos();
             }
         }
@@ -120,7 +118,7 @@ namespace Vistas.Administracion.Turnos
                         if (!coincide) continue;
                     }
 
-                    // Filtros exclusivos de admin
+                    // Filtro especialidad: solo admin
                     if (!esMedico)
                     {
                         if (ddlEspecialidad.SelectedIndex > 0)
@@ -128,24 +126,24 @@ namespace Vistas.Administracion.Turnos
                             string espSeleccionada = ddlEspecialidad.SelectedItem.Text.Trim().ToLower();
                             if (fila["especialidad"].ToString().ToLower() != espSeleccionada) continue;
                         }
+                    }
 
-                        // fecha columna viene como "dd/MM/yyyy"
-                        if (!string.IsNullOrWhiteSpace(txtDesde.Text) || !string.IsNullOrWhiteSpace(txtHasta.Text))
+                    // Filtro por rango de fechas: aplica a todos los roles
+                    if (!string.IsNullOrWhiteSpace(txtDesde.Text) || !string.IsNullOrWhiteSpace(txtHasta.Text))
+                    {
+                        if (DateTime.TryParseExact(fila["fecha"].ToString(), "dd/MM/yyyy",
+                            System.Globalization.CultureInfo.InvariantCulture,
+                            System.Globalization.DateTimeStyles.None, out DateTime fechaFila))
                         {
-                            if (DateTime.TryParseExact(fila["fecha"].ToString(), "dd/MM/yyyy",
-                                System.Globalization.CultureInfo.InvariantCulture,
-                                System.Globalization.DateTimeStyles.None, out DateTime fechaFila))
-                            {
-                                if (!string.IsNullOrWhiteSpace(txtDesde.Text) &&
-                                    DateTime.TryParse(txtDesde.Text, out DateTime desde) &&
-                                    fechaFila.Date < desde.Date)
-                                    continue;
+                            if (!string.IsNullOrWhiteSpace(txtDesde.Text) &&
+                                DateTime.TryParse(txtDesde.Text, out DateTime desde) &&
+                                fechaFila.Date < desde.Date)
+                                continue;
 
-                                if (!string.IsNullOrWhiteSpace(txtHasta.Text) &&
-                                    DateTime.TryParse(txtHasta.Text, out DateTime hasta) &&
-                                    fechaFila.Date > hasta.Date)
-                                    continue;
-                            }
+                            if (!string.IsNullOrWhiteSpace(txtHasta.Text) &&
+                                DateTime.TryParse(txtHasta.Text, out DateTime hasta) &&
+                                fechaFila.Date > hasta.Date)
+                                continue;
                         }
                     }
 
