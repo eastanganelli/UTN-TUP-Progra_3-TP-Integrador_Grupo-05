@@ -16,30 +16,57 @@ namespace Vistas.Administracion.Turnos
         private bool bckInicio = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
+                AccesoPagina acceso = new AccesoPagina();
+                acceso.VerificarAcceso("admin", "medico");
                 Usuario usuario = (Usuario)Session["zezion"];
-                if (usuario.Rol == "medico") {
-                    btnCancelarTurno.Visible = false;
-                    btnCancelarTurno.Enabled = false;
-                }
-                string idTurno  = Request.QueryString["id"];
 
-                if (!string.IsNullOrEmpty(idTurno))
+                if (!IsPostBack)
                 {
-                    CargarDatosDelTurno(idTurno);
+                    string idTurno = Request.QueryString["id"];
+
+                    if (string.IsNullOrEmpty(idTurno))
+                    {
+                        Response.Redirect("tInicio.aspx");
+                        return;
+                    }
+
+                    DataTable dt = neg.BuscarTurnoPorId(idTurno);
+                    if (dt == null || dt.Rows.Count == 0)
+                    {
+                        Response.Redirect("tInicio.aspx");
+                        return;
+                    }
+
+                    // Médico solo puede ver sus propios turnos
+                    if (usuario.Rol == "medico")
+                    {
+                        int idMedicoTurno = Convert.ToInt32(dt.Rows[0]["id_medico"]);
+                        if (usuario.IDMedico != idMedicoTurno)
+                        {
+                            Response.Redirect("tInicio.aspx");
+                            return;
+                        }
+                        btnCancelarTurno.Visible = false;
+                        btnCancelarTurno.Enabled = false;
+                    }
+
+                    CargarDatosDelTurno(dt);
                 }
-                else
-                {
-                    Response.Redirect("tInicio.aspx");
-                }
+            }
+            catch (NoAccesoPagina)
+            {
+                Response.Redirect("/Login.aspx");
+            }
+            catch (SinPermisoPagina)
+            {
+                Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
 
-        private void CargarDatosDelTurno(string idTurno)
+        private void CargarDatosDelTurno(DataTable dt)
         {
-            DataTable dt = neg.BuscarTurnoPorId(idTurno);
-
             if (dt != null && dt.Rows.Count > 0)
             {
                 DataRow fila = dt.Rows[0];

@@ -15,7 +15,7 @@ namespace Vistas.Administracion.Usuarios {
             try
             {
                 AccesoPagina acceso = new AccesoPagina();
-                acceso.VerificarAcceso("admin", "medico");
+                acceso.VerificarAcceso("admin");
                 Usuario usuario = (Usuario)Session["zezion"];
                 if (!IsPostBack)
                 {

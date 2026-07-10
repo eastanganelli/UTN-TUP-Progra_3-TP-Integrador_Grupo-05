@@ -17,7 +17,7 @@ namespace Vistas.Administracion.Turnos
             try
             {
                 AccesoPagina acceso = new AccesoPagina();
-                acceso.VerificarAcceso("admin", "medico");
+                acceso.VerificarAcceso("admin");
 
                 if (!IsPostBack)
                 {

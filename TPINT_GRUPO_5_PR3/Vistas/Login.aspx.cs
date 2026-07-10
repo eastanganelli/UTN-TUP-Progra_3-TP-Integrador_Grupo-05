@@ -14,7 +14,8 @@ namespace Vistas
         private UsuariosNegocio negocioUsuarios = new UsuariosNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["zezion"] != null)
+                Response.Redirect("/Administracion/Inicio.aspx");
         }
 
         protected void btnIngresar_Click(object sender, EventArgs e)
