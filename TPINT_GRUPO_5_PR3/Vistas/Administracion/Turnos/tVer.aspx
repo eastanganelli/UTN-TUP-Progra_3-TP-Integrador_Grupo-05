@@ -290,12 +290,9 @@
                     <div class="mini-info">
                         <asp:Label ID="lblPaciente" runat="server" />
                         <br>
-                
                          <span class="dato-label">DNI-</span>
                         <asp:Label ID="lblDNI" runat="server" class="dato-label" />
-                        <br>
-                        <a id="lnkFichaPaciente" runat="server" class="mini-link">Ver ficha completa →</a>
-         
+                        <br>         
                     </div>
                 </div>
                 <div class="dato-fila">
@@ -307,20 +304,16 @@
                 <div class="dato-fila">
                     <span class="dato-label">Teléfono</span>
                     <br>
-                
                      <asp:Label ID="lblTelefono" runat="server" />
                 </div>
             </div>
             <div class="info-card">
                 <h2>Médico</h2>
                 <div class="mini-perfil">
-                   
                   <div class="mini-avatar medico"><asp:Label ID="lblInicialesMedico" runat="server" /></div>
                     <div class="mini-info">
                         <asp:Label ID="lblMedico" runat="server" />
-                        <br>
-                      
-   <a id="lnkFichaMedico" runat="server" class="mini-link">Ver ficha completa →</a>
+                        <br />
                     </div>
                 </div>
                 <div class="dato-fila">
@@ -336,8 +329,7 @@
                </div>
             <div class="info-card full-width">
                 <h2>Motivo y Observaciones</h2>
-                <div class="dato-fila" style="align-items: flex-start;
- padding-top: 14px;">
+                <div class="dato-fila" style="align-items: flex-start; padding-top: 14px;">
                     <span class="dato-label">Observaciones</span>
                 </div>
                 <textarea id="txtObservaciones" runat="server" class="observaciones-box" readonly></textarea>

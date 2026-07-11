@@ -101,18 +101,19 @@ namespace Vistas.Administracion.Turnos
 
         private void AplicarVisibilidad(bool esMedico, DateTime fechaTurno, string estadoOriginal)
         {
-            bool esAdmin   = !esMedico;
-            bool esPasado  = fechaTurno.Date <= DateTime.Today;
-            bool esFuturo  = !esPasado;
-            bool pendiente = string.Equals(estadoOriginal, "pendiente", StringComparison.OrdinalIgnoreCase);
+            bool esAdmin         = !esMedico;
+            bool esPasado        = fechaTurno.Date <= DateTime.Today;
+            bool esFuturo        = !esPasado;
+            bool pendiente       = string.Equals(estadoOriginal, "pendiente", StringComparison.OrdinalIgnoreCase);
+            bool horaAlcanzada   = fechaTurno <= DateTime.Now;
 
             pnlFechaHorario.Visible = esAdmin && (esFuturo || pendiente);
-            pnlEstado.Visible = esMedico && esPasado;
+            pnlEstado.Visible       = esMedico && horaAlcanzada;
             string estadoSeleccionado = ddlEstado.SelectedValue;
-            pnlObservacion.Visible = esMedico && esPasado &&
+            pnlObservacion.Visible  = esMedico && horaAlcanzada &&
                 string.Equals(estadoSeleccionado, "presente", StringComparison.OrdinalIgnoreCase);
 
-            btnGuardar.Visible = !(esMedico && esFuturo);
+            btnGuardar.Visible = !(esMedico && !horaAlcanzada);
         }
 
         protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -267,6 +268,11 @@ namespace Vistas.Administracion.Turnos
             string obsAGuardar;
             if (pnlEstado.Visible)
             {
+                if (fechaHoraOriginal > DateTime.Now)
+                {
+                    MostrarAlerta("No se puede registrar el estado antes del horario del turno.");
+                    return;
+                }
                 if (string.IsNullOrEmpty(ddlEstado.SelectedValue))
                 {
                     MostrarAlerta("Seleccioná un estado para el turno.");

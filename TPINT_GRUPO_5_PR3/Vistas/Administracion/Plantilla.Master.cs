@@ -20,8 +20,8 @@ namespace Vistas.Administracion
                 Response.Redirect("/Login.aspx");
             }
 
+            nombreClinica = Vistas.Properties.Resources.strNombreClinica;
             if (!IsPostBack) {
-                nombreClinica = Vistas.Properties.Resources.strNombreClinica;
                 CargarMenu(((Usuario)Session["zezion"]).Rol);
             }
 
