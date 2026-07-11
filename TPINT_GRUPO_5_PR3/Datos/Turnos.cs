@@ -225,7 +225,7 @@ namespace Datos {
                     ta.Especialidad AS Especialidad,
                     ta.estado       AS Estado
                 FROM vw_Turnos_Activos ta
-                WHERE CONVERT(date, ta.FechaHora) = CONVERT(date, GETDATE() AT TIME ZONE 'Argentina Standard Time')
+                WHERE CONVERT(date, ta.FechaHora) = CAST(SYSUTCDATETIME() AT TIME ZONE 'UTC' AT TIME ZONE 'Argentina Standard Time' AS DATE)
                 ORDER BY ta.FechaHora ASC";
             return conexion.ObtenerTabla(consulta, "TurnosDelDiaAdmin");
         }

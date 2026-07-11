@@ -43,9 +43,7 @@ namespace Vistas.Administracion.Reportes
 
         private void CargarMedicos(int? idEspecialidad)
         {
-            DataTable dt = idEspecialidad.HasValue
-                ? negMedicos.ObtenerMedicosPorEspecialidad((int)idEspecialidad)
-                : negMedicos.ObtenerMedicos();
+            DataTable dt = idEspecialidad.HasValue ? negMedicos.ObtenerMedicosPorEspecialidad((int)idEspecialidad) : negMedicos.ObtenerMedicos();
 
             ddlMedico.Items.Clear();
             ddlMedico.DataSource = dt;
@@ -57,13 +55,14 @@ namespace Vistas.Administracion.Reportes
 
         private void ActualizarCamposVisibles()
         {
+            bool ninguno       = ddlReporte.SelectedIndex == 0;
             bool esEstadoAnual = ddlReporte.SelectedValue == "Estado de Turnos por Año";
 
-            pnlAnio.Visible = esEstadoAnual;
-            pnlFechaDesde.Visible = !esEstadoAnual;
-            pnlFechaHasta.Visible = !esEstadoAnual;
-            pnlEspecialidad.Visible = !esEstadoAnual;
-            pnlMedico.Visible = !esEstadoAnual;
+            pnlAnio.Visible         = !ninguno && esEstadoAnual;
+            pnlFechaDesde.Visible   = !ninguno && !esEstadoAnual;
+            pnlFechaHasta.Visible   = !ninguno && !esEstadoAnual;
+            pnlEspecialidad.Visible = !ninguno && !esEstadoAnual;
+            pnlMedico.Visible       = !ninguno && !esEstadoAnual;
         }
 
         protected void ddlReporte_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,8 +72,7 @@ namespace Vistas.Administracion.Reportes
 
         protected void ddlEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int? idEspecialidad = string.IsNullOrEmpty(ddlEspecialidad.SelectedValue)
-                ? (int?)null : int.Parse(ddlEspecialidad.SelectedValue);
+            int? idEspecialidad = string.IsNullOrEmpty(ddlEspecialidad.SelectedValue) ? (int?)null : int.Parse(ddlEspecialidad.SelectedValue);
             CargarMedicos(idEspecialidad);
         }
 

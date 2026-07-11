@@ -97,8 +97,6 @@ namespace Vistas.Administracion.Turnos
                     txtObservaciones.Value = obs;
                 }
 
-                lnkFichaPaciente.HRef = "../Pacientes/pVer.aspx?idPaciente=" + fila["id_paciente"].ToString();
-                lnkFichaMedico.HRef = "../Medicos/mVer.aspx?id=" + fila["id_medico"].ToString();
             }
         }
 

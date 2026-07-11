@@ -52,8 +52,7 @@
 
         <div class="campo full-width">
             <label>Tipo de Reporte</label>
-            <asp:DropDownList ID="ddlReporte" runat="server"
-                AutoPostBack="true" OnSelectedIndexChanged="ddlReporte_SelectedIndexChanged">
+            <asp:DropDownList ID="ddlReporte" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlReporte_SelectedIndexChanged">
                 <asp:ListItem Text="Seleccione un reporte" />
                 <asp:ListItem Text="Asistencia a Turnos" />
                 <asp:ListItem Text="Turnos por Especialidad" />
@@ -94,12 +93,8 @@
     </div>
 
     <div class="acciones">
-
-       <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
-        CssClass="btn-secondary" CausesValidation="false"
-        OnClick="btnLimpiar_Click" />
-    <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte"
-        CssClass="btn-primary" OnClick="btnGenerar_Click" />
+        <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn-secondary" CausesValidation="false" OnClick="btnLimpiar_Click" />
+        <asp:Button ID="btnGenerar" runat="server" Text="Generar Reporte" CssClass="btn-primary" OnClick="btnGenerar_Click" />
     </div>
 
 </div>
