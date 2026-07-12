@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Datos;
+using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Datos;
 
 namespace Negocios
 {
@@ -12,14 +13,29 @@ namespace Negocios
     {
 
         private Reportes datosReportes = new Reportes();
+        private Medicos datosMedicos = new Medicos();
 
-        public DataTable TurnosPorEspecialidad(DateTime? desde = null, DateTime? hasta = null)
+        public DataTable TurnosPorEspecialidad(int? idEspecialidad, int? idMedico, DateTime? desde = null, DateTime? hasta = null)
         {
             if (desde.HasValue && hasta.HasValue && desde > hasta)
                 throw new Exception("La fecha desde no puede ser mayor a la fecha hasta.");
 
-            try { return datosReportes.TurnosPorEspecialidad(desde, hasta); }
-            catch (Exception ex) { throw new Exception("Error al obtener turnos por especialidad: " + ex.Message); }
+            try
+            {
+                if (idEspecialidad.HasValue && idMedico.HasValue)
+                {
+                    Medico m = datosMedicos.ObtenerMedico(idMedico.Value);
+
+                    if (m.IDEspecialidad != idEspecialidad.Value)
+                        throw new Exception("El médico seleccionado no pertenece a la especialidad seleccionada.");
+                }
+
+                return datosReportes.TurnosPorEspecialidad(idEspecialidad, idMedico, desde, hasta);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener turnos por especialidad: " + ex.Message);
+            }
         }
 
         public DataTable MedicosConMasTurnos(DateTime? desde = null, DateTime? hasta = null)

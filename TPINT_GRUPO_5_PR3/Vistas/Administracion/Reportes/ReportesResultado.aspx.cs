@@ -3,6 +3,7 @@ using Negocio;
 using Negocios;
 using System;
 using System.Data;
+using System.Web.UI;
 
 namespace Vistas.Administracion.Reportes
 {
@@ -29,6 +30,14 @@ namespace Vistas.Administracion.Reportes
             string reporte = Request.QueryString["reporte"];
             string desde = Request.QueryString["desde"];
             string hasta = Request.QueryString["hasta"];
+            int? idEspecialidad = null;
+            int? idMedico = null;
+
+            if (int.TryParse(Request.QueryString["especialidad"], out int esp) && esp != 0)
+                idEspecialidad = esp;
+
+            if (int.TryParse(Request.QueryString["medico"], out int med) && med != 0)
+                idMedico = med;
 
             if (string.IsNullOrEmpty(reporte))
             {
@@ -41,34 +50,56 @@ namespace Vistas.Administracion.Reportes
 
             DataTable dt;
 
-            switch (reporte)
+            try
             {
-                case "Turnos por Especialidad":
-                    dt = negocio.TurnosPorEspecialidad(fechaDesde, fechaHasta);
-                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
-                    break;
-                case "Médicos con más Turnos":
-                    dt = negocio.MedicosConMasTurnos(fechaDesde, fechaHasta);
-                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
-                    break;
-                case "Estado de Turnos por Año":
-                    int anio;
-                    if (!int.TryParse(Request.QueryString["anio"], out anio))
-                        anio = DateTime.Now.Year;
-                    dt = negocio.EstadoTurnosPorAnio(anio);
-                    MostrarReporteEstadoTurnos(dt, anio);
-                    break;
-                case "Asistencia a Turnos":
-                    dt = negocio.AsistenciaATurnos(fechaDesde, fechaHasta);
-                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
-                    break;
-                case "Pacientes con más Ausencias":
-                    dt = negocio.PacientesConMasAusencias(fechaDesde, fechaHasta);
-                    MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
-                    break;
-                default:
-                    Response.Redirect("ReportesInicio.aspx");
-                    break;
+                switch (reporte)
+                {
+                    case "Turnos por Especialidad":
+                        dt = negocio.TurnosPorEspecialidad(idEspecialidad, idMedico, fechaDesde, fechaHasta);
+                        MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                        break;
+
+                    case "Médicos con más Turnos":
+                        dt = negocio.MedicosConMasTurnos(fechaDesde, fechaHasta);
+                        MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                        break;
+
+                    case "Estado de Turnos por Año":
+                        int anio;
+
+                        if (!int.TryParse(Request.QueryString["anio"], out anio))
+                            anio = DateTime.Now.Year;
+
+                        if (anio > DateTime.Now.Year)
+                            throw new Exception("El año no puede ser mayor al año actual.");
+
+                        dt = negocio.EstadoTurnosPorAnio(anio);
+                        MostrarReporteEstadoTurnos(dt, anio);
+                        break;
+
+                    case "Asistencia a Turnos":
+                        dt = negocio.AsistenciaATurnos(fechaDesde, fechaHasta);
+                        MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                        break;
+
+                    case "Pacientes con más Ausencias":
+                        dt = negocio.PacientesConMasAusencias(fechaDesde, fechaHasta);
+                        MostrarReporte(dt, reporte, fechaDesde, fechaHasta);
+                        break;
+
+                    default:
+                        Response.Redirect("ReportesInicio.aspx");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    GetType(),
+                    "Error",
+                    $"alert('{ex.Message.Replace("'", "\\'")}'); window.history.back();",
+                    true);
             }
         }
 

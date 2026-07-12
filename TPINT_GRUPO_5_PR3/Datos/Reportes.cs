@@ -12,26 +12,42 @@ namespace Datos
     {
         private AccesoDatos conexion = new AccesoDatos();
 
-        public DataTable TurnosPorEspecialidad(DateTime? desde = null, DateTime? hasta = null)
+        public DataTable TurnosPorEspecialidad( int? idEspecialidad,int? idMedico,DateTime? desde = null,DateTime? hasta = null)
         {
-            string sql = @"SELECT e.nombre AS Especialidad,
-                                  COUNT(*) AS TotalTurnos
-                           FROM Turno t
-                           JOIN Medico       m ON m.id_medico       = t.id_medico
-                           JOIN Especialidad e ON e.id_especialidad = m.id_especialidad
-                           WHERE (@desde IS NULL OR CONVERT(DATE, t.fecha_hora) >= @desde)
-                           AND   (@hasta IS NULL OR CONVERT(DATE, t.fecha_hora) <= @hasta)
-                           GROUP BY e.nombre
-                           ORDER BY TotalTurnos DESC";
+            string sql = @"SELECT
+                        e.nombre AS Especialidad,
+                        COUNT(*) AS TotalTurnos
+                        FROM Turno t
+                        JOIN Medico m
+                            ON m.id_medico = t.id_medico
+                        JOIN Especialidad e
+                             ON e.id_especialidad = m.id_especialidad
+                        WHERE
+                                (@idEspecialidad IS NULL OR e.id_especialidad = @idEspecialidad)
+                            AND (@idMedico IS NULL OR m.id_medico = @idMedico)
+                            AND (@desde IS NULL OR CONVERT(DATE, t.fecha_hora) >= @desde)
+                            AND (@hasta IS NULL OR CONVERT(DATE, t.fecha_hora) <= @hasta)
+                        GROUP BY e.nombre
+                        ORDER BY TotalTurnos DESC";
 
-            var pDesde = new SqlParameter("@desde", SqlDbType.Date);
+            SqlParameter pEspecialidad = new SqlParameter("@idEspecialidad", SqlDbType.Int);
+            pEspecialidad.Value = idEspecialidad.HasValue ? (object)idEspecialidad.Value : DBNull.Value;
+
+            SqlParameter pMedico = new SqlParameter("@idMedico", SqlDbType.Int);
+            pMedico.Value = idMedico.HasValue ? (object)idMedico.Value : DBNull.Value;
+
+            SqlParameter pDesde = new SqlParameter("@desde", SqlDbType.Date);
             pDesde.Value = desde.HasValue ? (object)desde.Value : DBNull.Value;
-            var pHasta = new SqlParameter("@hasta", SqlDbType.Date);
+
+            SqlParameter pHasta = new SqlParameter("@hasta", SqlDbType.Date);
             pHasta.Value = hasta.HasValue ? (object)hasta.Value : DBNull.Value;
 
-            return conexion.ObtenerTablaParametros(sql, "TurnosPorEspecialidad",
-                new SqlParameter[] { pDesde, pHasta });
+            return conexion.ObtenerTablaParametros(
+                sql,
+                "TurnosPorEspecialidad",
+                new SqlParameter[] { pEspecialidad, pMedico, pDesde, pHasta });
         }
+       
 
         public DataTable MedicosConMasTurnos(DateTime? desde = null, DateTime? hasta = null)
         {

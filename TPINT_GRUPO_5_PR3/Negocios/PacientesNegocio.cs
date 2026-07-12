@@ -12,10 +12,8 @@ namespace Negocio
         private Pacientes datosPacientes = new Pacientes();
         public DataTable BuscarPacientes(string texto, string sexo, string estado)
         {
-
             DataTable tabla = datosPacientes.BuscarPacientes(texto, sexo, estado);
             return tabla;
-
         }
 
         public DataTable getTabla()
