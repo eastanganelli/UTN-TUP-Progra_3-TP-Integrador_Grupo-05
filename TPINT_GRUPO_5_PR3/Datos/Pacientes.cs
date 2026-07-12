@@ -58,6 +58,25 @@ namespace Datos
             return accesoDatos.EjecutarProcedimientoAlmacenado(cmd,"sp_ActualizarEstadoPaciente");
         }
 
+        public string DarDeBajaPaciente(int id_paciente)
+        {
+            SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
+            accesoDatos.EjecutarProcedimientoAlmacenado("sp_Paciente_Baja", new SqlParameter[] {
+                new SqlParameter("@id_paciente", id_paciente),
+                pMsg
+            });
+            return pMsg.Value?.ToString() ?? string.Empty;
+        }
+
+        public string ActivarPaciente(int id_paciente)
+        {
+            SqlParameter pMsg = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200) { Direction = ParameterDirection.Output };
+            accesoDatos.EjecutarProcedimientoAlmacenado("sp_Paciente_Activar", new SqlParameter[] {
+                new SqlParameter("@id_paciente", id_paciente),
+                pMsg
+            });
+            return pMsg.Value?.ToString() ?? string.Empty;
+        }
         public DataTable BuscarPacientes(string texto, string sexo, string estado)
         {
             string consulta =

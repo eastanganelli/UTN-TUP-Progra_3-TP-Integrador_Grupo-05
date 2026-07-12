@@ -9,11 +9,11 @@ namespace Negocio
 {
     public class PacientesNegocio
     {
+        private Pacientes datosPacientes = new Pacientes();
         public DataTable BuscarPacientes(string texto, string sexo, string estado)
         {
-            Datos.Pacientes DatosPaciente = new Datos.Pacientes();
 
-            DataTable tabla = DatosPaciente.BuscarPacientes(texto, sexo, estado);
+            DataTable tabla = datosPacientes.BuscarPacientes(texto, sexo, estado);
             return tabla;
 
         }
@@ -52,6 +52,25 @@ namespace Negocio
             if (filasAfectadas == 0)
             {
                 throw new Exception("No se pudo cambiar el estado del paciente. Verifique el ID proporcionado.");
+            }
+        }
+
+        public void ToggleEstadoPaciente(int id_paciente)
+        {
+            try
+            {
+                Paciente p = datosPacientes.ObtenerPacientePorId(id_paciente);
+                bool nuevoEstado = !p.Estado;
+                string mensaje = nuevoEstado
+                    ? datosPacientes.ActivarPaciente(id_paciente)
+                    : datosPacientes.DarDeBajaPaciente(id_paciente);
+                if (!string.IsNullOrEmpty(mensaje) &&
+                    !mensaje.Contains("correctamente"))
+                    throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message.StartsWith("Error") ? ex.Message : "Error al cambiar el estado del paciente: " + ex.Message);
             }
         }
         public void ModificarPaciente(Paciente paciente)

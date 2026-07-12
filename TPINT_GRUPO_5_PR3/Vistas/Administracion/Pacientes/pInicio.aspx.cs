@@ -111,14 +111,17 @@ namespace Vistas.Administracion.Pacientes
 
                 case "ToggleEstado": //ELIMINAR/BAJA LOGICA
                 {
-
-                        idPaciente = Convert.ToInt32(e.CommandArgument);
-
-
-                        bool activoActual = pacientesNegocio.ObtenerEstadoPaciente(idPaciente);
-
-
-                        pacientesNegocio.CambiarEstado(idPaciente, !activoActual);
+                        try
+                        {
+                            pacientesNegocio.ToggleEstadoPaciente(Convert.ToInt32(e.CommandArgument));
+                            lblMensaje.Visible = false;
+                        }
+                        catch (Exception ex)
+                        {
+                            lblMensaje.Text = ex.Message;
+                            lblMensaje.CssClass = "alerta-error";
+                            lblMensaje.Visible = true;
+                        }
 
                         CargarPacientes();
                         break;

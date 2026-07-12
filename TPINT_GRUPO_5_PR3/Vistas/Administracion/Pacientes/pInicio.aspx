@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Pacientes" Language="C#" MasterPageFile="~/Administracion/Plantilla.Master" AutoEventWireup="true" CodeBehind="pInicio.aspx.cs" Inherits="Vistas.Administracion.Pacientes.Pacientes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-<style>
+    <style>
     .grid-container {
     width: 100%;
     overflow-x: auto;
@@ -32,8 +32,12 @@
                 <div class="page-subtitle">Gestión de pacientes registrados en el sistema</div>
             </div>
             <asp:Button class="btn-primary" ID="btnAgregar" runat="server" Text="+ Agregar Paciente" OnClick="btnAgregar_Click" />
+                <label>
+            <br />
+            
+            </label>
         </div>
-
+        <asp:Label ID="lblMensaje" runat="server"></asp:Label>
         <div class="filters-bar">
             <div class="filter-group">
                 <label>Buscar</label>
