@@ -134,7 +134,7 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
         <!-- ========================
              ESTADO (solo medico, turno pasado)
         ========================= -->
-        <asp:Panel ID="pnlEstado" runat="server" Visible="false">
+        <asp:Panel ID="pnlEstado" runat="server" Enabled="false">
         <div class="form-card">
             <h2>Estado del Turno</h2>
             <p class="seccion-nota">Solo el médico asignado puede cambiar el estado de turnos ya realizados.</p>
@@ -153,7 +153,7 @@ OnClientClick="return confirm('¿Estás seguro de que querés volver? Se perder�
         <!-- ========================
              OBSERVACIONES (solo medico, turno pasado)
         ========================= -->
-        <asp:Panel ID="pnlObservacion" runat="server" Visible="false">
+        <asp:Panel ID="pnlObservacion" runat="server" Enabled="false">
         <div class="form-card">
             <h2>Observaciones</h2>
             <p class="seccion-nota">Solo el médico asignado puede agregar observaciones a turnos ya realizados.</p>

@@ -4,59 +4,45 @@ using System;
 using System.Data;
 using System.Web.UI.WebControls;
 
-namespace Vistas.Administracion.Turnos
-{
-    public partial class Turno_Editar : System.Web.UI.Page
-    {
+namespace Vistas.Administracion.Turnos {
+    public partial class Turno_Editar : System.Web.UI.Page {
         private TurnosNegocio _negTurnos = new TurnosNegocio();
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            try
-            {
+        protected void Page_Load(object sender, EventArgs e) {
+            try {
                 AccesoPagina acceso = new AccesoPagina();
                 acceso.VerificarAcceso("admin", "medico");
                 Usuario usuario = (Usuario)Session["zezion"];
 
-                if (!IsPostBack)
-                {
+                if (!IsPostBack) {
                     string idTurno = Request.QueryString["id"];
-                    if (string.IsNullOrEmpty(idTurno))
-                    {
+                    if (string.IsNullOrEmpty(idTurno)) {
                         Response.Redirect("tInicio.aspx");
                         return;
                     }
 
                     CargarEstados();
                     CargarDatosDelTurno(idTurno, usuario);
-                }
-                else
-                {
+                } else {
                     bool esMedico      = usuario.Rol == "medico";
-                    DateTime fechaTurno = ViewState["FechaTurno"] != null
-                        ? (DateTime)ViewState["FechaTurno"]
-                        : DateTime.MaxValue;
+                    DateTime fechaTurno = ViewState["FechaTurno"] != null ? (DateTime)ViewState["FechaTurno"] : DateTime.MaxValue;
                     string estadoOriginal = ViewState["EstadoOriginal"]?.ToString() ?? "pendiente";
 
-                    AplicarVisibilidad(esMedico, fechaTurno, estadoOriginal);
+                    AplicarModificacion(esMedico, fechaTurno, estadoOriginal);
                 }
             }
-            catch (NoAccesoPagina)
-            {
+            catch (NoAccesoPagina) {
                 Response.Redirect("/Login.aspx");
             }
-            catch (SinPermisoPagina)
-            {
+            catch (SinPermisoPagina) {
                 Response.Redirect("/Administracion/Inicio.aspx");
             }
         }
 
-        private void CargarDatosDelTurno(string idTurno, Usuario usuario)
-        {
+        private void CargarDatosDelTurno(string idTurno, Usuario usuario) {
             DataTable dt = _negTurnos.BuscarTurnoPorId(idTurno);
 
-            if (dt == null || dt.Rows.Count == 0)
-            {
+            if (dt == null || dt.Rows.Count == 0) {
                 Response.Redirect("tInicio.aspx");
                 return;
             }
@@ -65,8 +51,7 @@ namespace Vistas.Administracion.Turnos
             int idMedicoTurno = Convert.ToInt32(fila["id_medico"]);
 
             // Medico solo puede editar sus propios turnos
-            if (usuario.Rol == "medico" && usuario.IDMedico != idMedicoTurno)
-            {
+            if (usuario.Rol == "medico" && usuario.IDMedico != idMedicoTurno) {
                 Response.Redirect("tInicio.aspx");
                 return;
             }
@@ -96,11 +81,10 @@ namespace Vistas.Administracion.Turnos
             CargarHorariosDisponibles(idMedicoTurno, fechaHora.Date, idTurnoInt, fechaHora.ToString("HH:mm"));
 
             bool esMedico = usuario.Rol == "medico";
-            AplicarVisibilidad(esMedico, fechaHora, estadoActual);
+            AplicarModificacion(esMedico, fechaHora, estadoActual);
         }
 
-        private void AplicarVisibilidad(bool esMedico, DateTime fechaTurno, string estadoOriginal)
-        {
+        private void AplicarModificacion(bool esMedico, DateTime fechaTurno, string estadoOriginal) {
             bool esAdmin         = !esMedico;
             bool esPasado        = fechaTurno.Date <= DateTime.Today;
             bool esFuturo        = !esPasado;
@@ -108,29 +92,24 @@ namespace Vistas.Administracion.Turnos
             bool horaAlcanzada   = fechaTurno <= DateTime.Now;
 
             pnlFechaHorario.Visible = esAdmin && (esFuturo || pendiente);
-            pnlEstado.Visible       = esMedico && horaAlcanzada;
+            pnlEstado.Enabled = esMedico && horaAlcanzada;
             string estadoSeleccionado = ddlEstado.SelectedValue;
-            pnlObservacion.Visible  = esMedico && horaAlcanzada &&
-                string.Equals(estadoSeleccionado, "presente", StringComparison.OrdinalIgnoreCase);
-
-            btnGuardar.Visible = !(esMedico && !horaAlcanzada);
+            pnlObservacion.Enabled  = esMedico && horaAlcanzada && string.Equals(estadoSeleccionado, "presente", StringComparison.OrdinalIgnoreCase);
+            btnGuardar.Enabled = !(esMedico && !horaAlcanzada);
+            lblMensaje.Text = "⚠️ No se ha cumplido el turno del paciente.";
+            lblMensaje.Visible = !(esMedico && horaAlcanzada);
         }
 
-        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e) {
             Usuario usuario = (Usuario)Session["zezion"];
             bool esMedico = usuario.Rol == "medico";
-            DateTime fechaTurno = ViewState["FechaTurno"] != null
-                ? (DateTime)ViewState["FechaTurno"]
-                : DateTime.MaxValue;
+            DateTime fechaTurno = ViewState["FechaTurno"] != null ? (DateTime)ViewState["FechaTurno"] : DateTime.MaxValue;
             string estadoOriginal = ViewState["EstadoOriginal"]?.ToString() ?? "pendiente";
-            AplicarVisibilidad(esMedico, fechaTurno, estadoOriginal);
+            AplicarModificacion(esMedico, fechaTurno, estadoOriginal);
         }
 
-        private void MostrarBadgeEstado(string estado)
-        {
-            switch (estado)
-            {
+        private void MostrarBadgeEstado(string estado) {
+            switch (estado) {
                 case "presente":
                     lblEstadoBadge.Text     = "Presente";
                     lblEstadoBadge.CssClass = "badge-estado confirmado";
@@ -155,22 +134,17 @@ namespace Vistas.Administracion.Turnos
             ddlEstado.Items.Add(new ListItem("Ausente",   "ausente"));
         }
 
-        private void CargarHorariosDisponibles(int idMedico, DateTime fecha, int idTurnoActual, string horaAPreseleccionar)
-        {
+        private void CargarHorariosDisponibles(int idMedico, DateTime fecha, int idTurnoActual, string horaAPreseleccionar) {
             ddlHorario.Items.Clear();
 
-            try
-            {
+            try {
                 DataTable dt = _negTurnos.ObtenerHorariosParaEditar(idMedico, fecha, idTurnoActual);
 
-                if (dt.Rows.Count == 0)
-                {
+                if (dt.Rows.Count == 0) {
                     ddlHorario.Items.Add(new ListItem("Sin horarios disponibles", ""));
                     pnlConflicto.Visible = true;
                     lblConflicto.Text    = " El médico no tiene horarios disponibles para esa fecha.";
-                }
-                else
-                {
+                } else {
                     pnlConflicto.Visible = false;
                     ddlHorario.Items.Add(new ListItem("-- Seleccioná --", ""));
                     ddlHorario.DataSource     = dt;
@@ -179,22 +153,19 @@ namespace Vistas.Administracion.Turnos
                     ddlHorario.DataBind();
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 pnlConflicto.Visible = true;
                 lblConflicto.Text    = ex.Message;
                 ddlHorario.Items.Add(new ListItem("-- Sin disponibilidad --", ""));
             }
 
-            if (!string.IsNullOrEmpty(horaAPreseleccionar))
-            {
+            if (!string.IsNullOrEmpty(horaAPreseleccionar)) {
                 ListItem item = ddlHorario.Items.FindByValue(horaAPreseleccionar);
                 if (item != null) ddlHorario.SelectedValue = horaAPreseleccionar;
             }
         }
 
-        protected void txtFecha_TextChanged(object sender, EventArgs e)
-        {
+        protected void txtFecha_TextChanged(object sender, EventArgs e) {
             string idTurno = Request.QueryString["id"];
             if (string.IsNullOrEmpty(idTurno)) return;
 
