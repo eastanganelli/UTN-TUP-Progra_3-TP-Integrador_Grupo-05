@@ -37,7 +37,7 @@ namespace Vistas.Administracion.Usuarios {
             foreach (System.Data.DataRow row in dt.Rows)
                 ddlMedico.Items.Add(new ListItem(
                     row["nombre"].ToString(),
-                    row["id_medico"].ToString()));
+                    row["IDMedico"].ToString()));
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)

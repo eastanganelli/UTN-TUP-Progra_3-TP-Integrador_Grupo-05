@@ -52,7 +52,7 @@ namespace Vistas.Administracion.Usuarios {
             foreach (DataRow row in dt.Rows)
                 ddlMedico.Items.Add(new ListItem(
                     row["nombre"].ToString(),
-                    row["id_medico"].ToString()));
+                    row["IDMedico"].ToString()));
         }
 
         private void CargarUsuario(Usuario u)
